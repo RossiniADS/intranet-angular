@@ -1,0 +1,6 @@
+@intranet_angular.Server_HostAddress = http://localhost:5208
+
+GET {{intranet_angular.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,191 @@
+<div class="trending-area fix pt-25 gray-bg">
+  <div class="container">
+    <div class="trending-main">
+      <div class="row">
+        <!-- Trending Slider -->
+        <div class="col-lg-8">
+          <!-- Contêiner Swiper -->
+          <div class="swiper mySwiper">
+            <!-- Wrapper dos slides -->
+            <div class="swiper-wrapper">
+              <!-- Slides -->
+              <div class="swiper-slide" *ngFor="let slide of trendingSlides">
+                <div class="trending-top mb-30">
+                  <div class="trend-top-img">
+                    <img [src]="slide.img" alt="Trending Image">
+                    <div class="trend-top-cap">
+                      <span class="badge" [class.bgr]="slide.category === 'Business'">{{ slide.category }}</span>
+                      <h2><a [routerLink]="slide.link">{{ slide.title }}</a></h2>
+                      <p>by {{ slide.author }} - {{ slide.date }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Botões de navegação -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+
+            <!-- Paginação -->
+            <div class="swiper-pagination"></div>
+          </div>
+        </div>
+        <!-- Right Content -->
+        <div class="col-lg-4">
+          <div class="row">
+            <div class="col-lg-12 col-md-6 col-sm-6"
+                 *ngFor="let card of trendingCards">
+              <div class="trending-top mb-30">
+                <div class="trend-top-img">
+                  <img [src]="card.img" alt="Trending Image">
+                  <div class="trend-top-cap trend-top-cap2">
+                    <span class="badge" [class.bgb]="card.category === 'Fashion'" [class.bgg]="card.category === 'Tech'">
+                      {{ card.category }}
+                    </span>
+                    <h2><a [routerLink]="card.link">{{ card.title }}</a></h2>
+                    <p>by {{ card.author }} - {{ card.date }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="whats-news-area pt-50 pb-20 gray-bg">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="whats-news-wrapper">
+          <!-- Heading & Nav Button -->
+          <div class="row justify-content-between align-items-end mb-15">
+            <div class="col-xl-4">
+              <div class="section-tittle mb-30">
+                <h3>Whats New</h3>
+              </div>
+            </div>
+            <div class="col-xl-8 col-md-9">
+              <mat-tab-group>
+                <mat-tab *ngFor="let tab of tabs" [label]="tab.label">
+                  <div class="tab-content">
+                    <ng-container *ngFor="let news of tab.content">
+                      <div class="row">
+                        <div class="col-xl-6 col-lg-12" *ngIf="news.main">
+                          <div class="whats-news-single mb-40">
+                            <div class="whates-img">
+                              <img [src]="news.image" alt="" />
+                            </div>
+                            <div class="whates-caption">
+                              <h4><a [href]="news.link">{{ news.title }}</a></h4>
+                              <span>{{ news.author }} - {{ news.date }}</span>
+                              <p>{{ news.description }}</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-12">
+                          <div class="row">
+                            <div class="col-xl-12 col-lg-6 col-md-6 col-sm-10"
+                                 *ngFor="let sideNews of news.sideNews">
+                              <div class="whats-right-single mb-20">
+                                <div class="whats-right-img">
+                                  <img [src]="sideNews.image" alt="" />
+                                </div>
+                                <div class="whats-right-cap">
+                                  <span class="colorb">{{ sideNews.category }}</span>
+                                  <h4><a [href]="sideNews.link">{{ sideNews.title }}</a></h4>
+                                  <p>{{ sideNews.date }}</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
+                </mat-tab>
+              </mat-tab-group>
+            </div>
+          </div>
+          <!-- Section Atualizada -->
+          <div class="col-xl-6 col-lg-12">
+            <div class="row">
+              <!-- Single Item -->
+              <div *ngFor="let item of items" class="col-xl-12 col-lg-6 col-md-6 col-sm-10">
+                <div class="whats-right-single mb-20">
+                  <div class="whats-right-img">
+                    <img [src]="item.imgSrc" [alt]="item.altText" />
+                  </div>
+                  <div class="whats-right-cap">
+                    <span [ngClass]="item.labelClass">{{ item.label }}</span>
+                    <h4>
+                      <a [routerLink]="item.link">{{ item.title }}</a>
+                    </h4>
+                    <p>{{ item.date }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Banner -->
+          <div class="banner-one mt-20 mb-30">
+            <img [src]="banner.imgSrc" [alt]="banner.altText" />
+          </div>
+
+          <div class="col-lg-4">
+            <!-- Flow Social -->
+            <div class="single-follow mb-45">
+              <div class="single-box">
+                <div *ngFor="let social of socialLinks" class="follow-us d-flex align-items-center">
+                  <div class="follow-social">
+                    <a [href]="social.link"><img [src]="social.icon" [alt]="social.altText" /></a>
+                  </div>
+                  <div class="follow-count">
+                    <span>{{ social.count }}</span>
+                    <p>{{ social.label }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Most Recent Area -->
+            <div class="most-recent-area">
+              <!-- Section Title -->
+              <div class="small-tittle mb-20">
+                <h4>Most Recent</h4>
+              </div>
+
+              <!-- Most Recent Details -->
+              <div class="most-recent mb-40">
+                <div class="most-recent-img">
+                  <img [src]="mostRecent.featured.imgSrc" [alt]="mostRecent.featured.altText" />
+                  <div class="most-recent-cap">
+                    <span [ngClass]="mostRecent.featured.labelClass">{{ mostRecent.featured.label }}</span>
+                    <h4>
+                      <a [routerLink]="mostRecent.featured.link">{{ mostRecent.featured.title }}</a>
+                    </h4>
+                    <p>{{ mostRecent.featured.author }}  |  {{ mostRecent.featured.timeAgo }}</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Single Items -->
+              <div *ngFor="let item of mostRecent.items" class="most-recent-single">
+                <div class="most-recent-images">
+                  <img [src]="item.imgSrc" [alt]="item.altText" />
+                </div>
+                <div class="most-recent-capt">
+                  <h4><a [routerLink]="item.link">{{ item.title }}</a></h4>
+                  <p>{{ item.author }}  |  {{ item.timeAgo }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
