@@ -1,50 +1,47 @@
+<!-- Trending Area Start -->
 <div class="trending-area fix pt-25 gray-bg">
   <div class="container">
     <div class="trending-main">
       <div class="row">
-        <!-- Trending Slider -->
         <div class="col-lg-8">
-          <!-- Contêiner Swiper -->
+          <!-- Swiper -->
           <div class="swiper mySwiper">
-            <!-- Wrapper dos slides -->
             <div class="swiper-wrapper">
-              <!-- Slides -->
               <div class="swiper-slide" *ngFor="let slide of trendingSlides">
                 <div class="trending-top mb-30">
                   <div class="trend-top-img">
-                    <img [src]="slide.img" alt="Trending Image">
+                    <img [src]="slide.imageUrl" [alt]="slide.altText" />
                     <div class="trend-top-cap">
-                      <span class="badge" [class.bgr]="slide.category === 'Business'">{{ slide.category }}</span>
-                      <h2><a [routerLink]="slide.link">{{ slide.title }}</a></h2>
-                      <p>by {{ slide.author }} - {{ slide.date }}</p>
+                      <span class="bgr">{{ slide.category }}</span>
+                      <h2>
+                        <a [routerLink]="slide.link">{{ slide.title }}</a>
+                      </h2>
+                      <p>{{ slide.description }}</p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-
-            <!-- Botões de navegação -->
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-
+            <!-- Botões de Navegação -->
+            <!--<div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>-->
             <!-- Paginação -->
-            <div class="swiper-pagination"></div>
+            <!--<div class="swiper-pagination"></div>-->
           </div>
         </div>
-        <!-- Right Content -->
         <div class="col-lg-4">
           <div class="row">
             <div class="col-lg-12 col-md-6 col-sm-6"
                  *ngFor="let card of trendingCards">
               <div class="trending-top mb-30">
                 <div class="trend-top-img">
-                  <img [src]="card.img" alt="Trending Image">
+                  <img [src]="card.imageUrl" [alt]="card.altText" />
                   <div class="trend-top-cap trend-top-cap2">
-                    <span class="badge" [class.bgb]="card.category === 'Fashion'" [class.bgg]="card.category === 'Tech'">
-                      {{ card.category }}
-                    </span>
-                    <h2><a [routerLink]="card.link">{{ card.title }}</a></h2>
-                    <p>by {{ card.author }} - {{ card.date }}</p>
+                    <span [ngClass]="card.categoryClass">{{ card.category }}</span>
+                    <h2>
+                      <a [routerLink]="card.link">{{ card.title }}</a>
+                    </h2>
+                    <p>{{ card.description }}</p>
                   </div>
                 </div>
               </div>
@@ -55,7 +52,8 @@
     </div>
   </div>
 </div>
-
+<!-- Trending Area End -->
+<!-- Whats New Start -->
 <section class="whats-news-area pt-50 pb-20 gray-bg">
   <div class="container">
     <div class="row">
@@ -69,118 +67,70 @@
               </div>
             </div>
             <div class="col-xl-8 col-md-9">
-              <mat-tab-group>
-                <mat-tab *ngFor="let tab of tabs" [label]="tab.label">
-                  <div class="tab-content">
-                    <ng-container *ngFor="let news of tab.content">
-                      <div class="row">
-                        <div class="col-xl-6 col-lg-12" *ngIf="news.main">
-                          <div class="whats-news-single mb-40">
-                            <div class="whates-img">
-                              <img [src]="news.image" alt="" />
-                            </div>
-                            <div class="whates-caption">
-                              <h4><a [href]="news.link">{{ news.title }}</a></h4>
-                              <span>{{ news.author }} - {{ news.date }}</span>
-                              <p>{{ news.description }}</p>
-                            </div>
-                          </div>
+              <div class="properties__button">
+                <nav>
+                  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <a *ngFor="let tab of tabs"
+                       class="nav-link"
+                       [class.active]="tab.active"
+                       [id]="tab.id + '-tab'"
+                       data-bs-toggle="tab"
+                       [href]="'#' + tab.id"
+                       role="tab"
+                       [attr.aria-controls]="tab.id"
+                       [attr.aria-selected]="tab.active">{{ tab.title }}</a>
+                  </div>
+                </nav>
+              </div>
+            </div>
+          </div>
+          <!-- Tab Content -->
+          <div class="row">
+            <div class="col-12">
+              <div class="tab-content" id="nav-tabContent">
+                <div *ngFor="let tab of tabs"
+                     class="tab-pane fade"
+                     [class.show.active]="tab.active"
+                     [id]="tab.id"
+                     role="tabpanel"
+                     [attr.aria-labelledby]="tab.id + '-tab'">
+                  <div class="row">
+                    <!-- Example Articles -->
+                    <div *ngFor="let article of articles" class="col-xl-6 col-lg-12">
+                      <div class="whats-news-single mb-40">
+                        <div class="whates-img">
+                          <img [src]="article.img" alt="">
                         </div>
-                        <div class="col-xl-6 col-lg-12">
-                          <div class="row">
-                            <div class="col-xl-12 col-lg-6 col-md-6 col-sm-10"
-                                 *ngFor="let sideNews of news.sideNews">
-                              <div class="whats-right-single mb-20">
-                                <div class="whats-right-img">
-                                  <img [src]="sideNews.image" alt="" />
-                                </div>
-                                <div class="whats-right-cap">
-                                  <span class="colorb">{{ sideNews.category }}</span>
-                                  <h4><a [href]="sideNews.link">{{ sideNews.title }}</a></h4>
-                                  <p>{{ sideNews.date }}</p>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+                        <div class="whates-caption">
+                          <h4><a href="latest_news.html">{{ article.title }}</a></h4>
+                          <span>by {{ article.author }} - {{ article.date }}</span>
+                          <p>{{ article.description }}</p>
                         </div>
                       </div>
-                    </ng-container>
-                  </div>
-                </mat-tab>
-              </mat-tab-group>
-            </div>
-          </div>
-          <!-- Section Atualizada -->
-          <div class="col-xl-6 col-lg-12">
-            <div class="row">
-              <!-- Single Item -->
-              <div *ngFor="let item of items" class="col-xl-12 col-lg-6 col-md-6 col-sm-10">
-                <div class="whats-right-single mb-20">
-                  <div class="whats-right-img">
-                    <img [src]="item.imgSrc" [alt]="item.altText" />
-                  </div>
-                  <div class="whats-right-cap">
-                    <span [ngClass]="item.labelClass">{{ item.label }}</span>
-                    <h4>
-                      <a [routerLink]="item.link">{{ item.title }}</a>
-                    </h4>
-                    <p>{{ item.date }}</p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <!-- Banner -->
-          <div class="banner-one mt-20 mb-30">
-            <img [src]="banner.imgSrc" [alt]="banner.altText" />
+        </div>
+        <!-- Banner -->
+        <div class="banner-one mt-20 mb-30">
+          <img src="assets/img/gallery/body_card1.png" alt="">
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="most-recent-area">
+          <div class="small-tittle mb-20">
+            <h4>Most Recent</h4>
           </div>
-
-          <div class="col-lg-4">
-            <!-- Flow Social -->
-            <div class="single-follow mb-45">
-              <div class="single-box">
-                <div *ngFor="let social of socialLinks" class="follow-us d-flex align-items-center">
-                  <div class="follow-social">
-                    <a [href]="social.link"><img [src]="social.icon" [alt]="social.altText" /></a>
-                  </div>
-                  <div class="follow-count">
-                    <span>{{ social.count }}</span>
-                    <p>{{ social.label }}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Most Recent Area -->
-            <div class="most-recent-area">
-              <!-- Section Title -->
-              <div class="small-tittle mb-20">
-                <h4>Most Recent</h4>
-              </div>
-
-              <!-- Most Recent Details -->
-              <div class="most-recent mb-40">
-                <div class="most-recent-img">
-                  <img [src]="mostRecent.featured.imgSrc" [alt]="mostRecent.featured.altText" />
-                  <div class="most-recent-cap">
-                    <span [ngClass]="mostRecent.featured.labelClass">{{ mostRecent.featured.label }}</span>
-                    <h4>
-                      <a [routerLink]="mostRecent.featured.link">{{ mostRecent.featured.title }}</a>
-                    </h4>
-                    <p>{{ mostRecent.featured.author }}  |  {{ mostRecent.featured.timeAgo }}</p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Single Items -->
-              <div *ngFor="let item of mostRecent.items" class="most-recent-single">
-                <div class="most-recent-images">
-                  <img [src]="item.imgSrc" [alt]="item.altText" />
-                </div>
-                <div class="most-recent-capt">
-                  <h4><a [routerLink]="item.link">{{ item.title }}</a></h4>
-                  <p>{{ item.author }}  |  {{ item.timeAgo }}</p>
-                </div>
+          <div *ngFor="let recent of mostRecent" class="most-recent mb-40">
+            <div class="most-recent-img">
+              <img [src]="recent.img" alt="">
+              <div class="most-recent-cap">
+                <span class="bgbeg">{{ recent.category }}</span>
+                <h4><a href="latest_news.html">{{ recent.title }}</a></h4>
+                <p>{{ recent.author }} | {{ recent.time }}</p>
               </div>
             </div>
           </div>
@@ -189,3 +139,285 @@
     </div>
   </div>
 </section>
+<!-- Whats New End -->
+<!--   Weekly2-News start -->
+<div class="weekly2-news-area pt-5 pb-3 gray-bg">
+  <div class="container">
+    <div class="weekly2-wrapper">
+      <div class="row">
+        <!-- Banner -->
+        <div class="col-lg-3">
+          <div class="home-banner2 d-none d-lg-block">
+            <img [src]="bannerImage" alt="Home Banner" />
+          </div>
+        </div>
+        <div class="col-lg-9">
+          <div class="slider-wrapper">
+            <!-- Section Title -->
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="small-tittle mb-3">
+                  <h4>Most Popular</h4>
+                </div>
+              </div>
+            </div>
+            <!-- Slider -->
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="weekly2-news-active d-flex flex-wrap">
+                  <!-- Single Item -->
+                  <!-- Swiper -->
+                  <div class="swiper mySwiper2">
+                    <div class="swiper-wrapper">
+                      <div class="swiper-slide" *ngFor="let news of popularNews">
+                        <div class="weekly2-single">
+                          <div class="weekly2-img">
+                            <img [src]="news.img" alt="Weekly News" />
+                          </div>
+                          <div class="weekly2-caption">
+                            <h4><a href="#">{{ news.title }}</a></h4>
+                            <p>{{ news.author }} | {{ news.time }}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Botões de Navegação -->
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                    <!-- Paginação -->
+                    <!--<div class="swiper-pagination"></div>-->
+                  </div>
+                  <!-- End Single Item -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Weekly-News -->
+<!--  Recent Articles start -->
+<div class="recent-articles pt-80 pb-80">
+  <div class="container">
+    <div class="recent-wrapper">
+      <!-- Section Title -->
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="section-tittle mb-30">
+            <h3>{{ sectionTitle }}</h3>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <!-- Swiper (Carrossel) -->
+          <div class="recent-active dot-style d-flex">
+            <div class="swiper mySwiper3">
+              <div class="swiper-wrapper">
+                <!-- Single -->
+                <div class="swiper-slide" *ngFor="let article of articles2">
+                  <div class="single-recent">
+                    <div class="what-img">
+                      <img [src]="article.img" [alt]="article.title" />
+                    </div>
+                    <div class="what-cap">
+                      <h4><a [routerLink]="article.link">{{ article.title }}</a></h4>
+                      <p>{{ article.date }}</p>
+                      <a *ngIf="article.video" class="popup-video btn-icon" [href]="article.video">
+                        <span class="flaticon-play-button"></span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <!-- Fim do Swiper Slide -->
+              </div>
+              <!-- Navegação (Botões) -->
+              <!--<div class="swiper-button-next"></div>
+              <div class="swiper-button-prev"></div>-->
+              <!-- Paginação -->
+              <!--<div class="swiper-pagination"></div>-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Recent Articles End -->
+<!-- Start Video Area -->
+<div class="youtube-area video-padding d-none d-sm-block">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="video-items-active">
+          <div class="video-items text-center">
+            <video controls>
+              <source src="assets/video/news2.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="video-items text-center">
+            <video controls>
+              <source src="assets/video/news1.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="video-items text-center">
+            <video controls>
+              <source src="assets/video/news3.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="video-items text-center">
+            <video controls>
+              <source src="assets/video/news1.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="video-items text-center">
+            <video controls>
+              <source src="assets/video/news3.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="video-info">
+      <div class="row">
+        <div class="col-12">
+          <div class="testmonial-nav text-center">
+            <div class="single-video">
+              <video controls>
+                <source src="assets/video/news2.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+              <div class="video-intro">
+                <h4>Old Spondon News - 2020 </h4>
+              </div>
+            </div>
+            <div class="single-video">
+              <video controls>
+                <source src="assets/video/news1.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+              <div class="video-intro">
+                <h4>Banglades News Video </h4>
+              </div>
+            </div>
+            <div class="single-video">
+              <video controls>
+                <source src="assets/video/news3.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+              <div class="video-intro">
+                <h4>Latest Video - 2020 </h4>
+              </div>
+            </div>
+            <div class="single-video">
+              <video controls>
+                <source src="assets/video/news1.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+              <div class="video-intro">
+                <h4>Spondon News -2019 </h4>
+              </div>
+            </div>
+            <div class="single-video">
+              <video controls>
+                <source src="assets/video/news3.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+              <div class="video-intro">
+                <h4>Latest Video - 2020</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Start Video area-->
+<!--   Weekly3-News start -->
+<div class="weekly3-news-area pt-80 pb-130">
+  <div class="container">
+    <div class="weekly3-wrapper">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="slider-wrapper">
+            <!-- Slider -->
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="weekly3-news-active dot-style d-flex">
+                  <div class="weekly3-single">
+                    <div class="weekly3-img">
+                      <img src="assets/img/gallery/weekly2News1.png" alt="">
+                    </div>
+                    <div class="weekly3-caption">
+                      <h4><a href="latest_news.html">What to Expect From the 2020 Oscar Nomin ations</a></h4>
+                      <p>19 Jan 2020</p>
+                    </div>
+                  </div>
+                  <div class="weekly3-single">
+                    <div class="weekly3-img">
+                      <img src="assets/img/gallery/weekly2News2.png" alt="">
+                    </div>
+                    <div class="weekly3-caption">
+                      <h4><a href="latest_news.html">What to Expect From the 2020 Oscar Nomin ations</a></h4>
+                      <p>19 Jan 2020</p>
+                    </div>
+                  </div>
+                  <div class="weekly3-single">
+                    <div class="weekly3-img">
+                      <img src="assets/img/gallery/weekly2News3.png" alt="">
+                    </div>
+                    <div class="weekly3-caption">
+                      <h4><a href="latest_news.html">What to Expect From the 2020 Oscar Nomin ations</a></h4>
+                      <p>19 Jan 2020</p>
+                    </div>
+                  </div>
+                  <div class="weekly3-single">
+                    <div class="weekly3-img">
+                      <img src="assets/img/gallery/weekly2News4.png" alt="">
+                    </div>
+                    <div class="weekly3-caption">
+                      <h4><a href="latest_news.html">What to Expect From the 2020 Oscar Nomin ations</a></h4>
+                      <p>19 Jan 2020</p>
+                    </div>
+                  </div>
+                  <div class="weekly3-single">
+                    <div class="weekly3-img">
+                      <img src="assets/img/gallery/weekly2News2.png" alt="">
+                    </div>
+                    <div class="weekly3-caption">
+                      <h4><a href="latest_news.html">What to Expect From the 2020 Oscar Nomin ations</a></h4>
+                      <p>19 Jan 2020</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Weekly-News -->
+<!-- banner-last Start -->
+<div class="banner-area gray-bg pt-90 pb-90">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10 col-md-10">
+        <div class="banner-one">
+          <img src="assets/img/gallery/body_card3.png" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- banner-last End -->

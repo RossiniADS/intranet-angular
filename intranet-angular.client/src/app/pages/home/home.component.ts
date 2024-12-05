@@ -19,7 +19,45 @@ export class HomeComponent implements AfterViewInit, OnInit {
       loop: true,
       speed: 600,
       autoplay: {
-        delay: 5000,
+        delay: 10000,
+        disableOnInteraction: false
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      slidesPerView: 1,
+      pagination: {
+        el: '.swiper-pagination',
+        "type": "bullets",
+        clickable: true,
+      }
+    });
+
+    new Swiper('.mySwiper2', {
+      loop: true,
+      speed: 600,
+      autoplay: {
+        delay: 10000,
+        disableOnInteraction: false
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      slidesPerView: 3,
+      pagination: {
+        el: '.swiper-pagination',
+        "type": "bullets",
+        clickable: true,
+      }
+    });
+
+    new Swiper('.mySwiper3', {
+      loop: true,
+      speed: 600,
+      autoplay: {
+        delay: 10000,
         disableOnInteraction: false
       },
       navigation: {
@@ -35,183 +73,156 @@ export class HomeComponent implements AfterViewInit, OnInit {
     });
   }
 
-  banner = {
-    imgSrc: 'assets/images/banner.jpg', // Substitua pelo caminho correto
-    altText: 'Descrição do banner'
-  };
-
-  // Links sociais
-  socialLinks = [
-    { altText: 'Facebook', link: 'https://facebook.com', icon: 'fa-facebook', label: 'Facebook', count: 100 },
-    { altText: 'Twitter', link: 'https://twitter.com', icon: 'fa-twitter', label: 'Twitter', count: 100 },
-    { altText: 'Instagram', link: 'https://instagram.com', icon: 'fa-instagram', label: 'Instagram', count: 100 }
-  ];
-
-  mostRecent = {
-    featured: {
-      imgSrc: 'assets/images/featured.jpg', // Substitua pelo caminho correto
-      altText: 'Descrição da imagem em destaque',
-      label: 'Destaque',
-      labelClass: 'label-class',
-      link: '/destaque',
-      title: 'Título do destaque',
-      author: 'Autor do artigo',
-      timeAgo: '2 horas atrás'
-    },
-    items: [
-      {
-        imgSrc: 'assets/images/item1.jpg',
-        altText: 'Descrição do item 1',
-        link: '/item1',
-        title: 'Título do item 1',
-        author: 'Autor do item 1',
-        timeAgo: '1 hora atrás'
-      },
-      {
-        imgSrc: 'assets/images/item2.jpg',
-        altText: 'Descrição do item 2',
-        link: '/item2',
-        title: 'Título do item 2',
-        author: 'Autor do item 2',
-        timeAgo: '3 horas atrás'
-      }
-    ]
-  };
-
+  //PARTE UM 
   trendingSlides = [
     {
-      img: 'assets/img/trending/trending_top2.jpg',
+      imageUrl: 'assets/img/trending/trending_top2.jpg',
+      altText: 'Trending Slide 1',
       category: 'Business',
       title: 'Anna Lora Stuns In White At Her Australian Premiere',
-      author: 'Alice Cloe',
-      date: 'Jun 19, 2020',
-      link: '/latest-news/1'
+      description: 'by Alice Cloe - Jun 19, 2020',
+      link: '/latest-news',
     },
     {
-      img: 'assets/img/trending/trending_top02.jpg',
+      imageUrl: 'assets/img/trending/trending_top02.jpg',
+      altText: 'Trending Slide 2',
       category: 'Business',
       title: 'Anna Lora Stuns In White At Her Australian Premiere',
-      author: 'Alice Cloe',
-      date: 'Jun 19, 2020',
-      link: '/latest-news/2'
+      description: 'by Alice Cloe - Jun 19, 2020',
+      link: '/latest-news',
     },
     {
-      img: 'assets/img/trending/trending_top03.jpg',
+      imageUrl: 'assets/img/trending/trending_top03.jpg',
+      altText: 'Trending Slide 3',
       category: 'Business',
       title: 'Anna Lora Stuns In White At Her Australian Premiere',
-      author: 'Alice Cloe',
-      date: 'Jun 19, 2020',
-      link: '/latest-news/3'
-    }
+      description: 'by Alice Cloe - Jun 19, 2020',
+      link: '/latest-news',
+    },
   ];
 
   trendingCards = [
     {
-      img: 'assets/img/trending/trending_top3.jpg',
+      imageUrl: 'assets/img/trending/trending_top3.jpg',
+      altText: 'Trending Card 1',
       category: 'Fashion',
+      categoryClass: 'bgb',
       title: 'Secretary for Economic Airplane that looks like',
-      author: 'Alice Cloe',
-      date: 'Jun 19, 2020',
-      link: '/latest-news/4'
+      description: 'by Alice Cloe - Jun 19, 2020',
+      link: '/latest-news',
     },
     {
-      img: 'assets/img/trending/trending_top4.jpg',
+      imageUrl: 'assets/img/trending/trending_top4.jpg',
+      altText: 'Trending Card 2',
       category: 'Tech',
+      categoryClass: 'bgg',
       title: 'Secretary for Economic Airplane that looks like',
+      description: 'by Alice Cloe - Jun 19, 2020',
+      link: '/latest-news',
+    },
+  ];
+
+  //PARTE 2
+  tabs = [
+    { id: 'nav-home', title: 'Lifestyle', active: true },
+    { id: 'nav-profile', title: 'Travel', active: false },
+    { id: 'nav-contact', title: 'Fashion', active: false },
+    { id: 'nav-last', title: 'Sports', active: false },
+    { id: 'nav-nav-Sport', title: 'Technology', active: false }
+  ];
+
+  articles = [
+    {
+      img: 'assets/img/gallery/whats_news_details1.png',
+      title: 'Secretart for Economic Air plane that looks like',
       author: 'Alice Cloe',
       date: 'Jun 19, 2020',
-      link: '/latest-news/5'
+      description: 'Struggling to sell one multi-million dollar home currently on the market won’t stop actress and singer Jennifer Lopez.'
     }
   ];
 
-  tabs = [
+  rightArticles = [
     {
-      label: 'Lifestyle',
-      content: [
-        {
-          main: true,
-          image: 'assets/img/gallery/whats_news_details1.png',
-          title: 'Secretary for Economic Airplane that looks like',
-          link: 'latest_news.html',
-          author: 'Alice Cloe',
-          date: 'Jun 19, 2020',
-          description:
-            'Struggling to sell one multi-million dollar home currently on the market won’t stop actress and singer Jennifer Lopez.',
-          sideNews: [
-            {
-              image: 'assets/img/gallery/whats_right_img1.png',
-              category: 'FASHION',
-              title: 'Portrait of group of friends ting eat. market in.',
-              link: 'latest_news.html',
-              date: 'Jun 19, 2020'
-            },
-            {
-              image: 'assets/img/gallery/whats_right_img2.png',
-              category: 'FASHION',
-              title: 'Portrait of group of friends ting eat. market in.',
-              link: 'latest_news.html',
-              date: 'Jun 19, 2020'
-            }
-          ]
-        }
-      ]
+      img: 'assets/img/gallery/whats_right_img1.png',
+      category: 'FASHION',
+      title: 'Portrait of group of friends ting eat. market in.',
+      date: 'Jun 19, 2020'
+    },
+    // Outros artigos...
+  ];
+
+  mostRecent = [
+    {
+      img: 'assets/img/gallery/most_recent.png',
+      category: 'Vogue',
+      title: 'What to Wear: 9+ Cute Work Outfits to Wear This.',
+      author: 'Jhon',
+      time: '2 hours ago'
+    },
+    // Outros artigos recentes...
+  ];
+
+  //PARTE 3
+  bannerImage: string = 'assets/img/gallery/body_card2.png';
+
+  popularNews = [
+    {
+      img: 'assets/img/gallery/weeklyNews1.png',
+      title: 'Scarlett’s disappointment at latest accolade',
+      author: 'Jhon',
+      time: '2 hours ago',
     },
     {
-      label: 'Travel',
-      content: [
-        {
-          main: true,
-          image: 'assets/img/gallery/whats_right_img2.png',
-          title: 'Secretary for Economic Airplane that looks like',
-          link: '#',
-          author: 'Alice Cloe',
-          date: 'Jun 19, 2020',
-          description:
-            'Struggling to sell one multi-million dollar home currently on the market won’t stop actress and singer Jennifer Lopez.',
-          sideNews: []
-        }
-      ]
+      img: 'assets/img/gallery/weeklyNews2.png',
+      title: 'Scarlett’s disappointment at latest accolade',
+      author: 'Jhon',
+      time: '2 hours ago',
+    },
+    {
+      img: 'assets/img/gallery/weeklyNews3.png',
+      title: 'Scarlett’s disappointment at latest accolade',
+      author: 'Jhon',
+      time: '2 hours ago',
+    },
+    {
+      img: 'assets/img/gallery/weeklyNews2.png',
+      title: 'Scarlett’s disappointment at latest accolade',
+      author: 'Jhon',
+      time: '2 hours ago',
+    },
+  ];
+
+  //PARTE 4
+   sectionTitle = 'Trending News';
+
+  articles2 = [
+    {
+      img: 'assets/img/gallery/tranding1.png',
+      title: 'What to Expect From the 2020 Oscar Nominations',
+      date: 'Jun 19, 2020',
+      video: 'https://www.youtube.com/watch?v=1aP-TXUpNoU',
+      link: 'latest_news.html'
+    },
+    {
+      img: 'assets/img/gallery/tranding2.png',
+      title: 'What to Expect From the 2020 Oscar Nominations',
+      date: 'Jun 19, 2020',
+      video: 'https://www.youtube.com/watch?v=1aP-TXUpNoU',
+      link: 'latest_news.html'
+    },
+    {
+      img: 'assets/img/gallery/tranding1.png',
+      title: 'What to Expect From the 2020 Oscar Nominations',
+      date: 'Jun 19, 2020',
+      video: 'https://www.youtube.com/watch?v=1aP-TXUpNoU',
+      link: 'latest_news.html'
+    },
+    {
+      img: 'assets/img/gallery/tranding2.png',
+      title: 'What to Expect From the 2020 Oscar Nominations',
+      date: 'Jun 19, 2020',
+      video: 'https://www.youtube.com/watch?v=1aP-TXUpNoU',
+      link: 'latest_news.html'
     }
   ];
-
-  items = [
-    {
-      imgSrc: 'assets/img/gallery/whats_right_img1.png',
-      altText: 'Imagem 1',
-      label: 'FASHION',
-      labelClass: 'colorb',
-      title: 'Portrait of group of friends ting eat. market in.',
-      link: '/latest-news',
-      date: 'Jun 19, 2020',
-    },
-    {
-      imgSrc: 'assets/img/gallery/whats_right_img2.png',
-      altText: 'Imagem 2',
-      label: 'FASHION',
-      labelClass: 'colorb',
-      title: 'Portrait of group of friends ting eat. market in.',
-      link: '/latest-news',
-      date: 'Jun 19, 2020',
-    },
-    {
-      imgSrc: 'assets/img/gallery/whats_right_img3.png',
-      altText: 'Imagem 3',
-      label: 'FASHION',
-      labelClass: 'colorg',
-      title: 'Portrait of group of friends ting eat. market in.',
-      link: '/latest-news',
-      date: 'Jun 19, 2020',
-    },
-    {
-      imgSrc: 'assets/img/gallery/whats_right_img4.png',
-      altText: 'Imagem 4',
-      label: 'FASHION',
-      labelClass: 'colorr',
-      title: 'Portrait of group of friends ting eat. market in.',
-      link: '/latest-news',
-      date: 'Jun 19, 2020',
-    },
-  ];
-
-
 }

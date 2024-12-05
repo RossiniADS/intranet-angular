@@ -1,88 +1,93 @@
 <header>
+  <!-- Header Start -->
   <div class="header-area">
-    <!-- Header Top -->
-    <div class="header-top bg-dark text-white d-none d-sm-block">
-      <div class="container">
-        <div class="row justify-content-between align-items-center">
-          <div class="col-auto">
-            <ul class="list-inline mb-0">
-              <li class="list-inline-item">
-                <span class="flaticon-energy"></span> trending-title
-              </li>
-              <li class="list-inline-item">Class property employ ancho red multi level mansion</li>
-            </ul>
-          </div>
-          <div class="col-auto">
-            <ul class="list-inline mb-0">
-              <li class="list-inline-item">
-                <span class="flaticon-calendar"></span> +880166 253 232
-              </li>
-            </ul>
+    <div class="main-header">
+      <div class="header-top black-bg d-none d-sm-block">
+        <div class="container">
+          <div class="row d-flex justify-content-between align-items-center">
+            <div class="header-info-left">
+              <ul class="list-unstyled mb-0">
+                <li class="title"><span class="flaticon-energy"></span> trending-title</li>
+                <li>Class property employ ancho red multi level mansion</li>
+              </ul>
+            </div>
+            <div class="header-info-right">
+              <ul class="header-date list-unstyled mb-0">
+                <li><span class="flaticon-calendar"></span> +880166 253 232</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <!-- Header Middle -->
-    <div class="header-mid bg-light py-3">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-md-3 d-none d-md-block">
-            <a class="navbar-brand" href="index.html">
-              <img src="assets/img/logo/logo.png" alt="Logo">
-            </a>
-          </div>
-          <div class="col-md-9 text-end">
-            <img src="assets/img/gallery/header_card.png" alt="Header Banner" class="img-fluid">
+      <div class="header-mid gray-bg">
+        <div class="container">
+          <div class="row align-items-center">
+            <!-- Logo -->
+            <div class="col-xl-3 col-lg-3 col-md-3 d-none d-md-block">
+              <div class="logo">
+                <a routerLink="/"><img src="assets/img/logo/logo.png" alt="Logo"></a>
+              </div>
+            </div>
+            <div class="col-xl-9 col-lg-9 col-md-9">
+              <div class="header-banner float-end">
+                <img src="assets/img/gallery/header_card.png" alt="Header Card">
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <!-- Header Bottom -->
-    <div class="header-bottom sticky-top bg-white">
-      <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light">
-          <a class="navbar-brand d-lg-none" href="index.html">
-            <img src="assets/img/logo/logo.png" alt="Sticky Logo">
-          </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                  aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item"><a class="nav-link" routerLink="/home">Home</a></li>
-              <li class="nav-item"><a class="nav-link" routerLink="/about">About</a></li>
-              <li class="nav-item"><a class="nav-link" routerLink="/category">Category</a></li>
-              <li class="nav-item"><a class="nav-link" routerLink="/latest-news">Latest News</a></li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                   aria-expanded="false">Pages</a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" routerLink="/blog">Blog</a></li>
-                  <li><a class="dropdown-item" routerLink="/blog-details">Blog Details</a></li>
-                  <li><a class="dropdown-item" routerLink="/elements">Element</a></li>
+      <div class="header-bottom sticky-top">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-xl-8 col-lg-8 col-md-12 d-flex align-items-center">
+              <!-- Sticky Logo -->
+              <div class="sticky-logo me-3">
+                <a routerLink="/"><img src="assets/img/logo/logo.png" alt="Sticky Logo"></a>
+              </div>
+              <!-- Main Menu -->
+              <div class="main-menu d-none d-md-block">
+                <nav>
+                  <ul id="navigation" class="list-unstyled d-flex mb-0">
+                    <li><a routerLink="/">Home</a></li>
+                    <li><a routerLink="/about">About</a></li>
+                    <li><a routerLink="/category">Category</a></li>
+                    <li><a routerLink="/latest-news">Latest News</a></li>
+                    <li>
+                      <a href="#">Pages</a>
+                      <ul class="submenu list-unstyled">
+                        <li><a routerLink="/blog">Blog</a></li>
+                        <li><a routerLink="/blog-details">Blog Details</a></li>
+                        <li><a routerLink="/elements">Element</a></li>
+                      </ul>
+                    </li>
+                    <li><a routerLink="/contact">Contact</a></li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4">
+              <div class="header-right float-end d-none d-lg-block">
+                <!-- Header Social -->
+                <ul class="header-social list-unstyled d-flex mb-0">
+                  <li><a href="https://www.fb.com/sai4ull"><i class="fab fa-facebook-f"></i></a></li>
+                  <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                  <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                  <li><a href="#"><i class="fab fa-youtube"></i></a></li>
                 </ul>
-              </li>
-              <li class="nav-item"><a class="nav-link" routerLink="/contact">Contact</a></li>
-            </ul>
-            <ul class="navbar-nav ms-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="https://www.fb.com/sai4ull">
-                  <i class="fab fa-facebook-f"></i>
-                </a>
-              </li>
-              <li class="nav-item"><a class="nav-link" href="#"><i class="fab fa-twitter"></i></a></li>
-              <li class="nav-item"><a class="nav-link" href="#"><i class="fab fa-instagram"></i></a></li>
-              <li class="nav-item"><a class="nav-link" href="#"><i class="fab fa-youtube"></i></a></li>
-              <li class="nav-item">
-                <button class="btn btn-outline-secondary" (click)="toggleSearch()">
+                <!-- Search Nav -->
+                <div class="nav-search search-switch">
                   <i class="fa fa-search"></i>
-                </button>
-              </li>
-            </ul>
+                </div>
+              </div>
+            </div>
+            <!-- Mobile Menu -->
+            <div class="col-12">
+              <div class="mobile_menu d-md-none"></div>
+            </div>
           </div>
-        </nav>
+        </div>
       </div>
     </div>
   </div>
+  <!-- Header End -->
 </header>
