@@ -1,1 +1,126 @@
-<p>category works!</p>
+<div class="about-area2 gray-bg pt-60 pb-60">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="whats-news-wrapper">
+          <div class="row justify-content-between align-items-end mb-15">
+            <div class="col-xl-4">
+              <div class="section-tittle mb-30">
+                <h3>{{ aboutArea.title }}</h3>
+              </div>
+            </div>
+            <div class="col-xl-8 col-md-9">
+              <div class="properties__button">
+                <nav>
+                  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <a *ngFor="let tab of aboutArea.tabs"
+                       class="nav-item nav-link"
+                       [class.active]="tab.active"
+                       id="{{ tab.id }}-tab"
+                       data-bs-toggle="tab"
+                       href="#{{ tab.id }}"
+                       role="tab"
+                       [attr.aria-controls]="tab.id"
+                       [attr.aria-selected]="tab.active">
+                      {{ tab.label }}
+                    </a>
+                  </div>
+                </nav>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="tab-content" id="nav-tabContent">
+                <div *ngFor="let tab of aboutArea.tabs"
+                     class="tab-pane fade"
+                     [class.show.active]="tab.active"
+                     id="{{ tab.id }}"
+                     role="tabpanel"
+                     [attr.aria-labelledby]="tab.id + '-tab'">
+                  <div class="row">
+                    <div *ngFor="let article of aboutArea.articles"
+                         class="col-xl-6 col-lg-6 col-md-6">
+                      <div class="whats-news-single mb-40 mb-40">
+                        <div class="whates-img">
+                          <img [src]="article.imageSrc" alt="">
+                        </div>
+                        <div class="whates-caption whates-caption2">
+                          <h4><a href="#">{{ article.title }}</a></h4>
+                          <span>by {{ article.author }} - {{ article.date }}</span>
+                          <p>{{ article.description }}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="single-follow mb-45">
+          <div class="single-box">
+            <div *ngFor="let follower of aboutArea.followers"
+                 class="follow-us d-flex align-items-center">
+              <div class="follow-social">
+                <a href="#"><img [src]="follower.icon" alt=""></a>
+              </div>
+              <div class="follow-count">
+                <span>{{ follower.count }}</span>
+                <p>Fans</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="news-poster d-none d-lg-block">
+          <img [src]="aboutArea.posterImage" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="pagination-area gray-bg pb-45">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="single-wrap">
+          <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-start">
+              <!-- Botão Anterior -->
+              <li class="page-item"
+                  [class.disabled]="aboutArea.pagination.activePage === 1">
+                <a class="page-link" href="#"
+                   (click)="changePage(aboutArea.pagination.activePage - 1)">
+                  &laquo;
+                </a>
+              </li>
+
+              <!-- Páginas -->
+              <li class="page-item"
+                  *ngFor="let page of aboutArea.pagination.pages; let i = index">
+                <a class="page-link"
+                   [class.active]="aboutArea.pagination.activePage === i + 1"
+                   href="#"
+                   (click)="changePage(i + 1)">
+                  {{ page }}
+                </a>
+              </li>
+
+              <!-- Botão Próximo -->
+              <li class="page-item"
+                  [class.disabled]="aboutArea.pagination.activePage === aboutArea.pagination.pages.length">
+                <a class="page-link" href="#"
+                   (click)="changePage(aboutArea.pagination.activePage + 1)">
+                  &raquo;
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
