@@ -30,7 +30,7 @@ export class HeaderComponent {
       submenu: [
         { label: 'Blog', link: '/blog' },
         { label: 'Blog Details', link: '/blog-details' },
-        { label: 'Element', link: '/elements' }
+        { label: 'Element', link: '/element' }
       ]
     },
     { label: 'Contact', link: '/contact' }
