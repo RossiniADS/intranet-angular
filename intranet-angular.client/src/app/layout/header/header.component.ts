@@ -20,20 +20,20 @@ export class HeaderComponent {
   headerBannerAlt = 'Header Banner';
 
   menuItems = [
-    { label: 'Home', link: 'index.html' },
-    { label: 'About', link: 'about.html' },
-    { label: 'Category', link: 'categori.html' },
-    { label: 'Latest News', link: 'latest_news.html' },
+    { label: 'Home', link: '' },
+    { label: 'About', link: '/about' },
+    { label: 'Category', link: '/category' },
+    { label: 'Latest News', link: '/latest-news' },
     {
       label: 'Pages',
       link: '#',
       submenu: [
-        { label: 'Blog', link: 'blog.html' },
-        { label: 'Blog Details', link: 'blog_details.html' },
-        { label: 'Element', link: 'elements.html' }
+        { label: 'Blog', link: '/blog' },
+        { label: 'Blog Details', link: '/blog-details' },
+        { label: 'Element', link: '/elements' }
       ]
     },
-    { label: 'Contact', link: 'contact.html' }
+    { label: 'Contact', link: '/contact' }
   ];
 
   socialLinks = [

@@ -11,6 +11,13 @@ import { FooterComponent } from './layout/footer/footer.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AboutComponent } from './pages/about/about.component';
+import { CategoryComponent } from './pages/category/category.component';
+import { LatestNewsComponent } from './pages/latest-news/latest-news.component';
+import { ContactComponent } from './pages/contact/contact.component';
+import { BlogComponent } from './pages/blog/blog.component';
+import { BlogDetailsComponent } from './pages/blog-details/blog-details.component';
+import { ElementComponent } from './pages/element/element.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +26,13 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     PreloaderComponent,
     HeaderComponent,
     FooterComponent,
+    AboutComponent,
+    CategoryComponent,
+    LatestNewsComponent,
+    ContactComponent,
+    BlogComponent,
+    BlogDetailsComponent,
+    ElementComponent,
   ],
   imports: [
     BrowserModule,

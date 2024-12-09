@@ -55,10 +55,10 @@
                 <nav>
                   <ul id="navigation">
                     <li *ngFor="let menuItem of menuItems">
-                      <a [href]="menuItem.link">{{ menuItem.label }}</a>
+                      <a [routerLink]="menuItem.link">{{ menuItem.label }}</a>
                       <ul class="submenu" *ngIf="menuItem.submenu">
                         <li *ngFor="let subItem of menuItem.submenu">
-                          <a [href]="subItem.link">{{ subItem.label }}</a>
+                          <a [routerLink]="subItem.link">{{ subItem.label }}</a>
                         </li>
                       </ul>
                     </li>
