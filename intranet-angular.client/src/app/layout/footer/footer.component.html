@@ -1,36 +1,34 @@
 <footer>
-  <!-- Footer Start -->
+  <!-- Footer Start-->
   <div class="footer-main footer-bg">
     <div class="footer-area footer-padding">
       <div class="container">
-        <div class="row justify-content-between">
-          <!-- Logo Section -->
+        <div class="row d-flex justify-content-between">
           <div class="col-xl-3 col-lg-3 col-md-5 col-sm-8">
             <div class="single-footer-caption mb-50">
               <div class="single-footer-caption mb-30">
+                <!-- logo -->
                 <div class="footer-logo">
-                  <a routerLink="/"><img [src]="footerData.logoSrc" alt="Logo"></a>
+                  <a href="index.html"><img [src]="footerData.logoSrc" [alt]="footerData.logoAlt"></a>
                 </div>
                 <div class="footer-tittle">
                   <div class="footer-pera">
-                    <p class="info1">{{ footerData.info.description }}</p>
-                    <p class="info2">{{ footerData.info.address }}</p>
-                    <p class="info2">{{ footerData.info.phone }}</p>
+                    <p class="info1">{{ footerData.description }}</p>
+                    <p class="info2">{{ footerData.address }}</p>
+                    <p class="info2">{{ footerData.contact }}</p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
-          <!-- Popular Posts Section -->
           <div class="col-xl-4 col-lg-4 col-md-5 col-sm-7">
             <div class="single-footer-caption mb-50">
               <div class="footer-tittle">
-                <h4>Popular post</h4>
+                <h4>{{ footerData.popularPostTitle }}</h4>
               </div>
-              <div *ngFor="let post of footerData.posts" class="whats-right-single mb-20">
+              <div *ngFor="let post of footerData.popularPosts" class="whats-right-single mb-20">
                 <div class="whats-right-img">
-                  <img [src]="post.imgSrc" alt="Post Image">
+                  <img [src]="post.imgSrc" [alt]="post.imgAlt">
                 </div>
                 <div class="whats-right-cap">
                   <h4><a [href]="post.link">{{ post.title }}</a></h4>
@@ -39,30 +37,26 @@
               </div>
             </div>
           </div>
-
-          <!-- Banner Section -->
           <div class="col-xl-3 col-lg-3 col-md-5 col-sm-7">
             <div class="single-footer-caption mb-50">
               <div class="banner">
-                <img [src]="footerData.bannerImgSrc" alt="Banner Image">
+                <img [src]="footerData.bannerSrc" [alt]="footerData.bannerAlt">
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- Footer Bottom Area -->
+    <!-- footer-bottom aera -->
     <div class="footer-bottom-area footer-bg">
       <div class="container">
         <div class="footer-border">
-          <div class="row align-items-center">
-            <div class="col-xl-12">
+          <div class="row d-flex align-items-center">
+            <div class="col-xl-12 ">
               <div class="footer-copy-right text-center">
                 <p>
-                  &copy; {{ currentYear }} {{ footerData.copyright.text }}
-                  <i class="fa fa-heart" aria-hidden="true"></i>
-                  <a [href]="footerData.copyright.link" target="_blank">{{ footerData.copyright.linkText }}</a>
+                  Copyright &copy;
+                  <script>document.write(new Date().getFullYear());</script> All rights reserved | {{ footerData.footerNote }}
                 </p>
               </div>
             </div>
@@ -71,5 +65,5 @@
       </div>
     </div>
   </div>
-  <!-- Footer End -->
+  <!-- Footer End-->
 </footer>
