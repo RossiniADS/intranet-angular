@@ -10,6 +10,40 @@ import { faPlay } from '@fortawesome/free-solid-svg-icons';
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements AfterViewInit, OnInit {
+
+  slides = [
+    {
+      type: 'image',
+      src: 'https://via.placeholder.com/600x400',
+      title: 'Imagem 1',
+      description: 'Descrição para a imagem 1.',
+    },
+    {
+      type: 'video',
+      src: 'https://www.w3schools.com/html/mov_bbb.mp4',
+      title: 'Vídeo 1',
+      description: 'Descrição para o vídeo 1.',
+    },
+    {
+      type: 'image',
+      src: 'https://via.placeholder.com/600x400?text=Slide+2',
+      title: 'Imagem 2',
+      description: 'Descrição para a imagem 2.',
+    },
+  ];
+
+  currentIndex = 0;
+
+  prevSlide() {
+    this.currentIndex = (this.currentIndex - 1 + this.slides.length) % this.slides.length;
+  }
+
+  nextSlide() {
+    this.currentIndex = (this.currentIndex + 1) % this.slides.length;
+  }
+
+
+
   faPlay = faPlay;
 
   ngOnInit() {

@@ -4,7 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-contact',
   standalone: false,
-  
+
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.css'
 })
@@ -30,8 +30,8 @@ export class ContactComponent {
 
   constructor(public sanitizer: DomSanitizer) {
     // Coordenadas da localização (latitude e longitude)
-    const latitude = -25.363;
-    const longitude = 131.044;
+    const latitude = -22.734428;
+    const longitude = -45.120099;
 
     // URL para exibir o mapa com as coordenadas
     this.mapUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${longitude - 0.002}%2C${latitude - 0.002}%2C${longitude + 0.002}%2C${latitude + 0.002}&layer=mapnik&marker=${latitude}%2C${longitude}`;
