@@ -7,6 +7,7 @@ import { BlogComponent } from './pages/blog/blog.component';
 import { CategoryComponent } from './pages/category/category.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { ElementComponent } from './pages/element/element.component';
+import { LatestNewsComponent } from './pages/latest-news/latest-news.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -16,7 +17,7 @@ const routes: Routes = [
   { path: 'category', component: CategoryComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'element', component: ElementComponent },
-  { path: 'latest-news', component: BlogComponent },
+  { path: 'latest-news', component: LatestNewsComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
 
