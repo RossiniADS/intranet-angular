@@ -1,1 +1,227 @@
-<p>blog-details works!</p>
+<!--================Blog Area =================-->
+<section [class]="blogData.blogArea.sectionClass">
+  <div [class]="blogData.blogArea.containerClass">
+    <div [class]="blogData.blogArea.rowClass">
+      <!-- Post Details -->
+      <div [class]="blogData.postDetails.mainColumnClass">
+        <div class="single-post">
+          <div class="feature-img">
+            <img [src]="blogData.postDetails.post.featureImg" alt="Blog Image" />
+          </div>
+          <div class="blog_details">
+            <h2>{{ blogData.postDetails.post.title }}</h2>
+            <ul class="blog-info-link mt-3 mb-4">
+              <li *ngFor="let category of blogData.postDetails.post.categories">
+                <a href="#"><i class="fa fa-user"></i> {{ category }}</a>
+              </li>
+              <li>
+                <a href="#"><i class="fa fa-comments"></i> {{ blogData.postDetails.post.commentsCount }} Comments</a>
+              </li>
+            </ul>
+            <p class="excert" *ngFor="let excerpt of blogData.postDetails.post.excerpts">{{ excerpt }}</p>
+            <div class="quote-wrapper">
+              <div class="quotes">{{ blogData.postDetails.post.quote }}</div>
+            </div>
+            <p class="excert" *ngFor="let excerpt of blogData.postDetails.post.excerpts">{{ excerpt }}</p>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation-top">
+          <div class="d-sm-flex justify-content-between text-center">
+            <p class="like-info">{{ blogData.postDetails.navigation.likesInfo }}</p>
+            <ul class="social-icons">
+              <li *ngFor="let icon of blogData.postDetails.navigation.socialIcons">
+                <a href="#"><i [class]="icon"></i></a>
+              </li>
+            </ul>
+          </div>
+          <div class="navigation-area">
+            <div class="row">
+              <!-- Previous Post -->
+              <div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
+                <div class="thumb">
+                  <a href="#">
+                    <img [src]="blogData.postDetails.navigation.prevPost.thumb" alt="Previous Post" />
+                  </a>
+                </div>
+                <div class="arrow">
+                  <a href="#">
+                    <span class="lnr text-white ti-arrow-left"></span>
+                  </a>
+                </div>
+                <div class="detials">
+                  <p>Previous Post</p>
+                  <a href="#">
+                    <h4>{{ blogData.postDetails.navigation.prevPost.title }}</h4>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Next Post -->
+              <div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
+                <div class="detials">
+                  <p>Next Post</p>
+                  <a href="#">
+                    <h4>{{ blogData.postDetails.navigation.nextPost.title }}</h4>
+                  </a>
+                </div>
+                <div class="arrow">
+                  <a href="#">
+                    <span class="lnr text-white ti-arrow-right"></span>
+                  </a>
+                </div>
+                <div class="thumb">
+                  <a href="#">
+                    <img [src]="blogData.postDetails.navigation.nextPost.thumb" alt="Next Post" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Author -->
+        <div class="blog-author">
+          <div class="media align-items-center">
+            <img [src]="blogData.postDetails.author.image" alt="Author Image" />
+            <div class="media-body">
+              <a href="#">
+                <h4>{{ blogData.postDetails.author.name }}</h4>
+              </a>
+              <p>{{ blogData.postDetails.author.description }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Comments -->
+        <div class="comments-area">
+          <h4>Comments</h4>
+          <div class="comment-list" *ngFor="let comment of blogData.postDetails.comments">
+            <div class="single-comment justify-content-between d-flex">
+              <div class="user justify-content-between d-flex">
+                <div class="thumb">
+                  <img [src]="comment.thumb" alt="Commenter Image" />
+                </div>
+                <div class="desc">
+                  <p class="comment">{{ comment.text }}</p>
+                  <div class="d-flex justify-content-between">
+                    <div class="d-flex align-items-center">
+                      <h5>
+                        <a href="#">{{ comment.author }}</a>
+                      </h5>
+                      <p class="date">{{ comment.date }}</p>
+                    </div>
+                    <div class="reply-btn">
+                      <a href="#" class="btn-reply text-uppercase">Reply</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Comment Form -->
+        <div class="comment-form">
+          <h4>Leave a Comment</h4>
+          <form action="#">
+            <div class="row">
+              <div class="col-12" *ngFor="let field of blogData.postDetails.commentForm.fields">
+                <div class="form-group">
+                  <input *ngIf="field.type !== 'textarea'" [type]="field.type" [placeholder]="field.placeholder" class="form-control" />
+                  <textarea *ngIf="field.type === 'textarea'" placeholder="{{ field.placeholder }}" class="form-control w-100"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="button btn_1 boxed-btn">{{ blogData.postDetails.commentForm.submitButton }}</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="col-lg-4">
+        <div class="blog_right_sidebar">
+          <aside class="single_sidebar_widget search_widget">
+            <form action="#">
+              <div class="form-group">
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" [placeholder]="blogData.sidebar.search.placeholder" />
+                  <div class="input-group-append">
+                    <button class="btns" type="button">
+                      <i [class]="blogData.sidebar.search.buttonIcon"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn" type="submit">Search</button>
+            </form>
+          </aside>
+
+          <!-- Categories -->
+          <aside class="single_sidebar_widget post_category_widget">
+            <h4 class="widget_title">Categories</h4>
+            <ul class="list cat-list">
+              <li *ngFor="let category of blogData.sidebar.categories">
+                <a href="#" class="d-flex">
+                  <p>{{ category.name }}</p>
+                  <p>({{ category.count }})</p>
+                </a>
+              </li>
+            </ul>
+          </aside>
+
+          <!-- Recent Posts -->
+          <aside class="single_sidebar_widget popular_post_widget">
+            <h3 class="widget_title">Recent Posts</h3>
+            <div class="media post_item" *ngFor="let post of blogData.sidebar.recentPosts">
+              <img [src]="post.image" alt="Recent Post Image" />
+              <div class="media-body">
+                <a href="#">
+                  <h3>{{ post.title }}</h3>
+                </a>
+                <p>{{ post.date }}</p>
+              </div>
+            </div>
+          </aside>
+
+          <!-- Tag Clouds -->
+          <aside class="single_sidebar_widget tag_cloud_widget">
+            <h4 class="widget_title">Tag Clouds</h4>
+            <ul class="list">
+              <li *ngFor="let tag of blogData.sidebar.tagClouds">
+                <a href="#">{{ tag }}</a>
+              </li>
+            </ul>
+          </aside>
+
+          <!-- Instagram Feeds -->
+          <aside class="single_sidebar_widget instagram_feeds">
+            <h4 class="widget_title">Instagram Feeds</h4>
+            <ul class="instagram_row flex-wrap">
+              <li *ngFor="let img of blogData.sidebar.instagramFeeds">
+                <a href="#">
+                  <img [src]="img" alt="Instagram Feed" class="img-fluid" />
+                </a>
+              </li>
+            </ul>
+          </aside>
+
+          <!-- Newsletter -->
+          <aside class="single_sidebar_widget newsletter_widget">
+            <h4 class="widget_title">Newsletter</h4>
+            <form action="#">
+              <div class="form-group">
+                <input type="email" class="form-control" [placeholder]="blogData.sidebar.newsletter.placeholder" required />
+              </div>
+              <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn" type="submit">{{ blogData.sidebar.newsletter.button }}</button>
+            </form>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--================Blog Area =================-->
