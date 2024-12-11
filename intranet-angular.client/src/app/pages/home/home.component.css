@@ -1,3 +1,4 @@
+/* Container geral do carrossel */
 .carousel-container {
   display: flex;
   flex-direction: column;
@@ -6,59 +7,201 @@
   max-width: 100%;
   margin: auto;
   overflow: hidden;
-  height: 400px; /* Altura fixa para o carrossel */
+  height: 550px;
+  background: #f9f9f9;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Cabeçalho acima do slide */
+.carousel-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  background: transparent; /* Removido o fundo branco */
+  border-bottom: 1px solid #ddd;
+  z-index: 10; /* Certifique-se de que o cabeçalho está acima do slide */
+  position: relative;
+}
+
+/* Corpo do carrossel */
 .carousel-slide {
   flex-direction: row;
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 60px); /* Subtraindo a altura do cabeçalho */
   position: absolute;
+  top: 60px; /* Altura do cabeçalho */
   opacity: 0;
-  display: none; /* Esconde os slides inativos */
+  display: none;
   transition: opacity 0.5s ease-in-out;
 }
 
   .carousel-slide.active {
-    display: flex; /* Mostra apenas o slide ativo */
+    display: flex;
     opacity: 1;
-    position: relative;
   }
 
 .carousel-half {
   flex: 1;
   padding: 20px;
-  text-align: center;
   display: flex;
-  flex-direction: column; /* Alinha os elementos em coluna */
-  align-items: center; /* Centraliza horizontalmente */
-  justify-content: center; /* Centraliza verticalmente */
-  overflow: hidden;
+  flex-direction: column;
+  justify-content: center;
   height: 100%;
 }
-  .carousel-half h2 {
-    margin-bottom: 10px; /* Adiciona espaço entre o título e o parágrafo */
-    font-size: 1.5rem; /* Ajusta o tamanho do título */
-  }
 
-  .carousel-half p {
-    font-size: 1rem; /* Ajusta o tamanho do parágrafo */
-    line-height: 1.5; /* Adiciona espaçamento entre as linhas */
-    text-align: justify; /* Opcional: Alinha o texto de forma justificada */
-  }
+/* Metade esquerda: Mídia */
+.media-section img,
+.media-section video {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+}
 
-  .carousel-half img,
-  .carousel-half video {
-    max-width: 100%;
-    border-radius: 10px;
+.video-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+  .video-container video {
     width: 100%;
-    height: 100%;
-    object-fit: cover; /* Ajusta o conteúdo para cobrir o espaço disponível */
     border-radius: 10px;
   }
 
+  .video-container .play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-photo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+/* Garantir que as imagens sejam perfeitamente redondas */
+.user-photo, .profile-photo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover; /* Garantir que a imagem se ajuste corretamente */
+  margin-right: 15px;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0;
+  color: #333;
+}
+
+.user-time {
+  font-size: 0.9rem;
+  margin: 0;
+  color: #666;
+}
+
+.user-icons {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 5px;
+}
+
+/* Metade direita: Texto e perfil */
+.text-section {
+  text-align: left;
+  padding: 20px;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profile-photo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.profile-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-name {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0;
+  color: #333;
+}
+
+.profile-time {
+  font-size: 0.85rem;
+  margin: 0;
+  color: #666;
+}
+
+.text-section h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.text-section p {
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.cta-button {
+  background: #007b5e;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+  .cta-button:hover {
+    background: #005a43;
+  }
+
+/* Controles do carrossel */
 .carousel-controls {
   position: absolute;
   top: 50%;
@@ -75,8 +218,47 @@
     padding: 10px;
     cursor: pointer;
     border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    transition: background 0.3s ease;
   }
 
     .carousel-controls button:hover {
       background: rgba(0, 0, 0, 0.8);
     }
+
+.control-left {
+  position: absolute;
+  left: 20px;
+}
+
+.control-right {
+  position: absolute;
+  right: 20px;
+}
+
+@media (max-width: 768px) {
+  .carousel-container {
+    height: 750px;
+  }
+
+  .carousel-slide {
+    flex-direction: column;
+  }
+
+  .text-section {
+    text-align: center;
+  }
+
+  .control-left,
+  .control-right {
+    font-size: 1rem;
+  }
+
+  .cta-button {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
+}

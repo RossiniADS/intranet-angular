@@ -4,30 +4,62 @@
     <div class="trending-main">
       <div class="row">
 
+        <div class="col-lg-12">
 
-
-        <div class="col-lg-12 carousel-container">
-          <div *ngFor="let slide of slides; let i = index" class="carousel-slide" [class.active]="i === currentIndex">
-            <div class="carousel-half">
-              <img *ngIf="slide.type === 'image'" [src]="slide.src" alt="Slide Image" />
-              <video *ngIf="slide.type === 'video'" [src]="slide.src" controls>
-                Seu navegador não suporta vídeos.
-              </video>
+          <div class="carousel-container">
+            <!-- Cabeçalho sobre o slide -->
+            <div class="carousel-header">
+              <div class="user-info">
+                <img src="../../../assets/img/team/2.png" alt="User Photo" class="user-photo" />
+                <div class="user-details">
+                  <h3 class="user-name">Good morning, Jennifer</h3>
+                  <p class="user-time">09:30 AM Wednesday, June 22, 2021</p>
+                  <div class="user-icons">
+                    <span>Payslips</span> | <span>Annual Leave</span> | <span>IT Global Service Desk</span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="carousel-half">
-              <h2>{{ slide.title }}</h2>
-              <p>{{ slide.description }}</p>
+
+            <!-- Corpo do carrossel -->
+            <div *ngFor="let slide of slides; let i = index"
+                 class="carousel-slide"
+                 [class.active]="i === currentIndex">
+              <!-- Metade esquerda: Imagem ou vídeo -->
+              <div class="carousel-half media-section">
+                <img *ngIf="slide.type === 'image'" [src]="slide.src" alt="Slide Image" />
+                <div class="video-container" *ngIf="slide.type === 'video'">
+                  <video [src]="slide.src" controls></video>
+                  <div class="play-button">&#9658;</div>
+                </div>
+              </div>
+
+              <!-- Metade direita: Título, descrição e detalhes -->
+              <div class="carousel-half text-section">
+                <div class="user-profile">
+                  <img src="../../../assets/img/team/2.png" alt="Profile Photo" class="profile-photo" />
+                  <div class="profile-details">
+                    <h4 class="profile-name">Christine Holgate</h4>
+                    <p class="profile-time">1 day ago</p>
+                  </div>
+                </div>
+                <h2>{{ slide.title }}</h2>
+                <p>{{ slide.description }}</p>
+                <button class="cta-button">Learn More</button>
+              </div>
+            </div>
+
+            <!-- Controles do carrossel -->
+            <div class="carousel-controls">
+              <button (click)="prevSlide()" class="control-left">&#10094;</button>
+              <button (click)="nextSlide()" class="control-right">&#10095;</button>
             </div>
           </div>
-          <div class="carousel-controls">
-            <button (click)="prevSlide()">&#10094;</button>
-            <button (click)="nextSlide()">&#10095;</button>
-          </div>
+
+
         </div>
 
-
-
-        <div class="col-lg-8">
+        <div class="col-lg-8 pt-50">
           <!-- Swiper -->
           <div class="swiper mySwiper">
             <div class="swiper-wrapper">
@@ -48,12 +80,12 @@
             </div>
             <!-- Botões de Navegação -->
             <!--<div class="swiper-button-next"></div>
-      <div class="swiper-button-prev"></div>-->
+            <div class="swiper-button-prev"></div>-->
             <!-- Paginação -->
             <!--<div class="swiper-pagination"></div>-->
           </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-4 pt-50">
           <div class="row">
             <div class="col-lg-12 col-md-6 col-sm-6"
                  *ngFor="let card of trendingCards">
