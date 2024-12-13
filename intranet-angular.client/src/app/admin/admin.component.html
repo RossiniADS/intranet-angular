@@ -1,10 +1,10 @@
-<div class="admin-layout">
+<div class="d-flex flex-column min-vh-100">
   <app-admin-header></app-admin-header>
-  <div class="admin-content">
+  <div class="d-flex flex-grow-1">
     <app-admin-sidebar></app-admin-sidebar>
-    <main class="admin-main">
-      <router-outlet></router-outlet>
+    <main style="margin-top: 58px; flex-grow: 1;">
+      <router-outlet class="container pt-4"></router-outlet>
     </main>
   </div>
-  <app-admin-footer></app-admin-footer>
+  <app-admin-footer class="admin-footer"></app-admin-footer>
 </div>
