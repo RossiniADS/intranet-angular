@@ -18,7 +18,8 @@ const routes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'element', component: ElementComponent },
   { path: 'latest-news', component: LatestNewsComponent },
-  { path: '**', redirectTo: '', pathMatch: 'full' }
+  { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
 @NgModule({

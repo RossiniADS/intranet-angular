@@ -1,0 +1,38 @@
+.admin-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.admin-header {
+  flex: 0 0 auto;
+}
+
+.admin-content {
+  display: flex;
+  flex: 1 1 auto;
+}
+
+.admin-sidebar {
+  flex: 0 0 250px;
+  border-right: 1px solid #ddd;
+}
+
+.admin-main {
+  flex: 1 1 auto;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.admin-footer {
+  flex: 0 0 auto;
+  text-align: center;
+  background-color: #f8f9fa;
+  padding: 1rem;
+}
+
+@media (max-width: 768px) {
+  .admin-sidebar {
+    display: none;
+  }
+}

@@ -43,21 +43,20 @@
               }
             ],
             "styles": [
-              "src/custom-theme.scss",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/swiper/swiper-bundle.min.css",
               "node_modules/swiper/swiper-bundle.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "src/assets/css/main.css",
               "src/assets/css/style.css",
               "src/assets/css/responsive.css",
-              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
-              "src/styles.css"
+              "src/styles.css",
+              "src/custom-theme.scss"
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
               "node_modules/swiper/swiper-bundle.min.js",
-              "node_modules/swiper/swiper-element-bundle.min.js",
-              "src/assets/js/main.js"
+              "node_modules/swiper/swiper-element-bundle.min.js"
             ]
           },
           "configurations": {
