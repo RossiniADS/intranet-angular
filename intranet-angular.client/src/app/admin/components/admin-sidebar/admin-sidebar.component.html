@@ -1,45 +1,45 @@
-  <!-- Sidebar -->
-<nav id="sidebarMenu"
-     class="collapse d-lg-block sidebar collapse bg-white">
+<!-- Sidebar -->
+<nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
   <div class="position-sticky">
     <div class="list-group list-group-flush mx-3 mt-4">
+      <!-- Dashboard -->
       <a href="#"
          class="list-group-item list-group-item-action py-2 ripple"
          aria-current="true">
-        <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Main dashboard</span>
+        <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Main Dashboard</span>
       </a>
-      <a href="#"
-         class="list-group-item list-group-item-action py-2 ripple active">
-        <i class="fas fa-chart-area fa-fw me-3"></i><span>Webiste traffic</span>
+
+      <!-- Dropdown Pages -->
+      <a class="list-group-item list-group-item-action py-2 ripple d-flex justify-content-between align-items-center"
+         data-bs-toggle="collapse" href="#pagesMenu" role="button" aria-expanded="false" aria-controls="pagesMenu">
+        <span>
+          <i class="fas fa-folder fa-fw me-3"></i>Pages
+        </span>
+        <i class="fas fa-chevron-down"></i>
       </a>
-      <a href="#"
-         class="list-group-item list-group-item-action py-2 ripple"><i class="fas fa-lock fa-fw me-3"></i><span>Password</span></a>
+      <div class="collapse ms-3" id="pagesMenu">
+        <a href="#" class="list-group-item list-group-item-action py-2 ripple">
+          <i class="fas fa-home fa-fw me-3"></i>Home
+        </a>
+        <a href="#" class="list-group-item list-group-item-action py-2 ripple">
+          <i class="fas fa-info-circle fa-fw me-3"></i>About
+        </a>
+        <a href="#" class="list-group-item list-group-item-action py-2 ripple">
+          <i class="fas fa-list fa-fw me-3"></i>Category
+        </a>
+        <a href="#" class="list-group-item list-group-item-action py-2 ripple">
+          <i class="fas fa-newspaper fa-fw me-3"></i>Latest News
+        </a>
+        <a href="#" class="list-group-item list-group-item-action py-2 ripple">
+          <i class="fas fa-envelope fa-fw me-3"></i>Contact
+        </a>
+      </div>
+
+      <!-- Users -->
       <a href="#"
          class="list-group-item list-group-item-action py-2 ripple">
-        <i class="fas fa-chart-line fa-fw me-3"></i><span>Analytics</span>
+        <i class="fas fa-users fa-fw me-3"></i><span>Users</span>
       </a>
-      <a href="#"
-         class="list-group-item list-group-item-action py-2 ripple">
-        <i class="fas fa-chart-pie fa-fw me-3"></i><span>SEO</span>
-      </a>
-      <a href="#"
-         class="list-group-item list-group-item-action py-2 ripple"><i class="fas fa-chart-bar fa-fw me-3"></i><span>Orders</span></a>
-      <a href="#"
-         class="list-group-item list-group-item-action py-2 ripple">
-        <i class="fas fa-globe fa-fw me-3"></i><span>International</span>
-      </a>
-      <a href="#"
-         class="list-group-item list-group-item-action py-2 ripple">
-        <i class="fas fa-building fa-fw me-3"></i><span>Partners</span>
-      </a>
-      <a href="#"
-         class="list-group-item list-group-item-action py-2 ripple">
-        <i class="fas fa-calendar fa-fw me-3"></i><span>Calendar</span>
-      </a>
-      <a href="#"
-         class="list-group-item list-group-item-action py-2 ripple"><i class="fas fa-users fa-fw me-3"></i><span>Users</span></a>
-      <a href="#"
-         class="list-group-item list-group-item-action py-2 ripple"><i class="fas fa-money-bill fa-fw me-3"></i><span>Sales</span></a>
     </div>
   </div>
 </nav>

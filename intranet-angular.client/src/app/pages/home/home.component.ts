@@ -42,8 +42,6 @@ export class HomeComponent implements AfterViewInit, OnInit {
     this.currentIndex = (this.currentIndex + 1) % this.slides.length;
   }
 
-
-
   faPlay = faPlay;
 
   ngOnInit() {

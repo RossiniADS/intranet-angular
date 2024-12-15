@@ -30,9 +30,12 @@ builder.Services.AddAuthentication(options =>
     };
 });
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
-builder.Services.AddScoped<IPaginaService, PaginaService>();
-builder.Services.AddScoped<IConteudoService, ConteudoService>();
-builder.Services.AddScoped<ILogAlteracaoService, LogAlteracaoService>();
+builder.Services.AddScoped<IPageService, PageService>();
+builder.Services.AddScoped<ITrendingItemService, TrendingItemService>();
+builder.Services.AddScoped<ISlideService, SlideService>();
+builder.Services.AddScoped<INewsItemService, NewsItemService>();
+builder.Services.AddScoped<ITabService, TabService>();
+builder.Services.AddScoped<IVideoService, VideoService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

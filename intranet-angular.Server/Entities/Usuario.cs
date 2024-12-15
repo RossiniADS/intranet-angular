@@ -19,7 +19,5 @@ namespace intranet_angular.Server.Entities
         public DateTime Aniversario { get; set; }
         public DateTime CriadoEm { get; set; }
         public DateTime UltimaAtualizacao { get; set; }
-
-        public virtual ICollection<LogAlteracao> LogAlteracoes { get; set; }
     }
 }
