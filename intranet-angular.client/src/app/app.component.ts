@@ -17,9 +17,10 @@ export class AppComponent implements OnInit {
         this.loadStyle('assets/css/admin-styles.css');
         // Verifica se a URL atual contém '/admin'
         this.isAdminRoute = true;
-      } else {
-        this.loadStyle('assets/css/main.css');
       }
+      //else {
+        //this.loadStyle('assets/css/main.css');
+      //}
     });
   }
 
