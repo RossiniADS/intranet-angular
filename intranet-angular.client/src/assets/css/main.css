@@ -675,7 +675,7 @@ hr {
 /* scrollUp */
 /* line 443, ../../SAIFUL/Running_project/248. Magazine & News/assets/scss/_common.scss */
 #scrollUp {
-  background: #ff656a;
+  background: #ff2143;
   height: 50px;
   width: 50px;
   right: 31px;
@@ -698,6 +698,7 @@ hr {
 /* line 460, ../../SAIFUL/Running_project/248. Magazine & News/assets/scss/_common.scss */
 #scrollUp:hover {
   color: #fff;
+  background: #ff656a;
 }
 
 /* Sticky*/
