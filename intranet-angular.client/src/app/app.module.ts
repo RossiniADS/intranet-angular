@@ -19,6 +19,7 @@ import { BlogComponent } from './pages/blog/blog.component';
 import { BlogDetailsComponent } from './pages/blog-details/blog-details.component';
 import { ElementComponent } from './pages/element/element.component';
 import { FormsModule } from '@angular/forms';
+import { BackToTopComponent } from './layout/back-to-top/back-to-top.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { FormsModule } from '@angular/forms';
     BlogComponent,
     BlogDetailsComponent,
     ElementComponent,
+    BackToTopComponent,
   ],
   imports: [
     BrowserModule,
