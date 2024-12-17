@@ -20,7 +20,6 @@ import { BlogDetailsComponent } from './pages/blog-details/blog-details.componen
 import { ElementComponent } from './pages/element/element.component';
 import { FormsModule } from '@angular/forms';
 import { BackToTopComponent } from './layout/back-to-top/back-to-top.component';
-import { StickyDirective } from '../directives/sticky.directive';
 
 @NgModule({
   declarations: [
@@ -36,8 +35,7 @@ import { StickyDirective } from '../directives/sticky.directive';
     BlogComponent,
     BlogDetailsComponent,
     ElementComponent,
-    BackToTopComponent,
-    StickyDirective
+    BackToTopComponent
   ],
   imports: [
     BrowserModule,

@@ -21,7 +21,7 @@
   padding: 10px 20px;
   background: transparent; /* Removido o fundo branco */
   border-bottom: 1px solid #ddd;
-  z-index: 10; /* Certifique-se de que o cabeçalho está acima do slide */
+  z-index: 2; /* Certifique-se de que o cabeçalho está acima do slide */
   position: relative;
 }
 

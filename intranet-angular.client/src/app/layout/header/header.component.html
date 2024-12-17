@@ -43,9 +43,7 @@
         </div>
       </div>
       <div class="header-bottom header-sticky"
-           appSticky
-           [topSpacing]="0"
-           [stickyClass]="'is-sticky'">
+          (scroll)="onscroll()" [ngClass]="navbarfixed?'fixed':'nofixed'">
         <div class="container">
           <div class="row align-items-center">
             <div class="col-xl-8 col-lg-8 col-md-12 header-flex">
