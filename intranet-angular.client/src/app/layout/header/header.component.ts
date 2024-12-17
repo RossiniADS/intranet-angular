@@ -7,7 +7,24 @@ import { Component, HostListener } from '@angular/core';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
+  isMobileMenuOpen = false;
+  toggleMobileMenu(): void {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
 
+  toggleSubMenu(menuItem: any): void {
+    if (menuItem.submenu) {
+      // Fecha todos os outros submenus
+      this.menuItems.forEach(item => {
+        if (item !== menuItem) {
+          item.isOpen = false;
+        }
+      });
+
+      // Abre ou fecha o submenu clicado
+      menuItem.isOpen = !menuItem.isOpen;
+    }
+  }
   navbarfixed: boolean = false;
   @HostListener('window:scroll', ['$event']) onscroll() {
     if (window.scrollY > 100) {
@@ -40,7 +57,8 @@ export class HeaderComponent {
         { label: 'Blog', link: '/blog' },
         { label: 'Blog Details', link: '/blog-details' },
         { label: 'Element', link: '/element' }
-      ]
+      ],
+      isOpen: false
     },
     { label: 'Contact', link: '/contact' }
   ];

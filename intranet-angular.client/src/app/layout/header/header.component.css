@@ -10,3 +10,98 @@
   transition: 0.5s linear;
   top: -50px;
 }
+
+
+
+
+
+
+
+/* Ajuste do botão hambúrguer */
+.hamburger {
+  font-size: 24px; /* Tamanho do ícone */
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  padding: 0; /* Remove espaçamento interno */
+  margin: 0; /* Remove margens extras */
+  display: flex;
+  align-items: center; /* Centraliza verticalmente */
+  justify-content: center; /* Centraliza horizontalmente */
+  height: 100%; /* Ocupa toda a altura disponível */
+}
+
+/* Ajuste do container do botão hambúrguer */
+.mobile_menu {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* Alinha o botão à direita */
+  height: 100%; /* Garante alinhamento com o logo e menu */
+}
+
+/* Menu Mobile */
+.mobile-menu-content {
+  position: absolute;
+  top: 100%; /* Logo abaixo do header-bottom */
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  z-index: 1000;
+}
+
+  .mobile-menu-content ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .mobile-menu-content li {
+    margin-bottom: 10px;
+    position: relative;
+  }
+
+  .mobile-menu-content a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    padding: 10px;
+    border-radius: 4px;
+  }
+
+    .mobile-menu-content a:hover {
+      background-color: #f4f4f4;
+    }
+
+  .mobile-menu-content .submenu {
+    margin-top: 5px;
+    margin-left: 15px;
+    padding-left: 10px;
+    border-left: 2px solid #ddd;
+  }
+
+/* Submenu toggle */
+.has-submenu::after {
+  content: '▼';
+  font-size: 12px;
+  float: right;
+  margin-left: 10px;
+}
+
+.has-submenu.open::after {
+  content: '▲';
+}
+
+/* Exibir submenu quando aberto */
+.submenu {
+  display: none;
+  padding-left: 15px; /* Indenta os submenus */
+  margin-top: 5px;
+  border-left: 2px solid #ddd; /* Linha de destaque para submenus */
+}
+
+  .submenu.open {
+    display: block;
+  }
