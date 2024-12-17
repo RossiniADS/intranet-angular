@@ -96,13 +96,13 @@
 }
 
 /* Exibir submenu quando aberto */
-.submenu {
+.submenu-mobile {
   display: none;
   padding-left: 15px; /* Indenta os submenus */
   margin-top: 5px;
   border-left: 2px solid #ddd; /* Linha de destaque para submenus */
 }
 
-  .submenu.open {
+  .submenu-mobile.open {
     display: block;
   }
