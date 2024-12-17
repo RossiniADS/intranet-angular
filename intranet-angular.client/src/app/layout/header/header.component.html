@@ -43,8 +43,6 @@
         </div>
       </div>
 
-
-
       <div class="header-bottom header-sticky" (scroll)="onscroll()" [ngClass]="navbarfixed ? 'fixed' : 'nofixed'">
         <div class="container">
           <!-- Flexbox Container -->
@@ -80,28 +78,25 @@
         </div>
 
         <!-- Menu Mobile -->
+        <!-- Menu Mobile -->
         <div class="mobile-menu-content" *ngIf="isMobileMenuOpen">
           <ul>
             <li *ngFor="let menuItem of menuItems">
-              <a (click)="toggleSubMenu(menuItem)"
+              <a (click)="onMobileMenuItemClick(menuItem)"
                  [class.has-submenu]="menuItem.submenu"
                  [class.open]="menuItem.isOpen">
                 {{ menuItem.label }}
               </a>
               <ul class="submenu" [class.open]="menuItem.isOpen" *ngIf="menuItem.submenu">
                 <li *ngFor="let subItem of menuItem.submenu">
-                  <a [routerLink]="subItem.link">{{ subItem.label }}</a>
+                  <a [routerLink]="subItem.link" (click)="closeMobileMenu()">{{ subItem.label }}</a>
                 </li>
               </ul>
             </li>
           </ul>
         </div>
+
       </div>
-
-
-
-
-
 
     </div>
   </div>

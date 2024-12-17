@@ -11,10 +11,6 @@
   top: -50px;
 }
 
-
-
-
-
 .header-flex {
   display: flex; /* Flexbox para manter elementos lado a lado */
   justify-content: space-between; /* Espaço entre os elementos */

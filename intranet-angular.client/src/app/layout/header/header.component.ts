@@ -8,29 +8,46 @@ import { Component, HostListener } from '@angular/core';
 })
 export class HeaderComponent {
   isMobileMenuOpen = false;
+  navbarfixed: boolean = false;
+
   toggleMobileMenu(): void {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
   }
 
+  closeMobileMenu(): void {
+    this.isMobileMenuOpen = false;
+  }
+
+  onMobileMenuItemClick(menuItem: any): void {
+    if (menuItem.submenu) {
+      // Apenas expande ou recolhe o submenu
+      this.toggleSubMenu(menuItem);
+    } else {
+      // Fecha o menu mobile apenas se não tiver submenu
+      this.closeMobileMenu();
+    }
+  }
+
   toggleSubMenu(menuItem: any): void {
     if (menuItem.submenu) {
-      // Fecha todos os outros submenus
       this.menuItems.forEach(item => {
         if (item !== menuItem) {
           item.isOpen = false;
         }
       });
-
-      // Abre ou fecha o submenu clicado
       menuItem.isOpen = !menuItem.isOpen;
     }
   }
-  navbarfixed: boolean = false;
-  @HostListener('window:scroll', ['$event']) onscroll() {
-    if (window.scrollY > 100) {
-      this.navbarfixed = true
-    } else {
-      this.navbarfixed = false;
+
+  @HostListener('window:scroll', ['$event'])
+  onscroll() {
+    this.navbarfixed = window.scrollY > 100;
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    if (window.innerWidth >= 768) {
+      this.closeMobileMenu();
     }
   }
 
