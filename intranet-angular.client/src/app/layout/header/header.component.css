@@ -15,6 +15,17 @@
 
 
 
+.header-flex {
+  display: flex; /* Flexbox para manter elementos lado a lado */
+  justify-content: space-between; /* Espaço entre os elementos */
+  align-items: center; /* Alinhamento vertical */
+  flex-wrap: nowrap; /* Evita que os elementos quebrem de linha */
+}
+
+.sticky-logo img {
+  max-width: 120px; /* Tamanho máximo do logo */
+  height: auto; /* Mantém a proporção da imagem */
+}
 
 
 /* Ajuste do botão hambúrguer */
@@ -24,12 +35,6 @@
   border: none;
   cursor: pointer;
   color: #333;
-  padding: 0; /* Remove espaçamento interno */
-  margin: 0; /* Remove margens extras */
-  display: flex;
-  align-items: center; /* Centraliza verticalmente */
-  justify-content: center; /* Centraliza horizontalmente */
-  height: 100%; /* Ocupa toda a altura disponível */
 }
 
 /* Ajuste do container do botão hambúrguer */
