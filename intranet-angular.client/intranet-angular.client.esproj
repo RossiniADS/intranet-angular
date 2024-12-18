@@ -14,7 +14,6 @@
     <TypeScriptConfiguration Remove="src\NovaPasta\**" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="src\app\admin\" />
     <Folder Include="src\app\layout\back-to-top\" />
     <Folder Include="src\app\pages\home\" />
     <Folder Include="src\app\pages\about\" />

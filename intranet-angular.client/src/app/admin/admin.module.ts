@@ -8,6 +8,8 @@ import { AdminFooterComponent } from './components/admin-footer/admin-footer.com
 import { AdminSidebarComponent } from './components/admin-sidebar/admin-sidebar.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { PostsComponent } from './pages/posts/posts.component';
+import { UserComponent } from './pages/user/user.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -17,11 +19,13 @@ import { PostsComponent } from './pages/posts/posts.component';
     AdminFooterComponent,
     AdminSidebarComponent,
     DashboardComponent,
-    PostsComponent
+    PostsComponent,
+    UserComponent
   ],
   imports: [
     CommonModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class AdminModule { }

@@ -1,4 +1,6 @@
 using intranet_angular.Server.Context;
+using intranet_angular.Server.Interfaces;
+using intranet_angular.Server.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -9,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddDbContext<IntraNetDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("IntraNetConnectionString")));
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -28,6 +31,25 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+// Adicione serviços ao contêiner
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin", policy =>
+    {
+        policy.WithOrigins("https://localhost:52789") // Substitua pela origem do Angular
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
+builder.Services.AddTransient<ICategoriaService, CategoriaService>();
+builder.Services.AddTransient<IEventoService, EventoService>();
+builder.Services.AddTransient<IFuncionarioService, FuncionarioService>();
+builder.Services.AddScoped<IMidiaNoticiaService, MidiaNoticiaService>();
+builder.Services.AddTransient<INoticiaService, NoticiaService>();
+builder.Services.AddScoped<IPaginaService, PaginaService>();
+builder.Services.AddScoped<ISlideService, SlideService>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 
 
 builder.Services.AddControllers();
@@ -37,6 +59,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+app.UseCors("AllowSpecificOrigin");
 app.UseDefaultFiles();
 app.UseStaticFiles();
 

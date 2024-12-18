@@ -20,6 +20,7 @@ import { BlogDetailsComponent } from './pages/blog-details/blog-details.componen
 import { ElementComponent } from './pages/element/element.component';
 import { FormsModule } from '@angular/forms';
 import { BackToTopComponent } from './layout/back-to-top/back-to-top.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { BackToTopComponent } from './layout/back-to-top/back-to-top.component';
     MatTabsModule,
     BrowserAnimationsModule,
     FontAwesomeModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     provideAnimationsAsync()

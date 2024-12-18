@@ -1,0 +1,61 @@
+<div class="container">
+  <h1>Gerenciamento de Usuários</h1>
+
+  <form class="form-container" [formGroup]="usuarioForm" (ngSubmit)="submitForm()">
+    <div class="form-group">
+      <label for="nome">Nome:</label>
+      <input id="nome" formControlName="nome" type="text" placeholder="Digite o nome" />
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input id="email" formControlName="email" type="email" placeholder="Digite o email" />
+    </div>
+
+    <div class="form-group">
+      <label for="login">Login:</label>
+      <input id="login" formControlName="login" type="text" placeholder="Digite o login" />
+    </div>
+
+    <div class="form-group">
+      <label for="senha">Senha:</label>
+      <input id="senha" formControlName="senha" type="password" placeholder="Digite a senha" />
+    </div>
+
+    <div class="form-group">
+      <label for="aniversario">Aniversário:</label>
+      <input id="aniversario" formControlName="aniversario" type="date" />
+    </div>
+
+    <div class="button-group">
+      <button class="btn btn-primary" type="submit">{{ isEditing ? 'Atualizar' : 'Cadastrar' }}</button>
+      <button class="btn btn-secondary" type="button" (click)="resetForm()" *ngIf="isEditing">Cancelar</button>
+    </div>
+  </form>
+
+  <table class="user-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Login</th>
+        <th>Aniversário</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let usuario of usuarios">
+        <td>{{ usuario.id }}</td>
+        <td>{{ usuario.nome }}</td>
+        <td>{{ usuario.email }}</td>
+        <td>{{ usuario.login }}</td>
+        <td>{{ usuario.aniversario | date }}</td>
+        <td>
+          <button class="btn btn-edit" (click)="editUsuario(usuario)">Editar</button>
+          <button class="btn btn-delete" (click)="deleteUsuario(usuario.id)">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
