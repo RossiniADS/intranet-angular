@@ -67,6 +67,18 @@
                 </ul>
               </nav>
             </div>
+            <div class="header-right f-right d-none d-lg-block">
+              <!-- Heder social -->
+              <ul class="header-social">
+                <li *ngFor="let social of socialLinks">
+                  <a [href]="social.link"><i [class]="social.icon"></i></a>
+                </li>
+              </ul>
+              <!-- Search Nav -->
+              <div class="nav-search search-switch">
+                <i class="fa fa-search"></i>
+              </div>
+            </div>
             <!-- Botão Mobile -->
             <div class="d-block d-md-none">
               <button class="hamburger" (click)="toggleMobileMenu()">☰</button>
