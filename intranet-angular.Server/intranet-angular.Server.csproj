@@ -33,7 +33,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Interfaces\" />
     <Folder Include="Migrations\" />
+    <Folder Include="Model\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

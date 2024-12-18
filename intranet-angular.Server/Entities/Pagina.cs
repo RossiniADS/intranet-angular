@@ -1,10 +1,10 @@
-﻿using intranet_angular.Server.Entities;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace intranet_angular.Server.Model
+namespace intranet_angular.Server.Entities
 {
-    public class Page
+    public class Pagina
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
 

@@ -11,20 +11,23 @@ namespace intranet_angular.Server.Context
         {
         }
 
-        public DbSet<Page> Pages { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Noticia> Noticias { get; set; }
+        public DbSet<Categoria> Categorias { get; set; }
+        public DbSet<NoticiaCategoria> NoticiasCategorias { get; set; }
+        public DbSet<MidiaNoticia> MidiasNoticias { get; set; }
+        public DbSet<Evento> Eventos { get; set; }
+        public DbSet<Funcionario> Funcionarios { get; set; }
+        public DbSet<Pagina> Paginas { get; set; }
         public DbSet<Slide> Slides { get; set; }
-        public DbSet<TrendingItem> TrendingItems { get; set; }
-        public DbSet<Tab> Tabs { get; set; }
-        public DbSet<NewsItem> NewsItems { get; set; }
-        public DbSet<Video> Videos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Page>().HasMany(p => p.Slides).WithOne(s => s.Page).HasForeignKey(s => s.PageId);
-            modelBuilder.Entity<Page>().HasMany(p => p.TrendingItems).WithOne(t => t.Page).HasForeignKey(t => t.PageId);
-            modelBuilder.Entity<Page>().HasMany(p => p.Tabs).WithOne(t => t.Page).HasForeignKey(t => t.PageId);
-            modelBuilder.Entity<Page>().HasMany(p => p.NewsItems).WithOne(n => n.Page).HasForeignKey(n => n.PageId);
-            modelBuilder.Entity<Page>().HasMany(p => p.Videos).WithOne(v => v.Page).HasForeignKey(v => v.PageId);
+            // Configuração do relacionamento Many-to-Many
+            modelBuilder.Entity<NoticiaCategoria>()
+                .HasKey(nc => new { nc.NoticiaId, nc.CategoriaId });
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
