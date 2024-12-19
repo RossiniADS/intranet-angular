@@ -1,5 +1,6 @@
 ﻿using intranet_angular.Server.Entities;
 using intranet_angular.Server.Interfaces;
+using intranet_angular.Server.Model;
 using Microsoft.AspNetCore.Mvc;
 
 namespace intranet_angular.Server.Controllers
@@ -34,29 +35,35 @@ namespace intranet_angular.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] Categoria categoria)
+        public async Task<IActionResult> Add([FromBody] CategoriaModel categoriaModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+            var categoria = new Categoria()
+            {
+                Nome = categoriaModel.Nome
+            };
 
             var createdCategoria = await _categoriaService.AddAsync(categoria);
             return CreatedAtAction(nameof(GetById), new { id = createdCategoria.Id }, createdCategoria);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] Categoria categoria)
+        public async Task<IActionResult> Update(int id, [FromBody] CategoriaModel categoriaModel)
         {
-            if (id != categoria.Id)
-            {
-                return BadRequest("ID mismatch.");
-            }
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+            var categoria = new Categoria()
+            {
+                Id = id,
+                Nome = categoriaModel.Nome
+            };
 
             var updatedCategoria = await _categoriaService.UpdateAsync(categoria);
             return Ok(updatedCategoria);

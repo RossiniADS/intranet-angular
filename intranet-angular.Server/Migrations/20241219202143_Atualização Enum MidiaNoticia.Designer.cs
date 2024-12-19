@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using intranet_angular.Server.Context;
 
@@ -11,9 +12,11 @@ using intranet_angular.Server.Context;
 namespace intranet_angular.Server.Migrations
 {
     [DbContext(typeof(IntraNetDbContext))]
-    partial class IntraNetDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241219202143_Atualização Enum MidiaNoticia")]
+    partial class AtualizaçãoEnumMidiaNoticia
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

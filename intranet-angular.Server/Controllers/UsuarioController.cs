@@ -37,35 +37,47 @@ namespace intranet_angular.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] UsuarioModel usuario)
+        public async Task<IActionResult> Create([FromBody] UsuarioModel usuarioModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            Usuario user = new()
+            var usuario = new Usuario()
             {
-                Aniversario = usuario.Aniversario,
-                Login = usuario.Login,
+                Aniversario = usuarioModel.Aniversario,
+                Login = usuarioModel.Login,
                 CriadoEm = new DateTime(),
                 UltimaAtualizacao = new DateTime(),
-                Nome = usuario.Nome,
-                Senha = usuario.Senha,
-                Email = usuario.Email
+                Nome = usuarioModel.Nome,
+                Senha = usuarioModel.Senha,
+                Email = usuarioModel.Email
             };
 
-            var createdUsuario = await _usuarioService.CreateAsync(user);
+            var createdUsuario = await _usuarioService.CreateAsync(usuario);
             return CreatedAtAction(nameof(GetById), new { id = createdUsuario.Id }, createdUsuario);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] Usuario usuario)
+        public async Task<IActionResult> Update(int id, [FromBody] UsuarioModel usuarioModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+            var usuario = new Usuario()
+            {
+                Id = id,
+                Aniversario = usuarioModel.Aniversario,
+                Login = usuarioModel.Login,
+                CriadoEm = new DateTime(),
+                UltimaAtualizacao = new DateTime(),
+                Nome = usuarioModel.Nome,
+                Senha = usuarioModel.Senha,
+                Email = usuarioModel.Email
+            };
 
             try
             {

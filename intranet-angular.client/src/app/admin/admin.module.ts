@@ -10,6 +10,10 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { PostsComponent } from './pages/posts/posts.component';
 import { UserComponent } from './pages/user/user.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NewsComponent } from './pages/news/news.component';
+import { QuillModule } from 'ngx-quill';
+import { CategoryComponent } from './pages/category/category.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -20,12 +24,16 @@ import { ReactiveFormsModule } from '@angular/forms';
     AdminSidebarComponent,
     DashboardComponent,
     PostsComponent,
-    UserComponent
+    UserComponent,
+    NewsComponent,
+    CategoryComponent
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    QuillModule,
+    NgSelectModule
   ]
 })
 export class AdminModule { }

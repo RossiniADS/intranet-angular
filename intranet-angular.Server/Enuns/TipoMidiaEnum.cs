@@ -1,8 +1,7 @@
 ﻿namespace intranet_angular.Server.Enuns
 {
-    public enum TipoConteudoEnum
+    public enum TipoMidiaEnum
     {
-        Texto,
         Imagem,
         Video
     }

@@ -4,6 +4,8 @@ import { AdminComponent } from './admin.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { PostsComponent } from './pages/posts/posts.component';
 import { UserComponent } from './pages/user/user.component';
+import { NewsComponent } from './pages/news/news.component';
+import { CategoryComponent } from './pages/category/category.component';
 
 const routes: Routes = [
   {
@@ -13,6 +15,8 @@ const routes: Routes = [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'posts', component: PostsComponent },
       { path: 'usuarios', component: UserComponent },
+      { path: 'news', component: NewsComponent },
+      { path: 'categoria', component: CategoryComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ],
   },
@@ -22,4 +26,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AdminRoutingModule {}
+export class AdminRoutingModule { }
