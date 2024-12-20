@@ -1,0 +1,63 @@
+<div class="container">
+  <h1>Gerenciamento de Funcionários</h1>
+
+  <form class="form-container" [formGroup]="funcionarioForm" (ngSubmit)="submitForm()">
+    <div class="form-group">
+      <label for="nome">Nome:</label>
+      <input id="nome" formControlName="nome" type="text" placeholder="Digite o nome" />
+    </div>
+
+    <div class="form-group">
+      <label for="dataNascimento">Data de Nascimento:</label>
+      <input id="dataNascimento" formControlName="dataNascimento" type="date" />
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input id="email" formControlName="email" type="email" placeholder="Digite o email" />
+    </div>
+
+    <div class="form-group">
+      <label for="cargo">Cargo:</label>
+      <input id="cargo" formControlName="cargo" type="text" placeholder="Digite o cargo" />
+    </div>
+
+    <div class="form-group">
+      <label for="departamento">Departamento:</label>
+      <input id="departamento" formControlName="departamento" type="text" placeholder="Digite o departamento" />
+    </div>
+
+    <div class="button-group">
+      <button class="btn btn-primary" type="submit">{{ isEditing ? 'Atualizar' : 'Cadastrar' }}</button>
+      <button class="btn btn-secondary" type="button" (click)="resetForm()" *ngIf="isEditing">Cancelar</button>
+    </div>
+  </form>
+
+  <table class="employee-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Cargo</th>
+        <th>Departamento</th>
+        <th>Data de Nascimento</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let funcionario of funcionarios">
+        <td>{{ funcionario.id }}</td>
+        <td>{{ funcionario.nome }}</td>
+        <td>{{ funcionario.email }}</td>
+        <td>{{ funcionario.cargo }}</td>
+        <td>{{ funcionario.departamento }}</td>
+        <td>{{ funcionario.dataNascimento | date }}</td>
+        <td>
+          <button class="btn btn-edit" (click)="editFuncionario(funcionario)">Editar</button>
+          <button class="btn btn-delete" (click)="deleteFuncionario(funcionario.id)">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

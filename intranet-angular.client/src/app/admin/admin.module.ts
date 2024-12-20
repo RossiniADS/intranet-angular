@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
 import { AdminHeaderComponent } from './components/admin-header/admin-header.component';
@@ -15,6 +14,7 @@ import { QuillModule } from 'ngx-quill';
 import { CategoryComponent } from './pages/category/category.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { PageComponent } from './pages/page/page.component';
+import { EmployeesComponent } from './pages/employees/employees.component';
 
 
 @NgModule({
@@ -28,7 +28,8 @@ import { PageComponent } from './pages/page/page.component';
     UserComponent,
     NewsComponent,
     CategoryComponent,
-    PageComponent
+    PageComponent,
+    EmployeesComponent
   ],
   imports: [
     CommonModule,
