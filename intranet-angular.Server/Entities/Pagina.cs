@@ -9,6 +9,6 @@ namespace intranet_angular.Server.Entities
         public string Descricao { get; set; }
 
         // Relacionamento com Slides
-        public ICollection<Slide> Slides { get; set; }
+        public ICollection<GrupoDeSlides> GruposDeSlides { get; set; }
     }
 }

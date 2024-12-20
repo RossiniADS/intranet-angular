@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using intranet_angular.Server.Context;
 
@@ -11,9 +12,11 @@ using intranet_angular.Server.Context;
 namespace intranet_angular.Server.Migrations
 {
     [DbContext(typeof(IntraNetDbContext))]
-    partial class IntraNetDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241220201831_Grupo de slides criado")]
+    partial class Grupodeslidescriado
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -235,6 +238,9 @@ namespace intranet_angular.Server.Migrations
                     b.Property<int>("Ordem")
                         .HasColumnType("int");
 
+                    b.Property<int?>("PaginaId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Tipo")
                         .HasColumnType("int");
 
@@ -249,6 +255,8 @@ namespace intranet_angular.Server.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("GrupoDeSlidesId");
+
+                    b.HasIndex("PaginaId");
 
                     b.ToTable("Slides");
                 });
@@ -294,7 +302,7 @@ namespace intranet_angular.Server.Migrations
             modelBuilder.Entity("intranet_angular.Server.Entities.GrupoDeSlides", b =>
                 {
                     b.HasOne("intranet_angular.Server.Entities.Pagina", "Pagina")
-                        .WithMany("GruposDeSlides")
+                        .WithMany()
                         .HasForeignKey("PaginaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -349,6 +357,10 @@ namespace intranet_angular.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("intranet_angular.Server.Entities.Pagina", null)
+                        .WithMany("Slides")
+                        .HasForeignKey("PaginaId");
+
                     b.Navigation("GrupoDeSlides");
                 });
 
@@ -371,7 +383,7 @@ namespace intranet_angular.Server.Migrations
 
             modelBuilder.Entity("intranet_angular.Server.Entities.Pagina", b =>
                 {
-                    b.Navigation("GruposDeSlides");
+                    b.Navigation("Slides");
                 });
 #pragma warning restore 612, 618
         }

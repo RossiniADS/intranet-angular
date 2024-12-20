@@ -8,6 +8,7 @@ import { NewsComponent } from './pages/news/news.component';
 import { CategoryComponent } from './pages/category/category.component';
 import { PageComponent } from './pages/page/page.component';
 import { EmployeesComponent } from './pages/employees/employees.component';
+import { SlidesComponent } from './pages/slides/slides.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
       { path: 'categorias', component: CategoryComponent },
       { path: 'paginas', component: PageComponent },
       { path: 'funcionarios', component: EmployeesComponent },
+      { path: 'slides', component: SlidesComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ],
   },

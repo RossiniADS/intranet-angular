@@ -15,6 +15,7 @@ import { CategoryComponent } from './pages/category/category.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { PageComponent } from './pages/page/page.component';
 import { EmployeesComponent } from './pages/employees/employees.component';
+import { SlidesComponent } from './pages/slides/slides.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { EmployeesComponent } from './pages/employees/employees.component';
     NewsComponent,
     CategoryComponent,
     PageComponent,
-    EmployeesComponent
+    EmployeesComponent,
+    SlidesComponent
   ],
   imports: [
     CommonModule,

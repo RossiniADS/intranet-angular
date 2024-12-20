@@ -20,6 +20,7 @@ namespace intranet_angular.Server.Context
         public DbSet<Funcionario> Funcionarios { get; set; }
         public DbSet<Pagina> Paginas { get; set; }
         public DbSet<Slide> Slides { get; set; }
+        public DbSet<GrupoDeSlides> GrupoDeSlides { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

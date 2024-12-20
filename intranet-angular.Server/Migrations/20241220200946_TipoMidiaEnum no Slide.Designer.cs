@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using intranet_angular.Server.Context;
 
@@ -11,9 +12,11 @@ using intranet_angular.Server.Context;
 namespace intranet_angular.Server.Migrations
 {
     [DbContext(typeof(IntraNetDbContext))]
-    partial class IntraNetDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241220200946_TipoMidiaEnum no Slide")]
+    partial class TipoMidiaEnumnoSlide
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,28 +103,6 @@ namespace intranet_angular.Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Funcionarios");
-                });
-
-            modelBuilder.Entity("intranet_angular.Server.Entities.GrupoDeSlides", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PaginaId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PaginaId");
-
-                    b.ToTable("GrupoDeSlides");
                 });
 
             modelBuilder.Entity("intranet_angular.Server.Entities.MidiaNoticia", b =>
@@ -229,10 +210,10 @@ namespace intranet_angular.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("GrupoDeSlidesId")
+                    b.Property<int>("Ordem")
                         .HasColumnType("int");
 
-                    b.Property<int>("Ordem")
+                    b.Property<int>("PaginaId")
                         .HasColumnType("int");
 
                     b.Property<int>("Tipo")
@@ -248,7 +229,7 @@ namespace intranet_angular.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GrupoDeSlidesId");
+                    b.HasIndex("PaginaId");
 
                     b.ToTable("Slides");
                 });
@@ -289,17 +270,6 @@ namespace intranet_angular.Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Usuarios");
-                });
-
-            modelBuilder.Entity("intranet_angular.Server.Entities.GrupoDeSlides", b =>
-                {
-                    b.HasOne("intranet_angular.Server.Entities.Pagina", "Pagina")
-                        .WithMany("GruposDeSlides")
-                        .HasForeignKey("PaginaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Pagina");
                 });
 
             modelBuilder.Entity("intranet_angular.Server.Entities.MidiaNoticia", b =>
@@ -343,23 +313,18 @@ namespace intranet_angular.Server.Migrations
 
             modelBuilder.Entity("intranet_angular.Server.Entities.Slide", b =>
                 {
-                    b.HasOne("intranet_angular.Server.Entities.GrupoDeSlides", "GrupoDeSlides")
+                    b.HasOne("intranet_angular.Server.Entities.Pagina", "Pagina")
                         .WithMany("Slides")
-                        .HasForeignKey("GrupoDeSlidesId")
+                        .HasForeignKey("PaginaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("GrupoDeSlides");
+                    b.Navigation("Pagina");
                 });
 
             modelBuilder.Entity("intranet_angular.Server.Entities.Categoria", b =>
                 {
                     b.Navigation("NoticiasCategorias");
-                });
-
-            modelBuilder.Entity("intranet_angular.Server.Entities.GrupoDeSlides", b =>
-                {
-                    b.Navigation("Slides");
                 });
 
             modelBuilder.Entity("intranet_angular.Server.Entities.Noticia", b =>
@@ -371,7 +336,7 @@ namespace intranet_angular.Server.Migrations
 
             modelBuilder.Entity("intranet_angular.Server.Entities.Pagina", b =>
                 {
-                    b.Navigation("GruposDeSlides");
+                    b.Navigation("Slides");
                 });
 #pragma warning restore 612, 618
         }
