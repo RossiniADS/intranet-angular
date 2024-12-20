@@ -6,6 +6,7 @@ import { PostsComponent } from './pages/posts/posts.component';
 import { UserComponent } from './pages/user/user.component';
 import { NewsComponent } from './pages/news/news.component';
 import { CategoryComponent } from './pages/category/category.component';
+import { PageComponent } from './pages/page/page.component';
 
 const routes: Routes = [
   {
@@ -16,7 +17,8 @@ const routes: Routes = [
       { path: 'posts', component: PostsComponent },
       { path: 'usuarios', component: UserComponent },
       { path: 'news', component: NewsComponent },
-      { path: 'categoria', component: CategoryComponent },
+      { path: 'categorias', component: CategoryComponent },
+      { path: 'paginas', component: PageComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ],
   },

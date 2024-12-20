@@ -1,9 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace intranet_angular.Server.Model
+﻿namespace intranet_angular.Server.Response
 {
-    public class UsuarioModel
+    public class UsuarioResponse
     {
+        public int Id { get; set; }
         public string Nome { get; set; }
         public string Email { get; set; }
         public string Login { get; set; }

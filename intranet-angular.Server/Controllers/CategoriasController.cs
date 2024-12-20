@@ -1,6 +1,6 @@
 ﻿using intranet_angular.Server.Entities;
 using intranet_angular.Server.Interfaces;
-using intranet_angular.Server.Model;
+using intranet_angular.Server.Request;
 using Microsoft.AspNetCore.Mvc;
 
 namespace intranet_angular.Server.Controllers
@@ -35,37 +35,26 @@ namespace intranet_angular.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] CategoriaModel categoriaModel)
+        public async Task<IActionResult> Add([FromBody] CategoriaRequest categoriaRequest)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var categoria = new Categoria()
-            {
-                Nome = categoriaModel.Nome
-            };
-
-            var createdCategoria = await _categoriaService.AddAsync(categoria);
+            var createdCategoria = await _categoriaService.AddAsync(categoriaRequest);
             return CreatedAtAction(nameof(GetById), new { id = createdCategoria.Id }, createdCategoria);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] CategoriaModel categoriaModel)
+        public async Task<IActionResult> Update(int id, [FromBody] CategoriaRequest categoriaRequest)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var categoria = new Categoria()
-            {
-                Id = id,
-                Nome = categoriaModel.Nome
-            };
-
-            var updatedCategoria = await _categoriaService.UpdateAsync(categoria);
+            var updatedCategoria = await _categoriaService.UpdateAsync(id, categoriaRequest);
             return Ok(updatedCategoria);
         }
 

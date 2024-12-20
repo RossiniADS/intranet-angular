@@ -1,14 +1,15 @@
 ﻿using intranet_angular.Server.Entities;
-using intranet_angular.Server.Model;
+using intranet_angular.Server.Request;
+using intranet_angular.Server.Response;
 
 namespace intranet_angular.Server.Interfaces
 {
     public interface INoticiaService
     {
-        Task<IEnumerable<Noticia>> GetAllAsync();
-        Task<Noticia> GetByIdAsync(int id);
-        Task<Noticia> AddAsync(NoticiaModel noticiaModel);
-        Task<Noticia> UpdateAsync(int id, NoticiaModel noticiaModel);
+        Task<IEnumerable<NoticiaResponse>> GetAllAsync();
+        Task<NoticiaResponse?> GetByIdAsync(int id);
+        Task<NoticiaResponse> AddAsync(NoticiaRequest noticiaRequest);
+        Task<NoticiaResponse> UpdateAsync(int id, NoticiaRequest noticiaRequest);
         Task DeleteAsync(int id);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using intranet_angular.Server.Entities;
 using intranet_angular.Server.Interfaces;
+using intranet_angular.Server.Request;
 using Microsoft.AspNetCore.Mvc;
 
 namespace intranet_angular.Server.Controllers
@@ -34,32 +35,27 @@ namespace intranet_angular.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] Pagina pagina)
+        public async Task<IActionResult> Add([FromBody] PaginaRequest paginaRequest)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            await _paginaService.AddAsync(pagina);
+            var pagina = await _paginaService.AddAsync(paginaRequest);
             return CreatedAtAction(nameof(GetById), new { id = pagina.Id }, pagina);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] Pagina pagina)
+        public async Task<IActionResult> Update(int id, [FromBody] PaginaRequest paginaRequest)
         {
-            if (id != pagina.Id)
-            {
-                return BadRequest("ID mismatch.");
-            }
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            await _paginaService.UpdateAsync(pagina);
-            return NoContent();
+            var pagina = await _paginaService.UpdateAsync(id, paginaRequest);
+            return Ok(pagina);
         }
 
         [HttpDelete("{id}")]

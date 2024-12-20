@@ -1,7 +1,8 @@
 ﻿using intranet_angular.Server.Context;
 using intranet_angular.Server.Entities;
 using intranet_angular.Server.Interfaces;
-using intranet_angular.Server.Model;
+using intranet_angular.Server.Request;
+using intranet_angular.Server.Response;
 using Microsoft.EntityFrameworkCore;
 
 namespace intranet_angular.Server.Services
@@ -14,65 +15,65 @@ namespace intranet_angular.Server.Services
         {
             _context = context;
         }
-
-        public async Task<IEnumerable<Noticia>> GetAllAsync()
+        public async Task<IEnumerable<NoticiaResponse>> GetAllAsync()
         {
-            return await _context.Noticias.ToListAsync();
+            return await _context.Noticias
+                .Include(n => n.Midias)
+                .Include(n => n.NoticiasCategorias)
+                .Select(n => new NoticiaResponse
+                {
+                    Id = n.Id,
+                    Titulo = n.Titulo,
+                    AutorId = n.AutorId,
+                    CategoriaIds = n.NoticiasCategorias.Select(cat => cat.CategoriaId).ToList(),
+                    Conteudo = n.Conteudo,
+                    DataPublicacao = n.DataPublicacao,
+                    MidiaUrl = n.Midias.Select(m => m.URL).ToList()
+                })
+                .ToListAsync();
         }
 
-        public async Task<Noticia> GetByIdAsync(int id)
+
+        public async Task<NoticiaResponse?> GetByIdAsync(int id)
         {
-            return await _context.Noticias.FindAsync(id);
+            return await _context.Noticias
+                .Include(n => n.Midias)
+                .Include(n => n.NoticiasCategorias)
+                .Where(n => n.Id == id)
+                .Select(n => new NoticiaResponse
+                {
+                    Id = n.Id,
+                    Titulo = n.Titulo,
+                    AutorId = n.AutorId,
+                    CategoriaIds = n.NoticiasCategorias.Select(cat => cat.CategoriaId).ToList(),
+                    Conteudo = n.Conteudo,
+                    DataPublicacao = n.DataPublicacao,
+                    MidiaUrl = n.Midias.Select(m => m.URL).ToList()
+                })
+                .FirstOrDefaultAsync();
         }
 
-        public async Task<Noticia> AddAsync(NoticiaModel noticiaModel)
+        public async Task<NoticiaResponse> AddAsync(NoticiaRequest noticiaRequest)
         {
-            using var transaction = await _context.Database.BeginTransactionAsync();
+            await using var transaction = await _context.Database.BeginTransactionAsync();
             try
             {
-                // Criar a notícia
                 var noticia = new Noticia
                 {
-                    Titulo = noticiaModel.Titulo,
-                    Conteudo = noticiaModel.Conteudo,
-                    DataPublicacao = noticiaModel.DataPublicacao,
-                    AutorId = noticiaModel.AutorId,
-                    NoticiasCategorias = noticiaModel.CategoriaIds?.Select(id => new NoticiaCategoria { CategoriaId = id }).ToList()
+                    Titulo = noticiaRequest.Titulo,
+                    Conteudo = noticiaRequest.Conteudo,
+                    DataPublicacao = noticiaRequest.DataPublicacao,
+                    AutorId = noticiaRequest.AutorId,
+                    NoticiasCategorias = noticiaRequest.CategoriaIds?.Select(id => new NoticiaCategoria { CategoriaId = id }).ToList()
                 };
 
                 _context.Noticias.Add(noticia);
                 await _context.SaveChangesAsync();
 
-                // Processar os arquivos de mídia
-                if (noticiaModel.Midias != null && noticiaModel.Midias.Count > 0)
-                {
-                    foreach (var file in noticiaModel.Midias)
-                    {
-                        var filePath = Path.Combine("Uploads", Guid.NewGuid() + Path.GetExtension(file.FileName));
-
-                        // Salvar arquivo no servidor
-                        using (var stream = new FileStream(filePath, FileMode.Create))
-                        {
-                            await file.CopyToAsync(stream);
-                        }
-
-                        // Salvar URL na tabela MidiaNoticia
-                        var midiaNoticia = new MidiaNoticia
-                        {
-                            URL = filePath,
-                            NoticiaId = noticia.Id,
-                            Ordem = 1,
-                            Tipo = Enuns.TipoMidiaEnum.Imagem
-                        };
-
-                        _context.MidiasNoticias.Add(midiaNoticia);
-                    }
-
-                    await _context.SaveChangesAsync();
-                }
-
+                await ProcessarMidiasAsync(noticiaRequest.Midias, noticia.Id);
                 await transaction.CommitAsync();
-                return noticia;
+
+                return ToNoticiaResponse(noticia);
             }
             catch
             {
@@ -81,12 +82,11 @@ namespace intranet_angular.Server.Services
             }
         }
 
-        public async Task<Noticia> UpdateAsync(int id, NoticiaModel noticiaModel)
+        public async Task<NoticiaResponse> UpdateAsync(int id, NoticiaRequest noticiaRequest)
         {
-            using var transaction = await _context.Database.BeginTransactionAsync();
+            await using var transaction = await _context.Database.BeginTransactionAsync();
             try
             {
-                // Obter a notícia existente
                 var noticia = await _context.Noticias
                     .Include(n => n.NoticiasCategorias)
                     .Include(n => n.Midias)
@@ -95,62 +95,30 @@ namespace intranet_angular.Server.Services
                 if (noticia == null)
                     throw new KeyNotFoundException("Notícia não encontrada.");
 
-                // Atualizar os campos da notícia
-                noticia.Titulo = noticiaModel.Titulo;
-                noticia.Conteudo = noticiaModel.Conteudo;
-                noticia.DataPublicacao = noticiaModel.DataPublicacao;
-                noticia.AutorId = noticiaModel.AutorId;
+                noticia.Titulo = noticiaRequest.Titulo;
+                noticia.Conteudo = noticiaRequest.Conteudo;
+                noticia.DataPublicacao = noticiaRequest.DataPublicacao;
+                noticia.AutorId = noticiaRequest.AutorId;
 
-                // Atualizar as categorias
-                noticia.NoticiasCategorias.Clear();
-                if (noticiaModel.CategoriaIds != null && noticiaModel.CategoriaIds.Any())
+                noticia.NoticiasCategorias = noticiaRequest.CategoriaIds?.Select(id =>
+                    new NoticiaCategoria { CategoriaId = id, NoticiaId = noticia.Id }
+                ).ToList() ?? [];
+
+                foreach (var midia in noticia.Midias)
                 {
-                    noticia.NoticiasCategorias = noticiaModel.CategoriaIds
-                        .Select(id => new NoticiaCategoria { CategoriaId = id, NoticiaId = noticia.Id })
-                        .ToList();
+                    if (File.Exists(midia.URL))
+                        File.Delete(midia.URL);
                 }
 
-                // Atualizar arquivos de mídia
-                if (noticiaModel.Midias != null && noticiaModel.Midias.Count > 0)
-                {
-                    // Remover mídias existentes
-                    foreach (var midia in noticia.Midias)
-                    {
-                        var filePath = midia.URL;
-                        if (File.Exists(filePath))
-                        {
-                            File.Delete(filePath);
-                        }
-                    }
-                    _context.MidiasNoticias.RemoveRange(noticia.Midias);
+                _context.MidiasNoticias.RemoveRange(noticia.Midias);
+                await ProcessarMidiasAsync(noticiaRequest.Midias, noticia.Id);
 
-                    // Adicionar novas mídias
-                    foreach (var file in noticiaModel.Midias)
-                    {
-                        var filePath = Path.Combine("Uploads", Guid.NewGuid() + Path.GetExtension(file.FileName));
-
-                        // Salvar arquivo no servidor
-                        using (var stream = new FileStream(filePath, FileMode.Create))
-                        {
-                            await file.CopyToAsync(stream);
-                        }
-
-                        var midiaNoticia = new MidiaNoticia
-                        {
-                            URL = filePath,
-                            NoticiaId = noticia.Id
-                        };
-
-                        _context.MidiasNoticias.Add(midiaNoticia);
-                    }
-                }
-
-                // Salvar as alterações
                 _context.Noticias.Update(noticia);
                 await _context.SaveChangesAsync();
 
                 await transaction.CommitAsync();
-                return noticia;
+
+                return ToNoticiaResponse(noticia);
             }
             catch
             {
@@ -161,13 +129,60 @@ namespace intranet_angular.Server.Services
 
         public async Task DeleteAsync(int id)
         {
-            var noticia = await _context.Noticias.FindAsync(id);
-            if (noticia != null)
+            var noticia = await _context.Noticias
+                .Include(n => n.Midias)
+                .FirstOrDefaultAsync(n => n.Id == id);
+
+            if (noticia == null) throw new KeyNotFoundException("Notícia não encontrada.");
+
+            foreach (var midia in noticia.Midias)
             {
-                _context.Noticias.Remove(noticia);
-                await _context.SaveChangesAsync();
+                if (File.Exists(midia.URL))
+                {
+                    File.Delete(midia.URL);
+                }
             }
+
+            _context.Noticias.Remove(noticia);
+            await _context.SaveChangesAsync();
+        }
+
+        private static NoticiaResponse ToNoticiaResponse(Noticia noticia) => new()
+        {
+            Id = noticia.Id,
+            Titulo = noticia.Titulo,
+            AutorId = noticia.AutorId,
+            CategoriaIds = noticia.NoticiasCategorias.Select(cat => cat.CategoriaId).ToList(),
+            Conteudo = noticia.Conteudo,
+            DataPublicacao = noticia.DataPublicacao,
+            MidiaUrl = noticia.Midias.Select(m => m.URL).ToList()
+        };
+
+        private async Task ProcessarMidiasAsync(IEnumerable<IFormFile>? midias, int noticiaId)
+        {
+            if (midias == null) return;
+
+            foreach (var file in midias)
+            {
+                var filePath = Path.Combine("Uploads", Guid.NewGuid() + Path.GetExtension(file.FileName));
+
+                Directory.CreateDirectory(Path.GetDirectoryName(filePath) ?? "Uploads");
+
+                await using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                _context.MidiasNoticias.Add(new MidiaNoticia
+                {
+                    URL = filePath,
+                    NoticiaId = noticiaId,
+                    Ordem = 1,
+                    Tipo = Enuns.TipoMidiaEnum.Imagem
+                });
+            }
+
+            await _context.SaveChangesAsync();
         }
     }
-
 }

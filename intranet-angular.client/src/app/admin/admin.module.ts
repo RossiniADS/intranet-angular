@@ -14,6 +14,7 @@ import { NewsComponent } from './pages/news/news.component';
 import { QuillModule } from 'ngx-quill';
 import { CategoryComponent } from './pages/category/category.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { PageComponent } from './pages/page/page.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     PostsComponent,
     UserComponent,
     NewsComponent,
-    CategoryComponent
+    CategoryComponent,
+    PageComponent
   ],
   imports: [
     CommonModule,

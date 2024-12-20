@@ -1,6 +1,6 @@
 ﻿using intranet_angular.Server.Entities;
 using intranet_angular.Server.Interfaces;
-using intranet_angular.Server.Model;
+using intranet_angular.Server.Request;
 using Microsoft.AspNetCore.Mvc;
 
 namespace intranet_angular.Server.Controllers
@@ -37,7 +37,7 @@ namespace intranet_angular.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] UsuarioModel usuarioModel)
+        public async Task<IActionResult> Create([FromBody] UsuarioRequest usuarioRequest)
         {
             if (!ModelState.IsValid)
             {
@@ -46,13 +46,13 @@ namespace intranet_angular.Server.Controllers
 
             var usuario = new Usuario()
             {
-                Aniversario = usuarioModel.Aniversario,
-                Login = usuarioModel.Login,
+                Aniversario = usuarioRequest.Aniversario,
+                Login = usuarioRequest.Login,
                 CriadoEm = new DateTime(),
                 UltimaAtualizacao = new DateTime(),
-                Nome = usuarioModel.Nome,
-                Senha = usuarioModel.Senha,
-                Email = usuarioModel.Email
+                Nome = usuarioRequest.Nome,
+                Senha = usuarioRequest.Senha,
+                Email = usuarioRequest.Email
             };
 
             var createdUsuario = await _usuarioService.CreateAsync(usuario);
@@ -60,7 +60,7 @@ namespace intranet_angular.Server.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] UsuarioModel usuarioModel)
+        public async Task<IActionResult> Update(int id, [FromBody] UsuarioRequest usuarioRequest)
         {
             if (!ModelState.IsValid)
             {
@@ -70,13 +70,13 @@ namespace intranet_angular.Server.Controllers
             var usuario = new Usuario()
             {
                 Id = id,
-                Aniversario = usuarioModel.Aniversario,
-                Login = usuarioModel.Login,
+                Aniversario = usuarioRequest.Aniversario,
+                Login = usuarioRequest.Login,
                 CriadoEm = new DateTime(),
                 UltimaAtualizacao = new DateTime(),
-                Nome = usuarioModel.Nome,
-                Senha = usuarioModel.Senha,
-                Email = usuarioModel.Email
+                Nome = usuarioRequest.Nome,
+                Senha = usuarioRequest.Senha,
+                Email = usuarioRequest.Email
             };
 
             try

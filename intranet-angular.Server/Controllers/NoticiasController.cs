@@ -1,6 +1,6 @@
-﻿using intranet_angular.Server.Entities;
-using intranet_angular.Server.Interfaces;
-using intranet_angular.Server.Model;
+﻿using intranet_angular.Server.Interfaces;
+using intranet_angular.Server.Request;
+using intranet_angular.Server.Response;
 using Microsoft.AspNetCore.Mvc;
 
 namespace intranet_angular.Server.Controllers
@@ -35,26 +35,26 @@ namespace intranet_angular.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromForm] NoticiaModel noticiaModel)
+        public async Task<IActionResult> Add([FromForm] NoticiaRequest noticiaRequest)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var createdNoticia = await _noticiaService.AddAsync(noticiaModel);
+            var createdNoticia = await _noticiaService.AddAsync(noticiaRequest);
             return CreatedAtAction(nameof(GetById), new { id = createdNoticia.Id }, createdNoticia);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromForm] NoticiaModel noticiaModel)
+        public async Task<IActionResult> Update(int id, [FromForm] NoticiaRequest noticiaRequest)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var updatedNoticia = await _noticiaService.UpdateAsync(id, noticiaModel);
+            var updatedNoticia = await _noticiaService.UpdateAsync(id, noticiaRequest);
             return Ok(updatedNoticia);
         }
 

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { CategoriaResponse } from '../../response/categoriaResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -10,19 +11,19 @@ export class CategoriaService {
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+  getAll(): Observable<CategoriaResponse[]> {
+    return this.http.get<CategoriaResponse[]>(this.apiUrl);
   }
 
-  add(categoria: any): Observable<any> {
-    return this.http.post(this.apiUrl, categoria);
+  add(categoria: any): Observable<CategoriaResponse> {
+    return this.http.post<CategoriaResponse>(this.apiUrl, categoria);
   }
 
-  update(id: number, categoria: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}`, categoria);
+  update(id: number, categoria: any): Observable<CategoriaResponse> {
+    return this.http.put<CategoriaResponse>(`${this.apiUrl}/${id}`, categoria);
   }
 
-  delete(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`);
+  delete(id: number): Observable<CategoriaResponse> {
+    return this.http.delete<CategoriaResponse>(`${this.apiUrl}/${id}`);
   }
 }

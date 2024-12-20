@@ -1,16 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-export interface Noticia {
-  id: number;
-  titulo: string;
-  conteudo: string;
-  midiaUrl: string;
-  autorId?: number;
-  categoriaIds: number[];
-  dataPublicacao: Date;
-}
+import { NoticiaResponse } from '../../response/noticiaResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -20,20 +11,20 @@ export class NoticiaService {
 
   constructor(private http: HttpClient) { }
 
-  getNoticias(): Observable<Noticia[]> {
-    return this.http.get<Noticia[]>(this.apiUrl);
+  getNoticias(): Observable<NoticiaResponse[]> {
+    return this.http.get<NoticiaResponse[]>(this.apiUrl);
   }
 
-  getNoticia(id: number): Observable<Noticia> {
-    return this.http.get<Noticia>(`${this.apiUrl}/${id}`);
+  getNoticia(id: number): Observable<NoticiaResponse> {
+    return this.http.get<NoticiaResponse>(`${this.apiUrl}/${id}`);
   }
 
-  createNoticia(formData: FormData): Observable<Noticia> {
-    return this.http.post<Noticia>(this.apiUrl, formData);
+  createNoticia(formData: FormData): Observable<NoticiaResponse> {
+    return this.http.post<NoticiaResponse>(this.apiUrl, formData);
   }
 
-  updateNoticia(id: number, formData: FormData): Observable<Noticia> {
-    return this.http.put<Noticia>(`${this.apiUrl}/${id}`, formData);
+  updateNoticia(id: number, formData: FormData): Observable<NoticiaResponse> {
+    return this.http.put<NoticiaResponse>(`${this.apiUrl}/${id}`, formData);
   }
 
   deleteNoticia(id: number): Observable<void> {

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Noticia, NoticiaService } from '../../../service/noticia.service';
+import { NoticiaService } from '../../../service/noticia.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoriaService } from '../../../service/categoria.service';
+import { NoticiaResponse } from '../../../../response/noticiaResponse';
 
 @Component({
   selector: 'app-news',
@@ -10,7 +11,7 @@ import { CategoriaService } from '../../../service/categoria.service';
   styleUrl: './news.component.css'
 })
 export class NewsComponent implements OnInit {
-  noticias: Noticia[] = [];
+  noticias: NoticiaResponse[] = [];
   categorias: { id: number; nome: string }[] = [];
   noticiaForm: FormGroup;
   isEditing = false;
@@ -66,7 +67,6 @@ export class NewsComponent implements OnInit {
       formData.append('midias', this.selectedFile);
     }
 
-    console.log(formData)
     if (this.isEditing && this.selectedNoticiaId !== null) {
       this.noticiaService.updateNoticia(this.selectedNoticiaId, formData).subscribe(() => {
         this.loadNoticias();
@@ -94,7 +94,7 @@ export class NewsComponent implements OnInit {
     }
   }
 
-  editNoticia(noticia: Noticia): void {
+  editNoticia(noticia: NoticiaResponse): void {
     this.isEditing = true;
     this.selectedNoticiaId = noticia.id;
     this.noticiaForm.patchValue(noticia);

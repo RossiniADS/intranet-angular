@@ -1,0 +1,42 @@
+<div class="container">
+  <h1>Gerenciamento de Páginas</h1>
+
+  <form class="form-container" [formGroup]="paginaForm" (ngSubmit)="submitForm()">
+    <div class="form-group">
+      <label for="nome">Nome:</label>
+      <input id="nome" formControlName="nome" type="text" placeholder="Digite o nome" />
+    </div>
+
+    <div class="form-group">
+      <label for="descricao">Descrição:</label>
+      <textarea id="descricao" formControlName="descricao" placeholder="Digite a descrição"></textarea>
+    </div>
+
+    <div class="button-group">
+      <button class="btn btn-primary" type="submit">{{ isEditing ? 'Atualizar' : 'Cadastrar' }}</button>
+      <button class="btn btn-secondary" type="button" (click)="resetForm()" *ngIf="isEditing">Cancelar</button>
+    </div>
+  </form>
+
+  <table class="pagina-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Descrição</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pagina of paginas">
+        <td>{{ pagina.id }}</td>
+        <td>{{ pagina.nome }}</td>
+        <td>{{ pagina.descricao }}</td>
+        <td>
+          <button class="btn btn-edit" (click)="editPagina(pagina)">Editar</button>
+          <button class="btn btn-delete" (click)="deletePagina(pagina.id)">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

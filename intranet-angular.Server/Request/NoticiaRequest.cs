@@ -1,6 +1,6 @@
-﻿namespace intranet_angular.Server.Model
+﻿namespace intranet_angular.Server.Request
 {
-    public class NoticiaModel
+    public class NoticiaRequest
     {
         public string Titulo { get; set; }
         public string Conteudo { get; set; }

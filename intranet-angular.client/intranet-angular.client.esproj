@@ -9,14 +9,13 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="src\NovaPasta1\**" />
-    <None Remove="src\NovaPasta\**" />
     <TypeScriptConfiguration Remove="src\NovaPasta1\**" />
-    <TypeScriptConfiguration Remove="src\NovaPasta\**" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\app\layout\back-to-top\" />
     <Folder Include="src\app\pages\home\" />
     <Folder Include="src\app\pages\about\" />
     <Folder Include="src\directives\" />
+    <Folder Include="src\request\" />
   </ItemGroup>
 </Project>
