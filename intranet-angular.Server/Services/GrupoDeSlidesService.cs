@@ -19,23 +19,46 @@ namespace intranet_angular.Server.Services
         public async Task<IEnumerable<GrupoDeSlideResponse>> GetAllAsync()
         {
             return await _context.GrupoDeSlides
+                .Include(g => g.Slides)
                 .Select(g => new GrupoDeSlideResponse
                 {
                     Id = g.Id,
                     Nome = g.Nome,
-                    PaginaId = g.PaginaId
+                    PaginaId = g.PaginaId,
+                    Slides = g.Slides.Select(slides => new SlideResponse()
+                    {
+                        Id = slides.Id,
+                        Descricao = slides.Descricao,
+                        GrupoDeSlidesId = slides.GrupoDeSlidesId,
+                        Ordem = slides.Ordem,
+                        Tipo = slides.Tipo,
+                        Titulo = slides.Titulo,
+                        URL = slides.URL
+                    }).ToList()
                 })
                 .ToListAsync();
         }
 
         public async Task<GrupoDeSlideResponse?> GetByIdAsync(int id)
         {
-            return await _context.GrupoDeSlides.Where(p => p.Id == id)
+            return await _context.GrupoDeSlides
+                .Where(p => p.Id == id)
+                .Include(g => g.Slides)
                 .Select(g => new GrupoDeSlideResponse
                 {
                     Id = g.Id,
                     Nome = g.Nome,
-                    PaginaId = g.PaginaId
+                    PaginaId = g.PaginaId,
+                    Slides = g.Slides.Select(slides => new SlideResponse()
+                    {
+                        Id = slides.Id,
+                        Descricao = slides.Descricao,
+                        GrupoDeSlidesId = slides.GrupoDeSlidesId,
+                        Ordem = slides.Ordem,
+                        Tipo = slides.Tipo,
+                        Titulo = slides.Titulo,
+                        URL = slides.URL
+                    }).ToList()
                 })
                 .FirstOrDefaultAsync();
         }
@@ -128,7 +151,7 @@ namespace intranet_angular.Server.Services
 
                 // Adicionar novos slides
                 var novosSlides = grupoDeSlideRequest.Slides
-                    .Where(s => s.Id == 0)
+                    .Where(s => s.Id == 0 || s.Id == null)
                     .Select(slideRequest => new Slide
                     {
                         Descricao = slideRequest.Descricao,

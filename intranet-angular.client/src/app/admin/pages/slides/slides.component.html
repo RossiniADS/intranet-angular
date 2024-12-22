@@ -57,10 +57,10 @@
           </div>
         </div>
         <button type="button" class="btn btn-primary" (click)="addSlide(i)">Adicionar Slide</button>
-        <button type="button" class="btn btn-danger" (click)="removeGrupo(i)">Remover Grupo</button>
+        <button type="button" class="btn btn-danger" *ngIf="!isEditing" (click)="removeGrupo(i)">Remover Grupo</button>
       </div>
     </div>
-    <button type="button" class="btn btn-primary" (click)="addGrupo()">Adicionar Grupo</button>
+    <button type="button" class="btn btn-primary" *ngIf="!isEditing" (click)="addGrupo()">Adicionar Grupo</button>
 
     <!-- Botões de Ação -->
     <div class="button-group">

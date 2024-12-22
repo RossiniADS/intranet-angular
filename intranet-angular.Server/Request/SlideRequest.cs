@@ -9,7 +9,7 @@ namespace intranet_angular.Server.Request
         public TipoMidiaEnum Tipo { get; set; }
         public string Titulo { get; set; }
         public string Descricao { get; set; }
-        public IFormFile File { get; set; }
+        public IFormFile? File { get; set; }
         public int Ordem { get; set; }
     }
 }

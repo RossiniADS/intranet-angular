@@ -16,6 +16,7 @@ export class SlidesComponent implements OnInit {
   grupoForm: FormGroup;
   isEditing = false;
   gruposResponse: GroupDeSlideResponse[] = []
+  grupoIdEmEdicao: number = 0;
 
   constructor(
     private fb: FormBuilder,
@@ -120,16 +121,34 @@ export class SlidesComponent implements OnInit {
         formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].Titulo`, slide.titulo);
         formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].Descricao`, slide.descricao);
         formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].Ordem`, slideIndex.toString());
+        if (this.isEditing) {
+          formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].Id`, slide.id);
+          formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].GrupoDeSlidesId`, slide.grupoDeSlidesId);
+        }
+
       });
     });
 
-    this.grupoDeSlidesService.createSlides(formData).subscribe({
-      next: () => {
-        alert('Grupos e slides cadastrados com sucesso!');
-        this.resetForm();
-      },
-      error: (err) => alert('Erro ao salvar os grupos e slides: ' + err.message),
-    });
+    if (this.isEditing && this.grupoIdEmEdicao != 0) {
+      this.grupoDeSlidesService.updateSlide(this.grupoIdEmEdicao, formData).subscribe({
+        next: () => {
+          alert('Grupos e slides atualizados com sucesso!');
+          this.resetForm();
+          this.loadGrupo();
+        },
+        error: (err) => alert('Erro ao atualizar os grupos e slides: ' + err.message),
+      });
+
+    } else {
+      this.grupoDeSlidesService.createSlides(formData).subscribe({
+        next: () => {
+          alert('Grupos e slides cadastrados com sucesso!');
+          this.resetForm();
+          this.loadGrupo();
+        },
+        error: (err) => alert('Erro ao salvar os grupos e slides: ' + err.message),
+      });
+    }
   }
 
   // Recarregar páginas
@@ -147,19 +166,49 @@ export class SlidesComponent implements OnInit {
   }
 
   editGrupo(index: number): void {
-    this.isEditing = true;
+    // Verifica se o índice é válido
+    if (index < 0 || index >= this.gruposResponse.length) {
+      return;
+    }
 
-    const grupo = this.grupos.at(index).value;
+    this.isEditing = true;
+    const grupo = this.gruposResponse[index];
+    this.grupoIdEmEdicao = grupo.id;
+
+    if (!grupo) {
+      return;
+    }
+
+    // Atualiza o formulário com os valores do grupo
     this.grupoForm.patchValue({
-      grupos: [
-        {
-          id: grupo.id,
-          nome: grupo.nome,
-          slides: grupo.slides,
-        },
-      ],
+      paginaId: grupo.paginaId,
     });
+
+    // Limpa os grupos existentes no formulário
+    this.grupos.clear();
+
+    // Adiciona o grupo ao formulário
+    const grupoFormGroup = this.fb.group({
+      nome: [grupo.nome, Validators.required],
+      slides: this.fb.array([]),
+    });
+
+    // Popula os slides do grupo
+    grupo.slides.forEach((slide) => {
+      const slideFormGroup = this.fb.group({
+        id: [slide.id],
+        grupoDeSlidesId: [slide.grupoDeSlidesId],
+        titulo: [slide.titulo, Validators.required],
+        descricao: [slide.descricao],
+        file: [null],
+      });
+
+      (grupoFormGroup.get('slides') as FormArray).push(slideFormGroup);
+    });
+
+    this.grupos.push(grupoFormGroup);
   }
+
 
   excluir(id: number): void {
     if (confirm('Deseja realmente excluir este grupo?')) {

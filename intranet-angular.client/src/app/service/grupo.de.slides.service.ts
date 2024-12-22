@@ -15,15 +15,15 @@ export class GrupoDeSlidesService {
     return this.http.get<GroupDeSlideResponse[]>(this.baseUrl);
   }
 
-  createSlides(grupoDeSlides: any): Observable<any> {
-    return this.http.post<any>(this.baseUrl, grupoDeSlides);
+  createSlides(grupoDeSlides: FormData): Observable<GroupDeSlideResponse> {
+    return this.http.post<GroupDeSlideResponse>(this.baseUrl, grupoDeSlides);
   }
 
-  updateSlide(id: number, grupoDeSlides: any): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/${id}`, grupoDeSlides);
+  updateSlide(id: number, grupoDeSlides: FormData): Observable<GroupDeSlideResponse> {
+    return this.http.put<GroupDeSlideResponse>(`${this.baseUrl}/${id}`, grupoDeSlides);
   }
 
-  deleteGrupoDeSlide(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.baseUrl}/${id}`);
+  deleteGrupoDeSlide(id: number): Observable<GroupDeSlideResponse> {
+    return this.http.delete<GroupDeSlideResponse>(`${this.baseUrl}/${id}`);
   }
 }

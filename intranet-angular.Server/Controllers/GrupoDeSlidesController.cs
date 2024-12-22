@@ -37,8 +37,6 @@ namespace intranet_angular.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> Add([FromForm] GrupoSlideRequest grupoDeSlidesRequest)
         {
-
-            // Verifique se o binding está funcionando corretamente
             if (grupoDeSlidesRequest == null)
             {
                 return BadRequest("Nenhum dado foi enviado.");
@@ -54,14 +52,19 @@ namespace intranet_angular.Server.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] GrupoDeSlideRequest grupoDeSlidesRequest)
+        public async Task<IActionResult> Update(int id, [FromForm] GrupoSlideRequest grupoDeSlidesRequest)
         {
+            if (grupoDeSlidesRequest == null)
+            {
+                return BadRequest("Nenhum dado foi enviado.");
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            await _grupoDeSlidesService.UpdateAsync(id, grupoDeSlidesRequest);
+            await _grupoDeSlidesService.UpdateAsync(id, grupoDeSlidesRequest.Grupos.First());
             return NoContent();
         }
 
