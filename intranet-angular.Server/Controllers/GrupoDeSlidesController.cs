@@ -35,31 +35,33 @@ namespace intranet_angular.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] GrupoDeSlides grupoDeSlides)
+        public async Task<IActionResult> Add([FromForm] GrupoSlideRequest grupoDeSlidesRequest)
         {
+
+            // Verifique se o binding está funcionando corretamente
+            if (grupoDeSlidesRequest == null)
+            {
+                return BadRequest("Nenhum dado foi enviado.");
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            await _grupoDeSlidesService.AddAsync(grupoDeSlides);
-            return CreatedAtAction(nameof(GetById), new { id = grupoDeSlides.Id }, grupoDeSlides);
+            var grupoDeSlides = await _grupoDeSlidesService.AddAsync(grupoDeSlidesRequest.Grupos);
+            return Ok(grupoDeSlides);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] GrupoDeSlides grupoDeSlides)
+        public async Task<IActionResult> Update(int id, [FromBody] GrupoDeSlideRequest grupoDeSlidesRequest)
         {
-            if (id != grupoDeSlides.Id)
-            {
-                return BadRequest("ID mismatch.");
-            }
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            await _grupoDeSlidesService.UpdateAsync(grupoDeSlides);
+            await _grupoDeSlidesService.UpdateAsync(id, grupoDeSlidesRequest);
             return NoContent();
         }
 

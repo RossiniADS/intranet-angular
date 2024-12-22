@@ -1,4 +1,4 @@
-import { SlideService } from '../../../service/slides.service';
+import { GrupoDeSlidesService } from '../../../service/grupo.de.slides.service';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { PaginaService } from '../../../service/pagina.service';
@@ -18,7 +18,7 @@ export class SlidesComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private paginaService: PaginaService,
-    private slideService: SlideService
+    private grupoDeSlidesService: GrupoDeSlidesService
   ) {
     this.grupoForm = this.fb.group({
       paginaId: ['', Validators.required],
@@ -93,19 +93,28 @@ export class SlidesComponent implements OnInit {
     const grupos = this.grupoForm.value.grupos;
 
     grupos.forEach((grupo: any, grupoIndex: number) => {
+      formData.append(`Grupos[${grupoIndex}].Nome`, grupo.nome);
+      formData.append(`Grupos[${grupoIndex}].PaginaId`, this.grupoForm.value.paginaId);
+
       grupo.slides.forEach((slide: any, slideIndex: number) => {
         if (slide.file) {
-          formData.append(`grupos[${grupoIndex}][slides][${slideIndex}][file]`, slide.file);
+          const fileType = slide.file.type.startsWith('image/') ? '0' : slide.file.type.startsWith('video/') ? '1' : null;
+
+          if (fileType !== null) {
+            formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].File`, slide.file);
+            formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].Tipo`, fileType); 
+          } else {
+            console.warn(`Arquivo ignorado: tipo não suportado (${slide.file.type})`);
+          }
         }
-        formData.append(`grupos[${grupoIndex}][slides][${slideIndex}][titulo]`, slide.titulo);
-        formData.append(`grupos[${grupoIndex}][slides][${slideIndex}][descricao]`, slide.descricao);
+
+        formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].Titulo`, slide.titulo); 
+        formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].Descricao`, slide.descricao); 
+        formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].Ordem`, slideIndex.toString()); 
       });
-      formData.append(`grupos[${grupoIndex}][nome]`, grupo.nome);
     });
 
-    formData.append('paginaId', this.grupoForm.value.paginaId);
-
-    this.slideService.createSlides(formData).subscribe({
+    this.grupoDeSlidesService.createSlides(formData).subscribe({
       next: () => {
         alert('Grupos e slides cadastrados com sucesso!');
         this.resetForm();

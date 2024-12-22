@@ -50,6 +50,7 @@ builder.Services.AddTransient<INoticiaService, NoticiaService>();
 builder.Services.AddScoped<IPaginaService, PaginaService>();
 builder.Services.AddScoped<ISlideService, SlideService>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+builder.Services.AddScoped<IGrupoDeSlidesService, GrupoDeSlidesService>();
 
 
 builder.Services.AddControllers();

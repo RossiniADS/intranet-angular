@@ -14,11 +14,11 @@ export class SlideService {
     return this.http.get<any[]>(this.baseUrl);
   }
 
-  createSlides(slide: any): Observable<any> {
+  createSlides(slide: FormData): Observable<any> {
     return this.http.post<any>(this.baseUrl, slide);
   }
 
-  updateSlide(id: number, slide: any): Observable<any> {
+  updateSlide(id: number, slide: FormData): Observable<any> {
     return this.http.put<any>(`${this.baseUrl}/${id}`, slide);
   }
 

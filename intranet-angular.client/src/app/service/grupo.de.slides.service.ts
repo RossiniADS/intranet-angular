@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class SlideService {
+export class GrupoDeSlidesService {
   private baseUrl = 'https://localhost:7227/api/grupoDeSlides';
 
   constructor(private http: HttpClient) { }
