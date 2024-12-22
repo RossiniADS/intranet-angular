@@ -68,4 +68,27 @@
       <button class="btn btn-secondary" type="button" (click)="resetForm()" *ngIf="isEditing">Cancelar</button>
     </div>
   </form>
+
+  <!-- Tabela de Grupos -->
+  <table class="slide-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>PaginaId</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let grupo of gruposResponse; let i = index">
+        <td>{{ grupo.id }}</td>
+        <td>{{ grupo.nome }}</td>
+        <td>{{ grupo.paginaId }}</td>
+        <td>
+          <button class="btn btn-edit" (click)="editGrupo(i)">Editar</button>
+          <button class="btn btn-delete" (click)="excluir(grupo.id)">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

@@ -2,6 +2,7 @@ import { GrupoDeSlidesService } from '../../../service/grupo.de.slides.service';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { PaginaService } from '../../../service/pagina.service';
+import { GroupDeSlideResponse } from '../../../../response/groupDeSlideResponse'
 
 @Component({
   selector: 'app-slides',
@@ -14,6 +15,7 @@ export class SlidesComponent implements OnInit {
   paginas: any[] = [];
   grupoForm: FormGroup;
   isEditing = false;
+  gruposResponse: GroupDeSlideResponse[] = []
 
   constructor(
     private fb: FormBuilder,
@@ -28,6 +30,13 @@ export class SlidesComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadPaginas();
+    this.loadGrupo();
+  }
+
+  loadGrupo() {
+    this.grupoDeSlidesService.getAll().subscribe((data) => {
+      this.gruposResponse = data;
+    })
   }
 
   // Getter para os grupos
@@ -102,15 +111,15 @@ export class SlidesComponent implements OnInit {
 
           if (fileType !== null) {
             formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].File`, slide.file);
-            formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].Tipo`, fileType); 
+            formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].Tipo`, fileType);
           } else {
             console.warn(`Arquivo ignorado: tipo não suportado (${slide.file.type})`);
           }
         }
 
-        formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].Titulo`, slide.titulo); 
-        formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].Descricao`, slide.descricao); 
-        formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].Ordem`, slideIndex.toString()); 
+        formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].Titulo`, slide.titulo);
+        formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].Descricao`, slide.descricao);
+        formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].Ordem`, slideIndex.toString());
       });
     });
 
@@ -135,5 +144,29 @@ export class SlidesComponent implements OnInit {
     this.grupoForm.reset();
     this.grupos.clear();
     this.isEditing = false;
+  }
+
+  editGrupo(index: number): void {
+    this.isEditing = true;
+
+    const grupo = this.grupos.at(index).value;
+    this.grupoForm.patchValue({
+      grupos: [
+        {
+          id: grupo.id,
+          nome: grupo.nome,
+          slides: grupo.slides,
+        },
+      ],
+    });
+  }
+
+  excluir(id: number): void {
+    if (confirm('Deseja realmente excluir este grupo?')) {
+      this.grupoDeSlidesService.deleteGrupoDeSlide(id).subscribe({
+        next: () => this.loadGrupo(),
+        error: (err) => alert('Erro ao excluir o grupo: ' + err.message),
+      });
+    }
   }
 }
