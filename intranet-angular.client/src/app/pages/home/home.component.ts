@@ -2,6 +2,9 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 import Swiper from 'swiper';
 import { register } from 'swiper/element/bundle';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
+import { NoticiaService } from '../../service/noticia.service';
+import { SlideService } from '../../service/slides.service';
+import { GrupoDeSlidesService } from '../../service/grupo.de.slides.service';
 
 @Component({
   selector: 'app-home',
@@ -10,42 +13,32 @@ import { faPlay } from '@fortawesome/free-solid-svg-icons';
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements AfterViewInit, OnInit {
-
-  slides = [
-    {
-      type: 'image',
-      src: 'https://via.placeholder.com/600x400',
-      title: 'Imagem 1',
-      description: 'Descrição para a imagem 1.',
-    },
-    {
-      type: 'video',
-      src: 'https://www.w3schools.com/html/mov_bbb.mp4',
-      title: 'Vídeo 1',
-      description: 'Descrição para o vídeo 1.',
-    },
-    {
-      type: 'image',
-      src: 'https://via.placeholder.com/600x400?text=Slide+2',
-      title: 'Imagem 2',
-      description: 'Descrição para a imagem 2.',
-    },
-  ];
-
-  currentIndex = 0;
-
-  prevSlide() {
-    this.currentIndex = (this.currentIndex - 1 + this.slides.length) % this.slides.length;
-  }
-
-  nextSlide() {
-    this.currentIndex = (this.currentIndex + 1) % this.slides.length;
-  }
-
   faPlay = faPlay;
+  trendingSlides: any[] = [];
+  pageIdHome = 1;
+  currentIndex = 0;
+  constructor(private noticiaService: NoticiaService, private slideService: SlideService, private grupoDeSlideService: GrupoDeSlidesService) {
+  }
 
   ngOnInit() {
-    register()
+    register();
+    this.loadTrendingSlides();
+  }
+
+  loadTrendingSlides() {
+    this.grupoDeSlideService.getByPageId(this.pageIdHome)
+      .subscribe((grupos) => {
+        grupos[0].slides.forEach(slide => {
+          this.trendingSlides.push({
+            imageUrl: 'https://localhost:7227/' + slide.url,
+            altText: 'Slide',
+            category: slide.principalCategoriaNome,
+            title: slide.titulo,
+            description: slide.descricao,
+            link: '/latest-news/' + slide.noticiaId,
+          });
+        });
+      });
   }
 
   ngAfterViewInit(): void {
@@ -145,33 +138,64 @@ export class HomeComponent implements AfterViewInit, OnInit {
     });
   }
 
-  //PARTE UM 
-  trendingSlides = [
+  slides = [
     {
-      imageUrl: 'assets/img/trending/trending_top2.jpg',
-      altText: 'Trending Slide 1',
-      category: 'Business',
-      title: 'Anna Lora Stuns In White At Her Australian Premiere',
-      description: 'by Alice Cloe - Jun 19, 2020',
-      link: '/latest-news',
+      type: 'image',
+      src: 'https://via.placeholder.com/600x400',
+      title: 'Imagem 1',
+      description: 'Descrição para a imagem 1.',
     },
     {
-      imageUrl: 'assets/img/trending/trending_top02.jpg',
-      altText: 'Trending Slide 2',
-      category: 'Business',
-      title: 'Anna Lora Stuns In White At Her Australian Premiere',
-      description: 'by Alice Cloe - Jun 19, 2020',
-      link: '/latest-news',
+      type: 'video',
+      src: 'https://www.w3schools.com/html/mov_bbb.mp4',
+      title: 'Vídeo 1',
+      description: 'Descrição para o vídeo 1.',
     },
     {
-      imageUrl: 'assets/img/trending/trending_top03.jpg',
-      altText: 'Trending Slide 3',
-      category: 'Business',
-      title: 'Anna Lora Stuns In White At Her Australian Premiere',
-      description: 'by Alice Cloe - Jun 19, 2020',
-      link: '/latest-news',
+      type: 'image',
+      src: 'https://via.placeholder.com/600x400?text=Slide+2',
+      title: 'Imagem 2',
+      description: 'Descrição para a imagem 2.',
     },
   ];
+
+  prevSlide() {
+    this.currentIndex = (this.currentIndex - 1 + this.slides.length) % this.slides.length;
+  }
+
+  nextSlide() {
+    this.currentIndex = (this.currentIndex + 1) % this.slides.length;
+  }
+
+
+
+  //PARTE UM 
+  //trendingSlides = [
+  //  {
+  //    imageUrl: 'assets/img/trending/trending_top2.jpg',
+  //    altText: 'Trending Slide 1',
+  //    category: 'Business',
+  //    title: 'Anna Lora Stuns In White At Her Australian Premiere',
+  //    description: 'by Alice Cloe - Jun 19, 2020',
+  //    link: '/latest-news',
+  //  },
+  //  {
+  //    imageUrl: 'assets/img/trending/trending_top02.jpg',
+  //    altText: 'Trending Slide 2',
+  //    category: 'Business',
+  //    title: 'Anna Lora Stuns In White At Her Australian Premiere',
+  //    description: 'by Alice Cloe - Jun 19, 2020',
+  //    link: '/latest-news',
+  //  },
+  //  {
+  //    imageUrl: 'assets/img/trending/trending_top03.jpg',
+  //    altText: 'Trending Slide 3',
+  //    category: 'Business',
+  //    title: 'Anna Lora Stuns In White At Her Australian Premiere',
+  //    description: 'by Alice Cloe - Jun 19, 2020',
+  //    link: '/latest-news',
+  //  },
+  //];
 
   trendingCards = [
     {

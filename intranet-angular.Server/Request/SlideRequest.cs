@@ -11,5 +11,7 @@ namespace intranet_angular.Server.Request
         public string Descricao { get; set; }
         public IFormFile? File { get; set; }
         public int Ordem { get; set; }
+        public int? NoticiaId { get; set; }
+
     }
 }

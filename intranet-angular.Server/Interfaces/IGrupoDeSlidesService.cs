@@ -8,6 +8,7 @@ namespace intranet_angular.Server.Interfaces
     {
         Task<IEnumerable<GrupoDeSlideResponse>> GetAllAsync();
         Task<GrupoDeSlideResponse?> GetByIdAsync(int id);
+        Task<List<GrupoDeSlideResponse>> GetByPageIdAsync(int pageId);
         Task<List<GrupoDeSlideResponse>> AddAsync(List<GrupoDeSlideRequest> grupoDeSlideRequest);
         Task<GrupoDeSlideResponse> UpdateAsync(int id, GrupoDeSlideRequest grupoDeSlideRequest);
         Task DeleteAsync(int id);

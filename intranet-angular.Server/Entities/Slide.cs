@@ -11,8 +11,9 @@ namespace intranet_angular.Server.Entities
         public string Descricao { get; set; }
         public string URL { get; set; }
         public int Ordem { get; set; }
+        public int? NoticiaId { get; set; }
 
-        // Relacionamento com GrupoDeSlides
         public GrupoDeSlides GrupoDeSlides { get; set; }
+        public Noticia Noticia { get; set; }
     }
 }

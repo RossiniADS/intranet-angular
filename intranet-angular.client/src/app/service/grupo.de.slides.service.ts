@@ -11,8 +11,12 @@ export class GrupoDeSlidesService {
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<any[]> {
+  getAll(): Observable<GroupDeSlideResponse[]> {
     return this.http.get<GroupDeSlideResponse[]>(this.baseUrl);
+  }
+
+  getByPageId(pageId: number): Observable<GroupDeSlideResponse[]> {
+    return this.http.get<GroupDeSlideResponse[]>(`${this.baseUrl}/page/${pageId}`);
   }
 
   createSlides(grupoDeSlides: FormData): Observable<GroupDeSlideResponse> {

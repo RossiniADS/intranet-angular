@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { PaginaService } from '../../../service/pagina.service';
 import { GroupDeSlideResponse } from '../../../../response/groupDeSlideResponse'
+import { NoticiaResponse } from '../../../../response/noticiaResponse';
+import { NoticiaService } from '../../../service/noticia.service';
 
 @Component({
   selector: 'app-slides',
@@ -15,13 +17,15 @@ export class SlidesComponent implements OnInit {
   paginas: any[] = [];
   grupoForm: FormGroup;
   isEditing = false;
-  gruposResponse: GroupDeSlideResponse[] = []
+  gruposResponse: GroupDeSlideResponse[] = [];
   grupoIdEmEdicao: number = 0;
+  noticiasResponse: NoticiaResponse[] = [];
 
   constructor(
     private fb: FormBuilder,
     private paginaService: PaginaService,
-    private grupoDeSlidesService: GrupoDeSlidesService
+    private grupoDeSlidesService: GrupoDeSlidesService,
+    private noticiaService: NoticiaService
   ) {
     this.grupoForm = this.fb.group({
       paginaId: ['', Validators.required],
@@ -32,6 +36,13 @@ export class SlidesComponent implements OnInit {
   ngOnInit(): void {
     this.loadPaginas();
     this.loadGrupo();
+    this.loadNoticia();
+  }
+
+  loadNoticia() {
+    this.noticiaService.getNoticias().subscribe((data) => {
+      this.noticiasResponse = data;
+     })
   }
 
   loadGrupo() {
@@ -71,6 +82,7 @@ export class SlidesComponent implements OnInit {
       this.fb.group({
         titulo: ['', Validators.required],
         descricao: [''],
+        noticiaId: [''],
         file: [null],
       })
     );
@@ -118,6 +130,7 @@ export class SlidesComponent implements OnInit {
           }
         }
 
+        formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].NoticiaId`, slide.noticiaId);
         formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].Titulo`, slide.titulo);
         formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].Descricao`, slide.descricao);
         formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].Ordem`, slideIndex.toString());
@@ -200,6 +213,7 @@ export class SlidesComponent implements OnInit {
         grupoDeSlidesId: [slide.grupoDeSlidesId],
         titulo: [slide.titulo, Validators.required],
         descricao: [slide.descricao],
+        noticiaId: [slide.noticiaId],
         file: [null],
       });
 

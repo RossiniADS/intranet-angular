@@ -34,6 +34,17 @@ namespace intranet_angular.Server.Controllers
             return Ok(grupoDeSlides);
         }
 
+        [HttpGet("page/{pageId}")]
+        public async Task<IActionResult> GetByPageId(int pageId)
+        {
+            var grupoDeSlides = await _grupoDeSlidesService.GetByPageIdAsync(pageId);
+            if (grupoDeSlides == null)
+            {
+                return NotFound();
+            }
+            return Ok(grupoDeSlides);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Add([FromForm] GrupoSlideRequest grupoDeSlidesRequest)
         {
