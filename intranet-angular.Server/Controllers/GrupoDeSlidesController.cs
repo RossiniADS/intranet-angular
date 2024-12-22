@@ -7,26 +7,26 @@ namespace intranet_angular.Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class GrupoDeGrupoDeSlidessController : ControllerBase
+    public class GrupoDeSlidesController : ControllerBase
     {
-        private readonly IGrupoDeSlidesService _grupoDeGrupoDeSlidesService;
+        private readonly IGrupoDeSlidesService _grupoDeSlidesService;
 
-        public GrupoDeGrupoDeSlidessController(IGrupoDeSlidesService grupoDeGrupoDeSlidessService)
+        public GrupoDeSlidesController(IGrupoDeSlidesService grupoDeSlidesService)
         {
-            _grupoDeGrupoDeSlidesService = grupoDeGrupoDeSlidessService;
+            _grupoDeSlidesService = grupoDeSlidesService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var grupoDeSlidess = await _grupoDeGrupoDeSlidesService.GetAllAsync();
+            var grupoDeSlidess = await _grupoDeSlidesService.GetAllAsync();
             return Ok(grupoDeSlidess);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var grupoDeSlides = await _grupoDeGrupoDeSlidesService.GetByIdAsync(id);
+            var grupoDeSlides = await _grupoDeSlidesService.GetByIdAsync(id);
             if (grupoDeSlides == null)
             {
                 return NotFound();
@@ -42,7 +42,7 @@ namespace intranet_angular.Server.Controllers
                 return BadRequest(ModelState);
             }
 
-            await _grupoDeGrupoDeSlidesService.AddAsync(grupoDeSlides);
+            await _grupoDeSlidesService.AddAsync(grupoDeSlides);
             return CreatedAtAction(nameof(GetById), new { id = grupoDeSlides.Id }, grupoDeSlides);
         }
 
@@ -59,20 +59,20 @@ namespace intranet_angular.Server.Controllers
                 return BadRequest(ModelState);
             }
 
-            await _grupoDeGrupoDeSlidesService.UpdateAsync(grupoDeSlides);
+            await _grupoDeSlidesService.UpdateAsync(grupoDeSlides);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var grupoDeSlides = await _grupoDeGrupoDeSlidesService.GetByIdAsync(id);
+            var grupoDeSlides = await _grupoDeSlidesService.GetByIdAsync(id);
             if (grupoDeSlides == null)
             {
                 return NotFound();
             }
 
-            await _grupoDeGrupoDeSlidesService.DeleteAsync(id);
+            await _grupoDeSlidesService.DeleteAsync(id);
             return NoContent();
         }
 

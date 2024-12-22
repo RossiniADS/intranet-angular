@@ -77,29 +77,29 @@ h1 {
     background: #ddd;
   }
 
-.user-table {
+.slide-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
 }
 
-  .user-table th,
-  .user-table td {
+  .slide-table th,
+  .slide-table td {
     text-align: left;
     padding: 10px;
     border: 1px solid #ddd;
   }
 
-  .user-table th {
+  .slide-table th {
     background: #4CAF50;
     color: #fff;
   }
 
-  .user-table tr:nth-child(even) {
+  .slide-table tr:nth-child(even) {
     background: #f9f9f9;
   }
 
-  .user-table .btn-edit {
+  .slide-table .btn-edit {
     background: #2196F3;
     color: white;
     padding: 5px 10px;
@@ -108,11 +108,11 @@ h1 {
     cursor: pointer;
   }
 
-    .user-table .btn-edit:hover {
+    .slide-table .btn-edit:hover {
       background: #1976D2;
     }
 
-  .user-table .btn-delete {
+  .slide-table .btn-delete {
     background: #F44336;
     color: white;
     padding: 5px 10px;
@@ -121,6 +121,21 @@ h1 {
     cursor: pointer;
   }
 
-    .user-table .btn-delete:hover {
+    .slide-table .btn-delete:hover {
       background: #D32F2F;
     }
+
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  resize: vertical;
+}
+
+  textarea:focus {
+    border-color: #4CAF50;
+    outline: none;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+  }

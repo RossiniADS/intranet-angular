@@ -1,99 +1,71 @@
 <div class="container">
   <h1>Gerenciamento de Páginas</h1>
 
-  <!-- Formulário de Gerenciamento de Páginas -->
-  <form class="form-container" [formGroup]="paginaForm" (ngSubmit)="submitForm()">
+  <form [formGroup]="grupoForm" (ngSubmit)="submitForm()" class="form-container">
+    <!-- Seleção de Página -->
     <div class="form-group">
-      <label for="titulo">Título da Página:</label>
-      <input id="titulo"
-             formControlName="titulo"
-             type="text"
-             placeholder="Digite o título da página" />
+      <label for="pagina">Selecione a Página:</label>
+      <select id="pagina" formControlName="paginaId" class="form-control">
+        <option *ngFor="let pagina of paginas" [value]="pagina.id">
+          {{ pagina.nome }}
+        </option>
+      </select>
     </div>
 
+    <!-- Gerenciamento de Grupos -->
+    <div formArrayName="grupos">
+      <div *ngFor="let grupo of grupos.controls; let i = index" [formGroupName]="i" class="grupo-container">
+        <h3>Grupo {{ i + 1 }}</h3>
+        <div class="form-group">
+          <label for="grupoNome-{{ i }}">Nome do Grupo:</label>
+          <input id="grupoNome-{{ i }}"
+                 formControlName="nome"
+                 type="text"
+                 class="form-control"
+                 placeholder="Digite o nome do grupo" />
+        </div>
+
+        <!-- Gerenciamento de Slides -->
+        <div formArrayName="slides">
+          <div *ngFor="let slide of getSlides(i).controls; let j = index"
+               [formGroupName]="j"
+               class="slide-container">
+            <h4>Slide {{ j + 1 }}</h4>
+            <div class="form-group">
+              <label for="slideTitulo-{{ i }}-{{ j }}">Título:</label>
+              <input id="slideTitulo-{{ i }}-{{ j }}"
+                     formControlName="titulo"
+                     type="text"
+                     class="form-control"
+                     placeholder="Digite o título do slide" />
+            </div>
+            <div class="form-group">
+              <label for="slideDescricao-{{ i }}-{{ j }}">Descrição:</label>
+              <textarea id="slideDescricao-{{ i }}-{{ j }}"
+                        formControlName="descricao"
+                        class="form-control"
+                        placeholder="Digite a descrição"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="slideArquivo-{{ i }}-{{ j }}">Arquivo:</label>
+              <input id="slideArquivo-{{ i }}-{{ j }}"
+                     type="file"
+                     class="form-control"
+                     (change)="onSlideFileSelected($event, i, j)" />
+            </div>
+            <button type="button" class="btn btn-danger" (click)="removeSlide(i, j)">Remover Slide</button>
+          </div>
+        </div>
+        <button type="button" class="btn btn-primary" (click)="addSlide(i)">Adicionar Slide</button>
+        <button type="button" class="btn btn-danger" (click)="removeGrupo(i)">Remover Grupo</button>
+      </div>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="addGrupo()">Adicionar Grupo</button>
+
+    <!-- Botões de Ação -->
     <div class="button-group">
-      <button class="btn btn-primary" type="submit">
-        {{ isEditingPagina ? 'Atualizar' : 'Cadastrar' }}
-      </button>
-      <button class="btn btn-secondary"
-              type="button"
-              (click)="resetPaginaForm()"
-              *ngIf="isEditingPagina">
-        Cancelar
-      </button>
+      <button class="btn btn-primary" type="submit">{{ isEditing ? 'Atualizar' : 'Cadastrar' }}</button>
+      <button class="btn btn-secondary" type="button" (click)="resetForm()" *ngIf="isEditing">Cancelar</button>
     </div>
   </form>
-
-  <!-- Listagem de Grupos de Slides -->
-  <div *ngFor="let grupo of gruposSlides" class="slide-group">
-    <h2>Slide Grupo {{ grupo.ordem }}</h2>
-    <table class="user-table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Título</th>
-          <th>Descrição</th>
-          <th>URL</th>
-          <th>Ordem</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let slide of grupo.slides">
-          <td>{{ slide.id }}</td>
-          <td>{{ slide.titulo }}</td>
-          <td>{{ slide.descricao }}</td>
-          <td>{{ slide.url }}</td>
-          <td>{{ slide.ordem }}</td>
-          <td>
-            <button class="btn btn-edit" (click)="editSlide(slide)">Editar</button>
-            <button class="btn btn-delete" (click)="deleteSlide(slide.id)">Excluir</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- Formulário de Gerenciamento de Slides -->
-  <div *ngIf="isEditingSlide" class="form-container">
-    <h3>{{ currentSlideId ? 'Editar Slide' : 'Novo Slide' }}</h3>
-    <form [formGroup]="slideForm" (ngSubmit)="submitSlideForm()">
-      <div class="form-group">
-        <label for="titulo-slide">Título do Slide:</label>
-        <input id="titulo-slide"
-               formControlName="titulo"
-               type="text"
-               placeholder="Digite o título do slide" />
-      </div>
-
-      <div class="form-group">
-        <label for="descricao-slide">Descrição do Slide:</label>
-        <input id="descricao-slide"
-               formControlName="descricao"
-               type="text"
-               placeholder="Digite a descrição do slide" />
-      </div>
-
-      <div class="form-group">
-        <label for="url-slide">URL do Slide:</label>
-        <input id="url-slide"
-               formControlName="url"
-               type="text"
-               placeholder="Digite a URL do slide" />
-      </div>
-
-      <div class="form-group">
-        <label for="ordem-slide">Ordem do Slide:</label>
-        <input id="ordem-slide"
-               formControlName="ordem"
-               type="number"
-               placeholder="Digite a ordem do slide" />
-      </div>
-
-      <div class="button-group">
-        <button class="btn btn-primary" type="submit">Salvar</button>
-        <button class="btn btn-secondary" type="button" (click)="resetSlideForm()">Cancelar</button>
-      </div>
-    </form>
-  </div>
 </div>
