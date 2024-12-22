@@ -675,7 +675,7 @@ hr {
 /* scrollUp */
 /* line 443, ../../SAIFUL/Running_project/248. Magazine & News/assets/scss/_common.scss */
 #scrollUp {
-  background: #ff2143;
+  background: #24b4f4;
   height: 50px;
   width: 50px;
   right: 31px;
@@ -698,7 +698,7 @@ hr {
 /* line 460, ../../SAIFUL/Running_project/248. Magazine & News/assets/scss/_common.scss */
 #scrollUp:hover {
   color: #fff;
-  background: #ff656a;
+  background: #1696e7;
 }
 
 /* Sticky*/
@@ -3279,7 +3279,7 @@ hr {
   opacity: 0;
   box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.05);
   padding: 17px 0;
-  border-top: 5px solid #ff656a;
+  border-top: 5px solid #1696e7;
   -webkit-transition: all 0.3s ease-out 0s;
   -moz-transition: all 0.3s ease-out 0s;
   -ms-transition: all 0.3s ease-out 0s;

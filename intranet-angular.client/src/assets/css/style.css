@@ -54,7 +54,7 @@
 }
 
 .theme-bg {
-  background: #ff2143
+  background: #24b4f4
 }
 
 .brand-bg {
@@ -74,30 +74,30 @@
 }
 
 .theme-color {
-  color: #ff2143
+  color: #24b4f4
 }
 
 .boxed-btn {
   background: #fff;
-  color: #ff2143 !important;
+  color: #24b4f4 !important;
   display: inline-block;
   padding: 18px 44px;
   font-family: "Barlow",sans-serif;
   font-size: 14px;
   font-weight: 400;
   border: 0;
-  border: 1px solid #ff2143;
+  border: 1px solid #24b4f4;
   letter-spacing: 3px;
   text-align: center;
-  color: #ff2143;
+  color: #24b4f4;
   text-transform: uppercase;
   cursor: pointer
 }
 
   .boxed-btn:hover {
-    background: #ff2143;
+    background: #24b4f4;
     color: #fff !important;
-    border: 1px solid #ff2143
+    border: 1px solid #24b4f4
   }
 
   .boxed-btn:focus {
@@ -408,7 +408,7 @@ hr {
   }
 
 .btn {
-  background: #ff2143;
+  background: #24b4f4;
   text-transform: uppercase;
   color: #fff;
   cursor: pointer;
@@ -453,7 +453,7 @@ hr {
   }
 
 .button.button-contactForm.boxed-btn2 {
-  background: #ff2143;
+  background: #24b4f4;
   border: 1px solid #ddd;
   color: #fff !important;
   width: 100%
@@ -462,7 +462,7 @@ hr {
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .btn.post-btn {
     background: #000;
-    color: #ff2143 !important
+    color: #24b4f4 !important
   }
 
     .btn.post-btn::before {
@@ -473,7 +473,7 @@ hr {
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .btn.post-btn {
     background: #000;
-    color: #ff2143 !important
+    color: #24b4f4 !important
   }
 
     .btn.post-btn::before {
@@ -484,7 +484,7 @@ hr {
 @media only screen and (min-width: 576px) and (max-width: 767px) {
   .btn.post-btn {
     background: #000;
-    color: #ff2143 !important
+    color: #24b4f4 !important
   }
 
     .btn.post-btn::before {
@@ -495,7 +495,7 @@ hr {
 @media (max-width: 575px) {
   .btn.post-btn {
     background: #000;
-    color: #ff2143 !important
+    color: #24b4f4 !important
   }
 
     .btn.post-btn::before {
@@ -519,11 +519,11 @@ hr {
 .border-btn {
   background: none;
   -moz-user-select: none;
-  border: 2px solid #ff2143;
+  border: 2px solid #24b4f4;
   padding: 18px 38px;
   margin: 10px;
   text-transform: capitalize;
-  color: #ff2143;
+  color: #24b4f4;
   cursor: pointer;
   display: inline-block;
   font-size: 14px;
@@ -546,7 +546,7 @@ hr {
     top: 0;
     width: 100%;
     height: 100%;
-    background: #ff2143;
+    background: #24b4f4;
     z-index: -1;
     transition: transform 0.5s;
     transition-timing-function: ease;
@@ -565,7 +565,7 @@ hr {
   }
 
 .send-btn {
-  background: #ff2143;
+  background: #24b4f4;
   color: #fff;
   font-size: 14px;
   width: 100%;
@@ -588,7 +588,7 @@ hr {
     width: 100%;
     height: 100%;
     background: #e6373d;
-    color: #ff2143;
+    color: #24b4f4;
     z-index: -1;
     transition: transform 0.5s;
     transition-timing-function: ease;
@@ -608,7 +608,7 @@ hr {
 }
 
 #scrollUp {
-  background: #ff2143;
+  background: #24b4f4;
   height: 50px;
   width: 50px;
   right: 31px;
@@ -2075,7 +2075,7 @@ hr {
     position: relative;
     border-style: solid;
     border-width: 1px;
-    border-top-color: #ff2143;
+    border-top-color: #24b4f4;
     border-bottom-color: transparent;
     border-left-color: transparent;
     border-right-color: transparent;
@@ -2747,7 +2747,7 @@ hr {
 }
 
 .theme-bg {
-  background: #ff2143
+  background: #24b4f4
 }
 
 .brand-bg {
@@ -2767,7 +2767,7 @@ hr {
 }
 
 .theme-color {
-  color: #ff2143
+  color: #24b4f4
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
@@ -2846,7 +2846,7 @@ hr {
 
 .header-area .header-top .header-info-left ul li span {
   margin-right: 8px;
-  color: #ff2143
+  color: #24b4f4
 }
 
 .header-area .header-top .header-info-left ul li.title {
@@ -2876,7 +2876,7 @@ hr {
 
 .header-area .header-bottom {
   box-shadow: 0px 0px 36px 0px rgba(0,0,0,0.1);
-  background: #ff2143
+  background: #24b4f4
 }
 
 @media only screen and (min-width: 576px) and (max-width: 767px) {
@@ -2907,7 +2907,7 @@ hr {
   content: "";
   width: 1px;
   height: 101%;
-  background: #ff889a;
+  background: #fff;
   position: absolute;
   left: 0;
   top: 0px;
@@ -2918,7 +2918,7 @@ hr {
   content: "";
   width: 1px;
   height: 101%;
-  background: #ff889a;
+  background: #fff;
   position: absolute;
   right: 0;
   top: 0px;
@@ -2969,7 +2969,7 @@ hr {
     content: "";
     width: 1px;
     height: 104%;
-    background: #ff889a;
+    background: #fff;
     position: absolute;
     right: 0px;
     top: -1px;
@@ -3075,7 +3075,7 @@ hr {
     }
 
       .main-header .main-menu ul ul.submenu > li > a:hover {
-        color: #ff2143;
+        color: #24b4f4;
         background: none
       }
 
@@ -3088,7 +3088,7 @@ hr {
     content: "";
     width: 1px;
     height: 104%;
-    background: #ff889a;
+    background: #fff;
     position: absolute;
     right: 0px;
     top: -1px;
@@ -3203,7 +3203,7 @@ hr {
 
       .mobile_menu .slicknav_menu .slicknav_nav a:hover {
         background: transparent;
-        color: #ff2143
+        color: #24b4f4
       }
 
       .mobile_menu .slicknav_menu .slicknav_nav a {
@@ -3381,7 +3381,7 @@ hr {
 }
 
   .trending-area .trending-main .trending-bottom .single-bottom .trend-bottom-cap h4 a:hover {
-    color: #ff2143
+    color: #24b4f4
   }
 
 .single-bottom:hover .trend-bottom-img img {
@@ -3430,7 +3430,7 @@ hr {
 }
 
 .whats-news-area .whats-news-single .whates-caption h4 a:hover, .about-area2 .whats-news-single .whates-caption h4 a:hover, .contact-section .whats-news-single .whates-caption h4 a:hover {
-  color: #ff2143
+  color: #24b4f4
 }
 
 .whats-news-area .whats-news-single .whates-caption span, .about-area2 .whats-news-single .whates-caption span, .contact-section .whats-news-single .whates-caption span {
@@ -3542,7 +3542,7 @@ hr {
 }
 
   .whats-news-area .whats-right-single .whats-right-cap h4 a:hover, .about-area2 .whats-right-single .whats-right-cap h4 a:hover, .contact-section .whats-right-single .whats-right-cap h4 a:hover {
-    color: #ff2143
+    color: #24b4f4
   }
 
 .whats-news-area .whats-right-single .whats-right-cap p, .about-area2 .whats-right-single .whats-right-cap p, .contact-section .whats-right-single .whats-right-cap p {
@@ -3708,7 +3708,7 @@ hr {
 }
 
 .whats-news-area .most-recent-area .most-recent-single .most-recent-capt h4 a:hover, .about-area2 .most-recent-area .most-recent-single .most-recent-capt h4 a:hover, .contact-section .most-recent-area .most-recent-single .most-recent-capt h4 a:hover {
-  color: #ff2143
+  color: #24b4f4
 }
 
 .whats-news-area .most-recent-area .most-recent-single .most-recent-capt p, .about-area2 .most-recent-area .most-recent-single .most-recent-capt p, .contact-section .most-recent-area .most-recent-single .most-recent-capt p {
@@ -3754,7 +3754,7 @@ hr {
 }
 
 .whats-news-area .nav-tabs .nav-item.show .nav-link, .whats-news-area .nav-tabs .nav-link.active, .about-area2 .nav-tabs .nav-item.show .nav-link, .about-area2 .nav-tabs .nav-link.active, .contact-section .nav-tabs .nav-item.show .nav-link, .contact-section .nav-tabs .nav-link.active {
-  color: #ff2143;
+  color: #24b4f4;
   background: none
 }
 
@@ -3896,7 +3896,7 @@ hr {
 }
 
 .weekly2-news-area .weekly2-wrapper .slider-wrapper .weekly2-single .weekly2-caption h4 a:hover {
-  color: #ff2143;
+  color: #24b4f4;
 }
 
 /* Texto adicional do slide */
@@ -3938,7 +3938,7 @@ hr {
 
     .weekly2-news-area .weekly2-wrapper .swiper .swiper-button-next:hover,
     .weekly2-news-area .weekly2-wrapper .swiper .swiper-button-prev:hover {
-      color: #ff2143;
+      color: #24b4f4;
     }
 
   /* Paginação do Swiper */
@@ -3948,7 +3948,7 @@ hr {
   }
 
   .weekly2-news-area .weekly2-wrapper .swiper .swiper-pagination-bullet-active {
-    background-color: #ff2143;
+    background-color: #24b4f4;
   }
 
 
@@ -4048,7 +4048,7 @@ hr {
       }
 
         .recent-articles .single-recent .what-cap h4 a:hover {
-          color: #ff2143;
+          color: #24b4f4;
         }
 
   .recent-articles .single-recent p {
@@ -4083,11 +4083,11 @@ hr {
 
   .recent-articles .swiper-button-prev:hover,
   .recent-articles .swiper-button-next:hover {
-    color: #ff2143;
+    color: #24b4f4;
   }
 
 .recent-articles .swiper-pagination-bullet {
-  background-color: #ff2143;
+  background-color: #24b4f4;
   opacity: 0.7;
   transition: opacity 0.3s ease;
 }
@@ -4205,7 +4205,7 @@ hr {
     }
 
       .weekly3-news-area .weekly3-wrapper .weekly3-single .weekly3-caption h4 a:hover {
-        color: #ff2143;
+        color: #24b4f4;
       }
 
     .weekly3-news-area .weekly3-wrapper .weekly3-single .weekly3-caption p {
@@ -4274,7 +4274,7 @@ hr {
   }
 
     .team-area .single-team .team-caption span {
-      color: #ff2143;
+      color: #24b4f4;
       font-size: 14px;
       font-weight: 300;
       font-family: "Barlow",sans-serif;
@@ -4292,7 +4292,7 @@ hr {
         left: -47px;
         top: 50%;
         transform: translateY(-50%);
-        background: #ff2143
+        background: #24b4f4
       }
 
     .team-area .single-team .team-caption h3 a {
@@ -4361,7 +4361,7 @@ hr {
 }
 
   .pagination-area .page-link:hover {
-    color: #ff2143
+    color: #24b4f4
   }
 
 .pagination-area .page-item.active .page-link {
@@ -4374,7 +4374,7 @@ hr {
 }
 
   .pagination-area .page-item.active .page-link:hover {
-    color: #ff2143
+    color: #24b4f4
   }
 
 .footer-area {
@@ -4450,7 +4450,7 @@ hr {
 }
 
   .footer-area .single-footer-caption .whats-right-single .whats-right-cap h4 a:hover {
-    color: #ff2143
+    color: #24b4f4
   }
 
 .footer-area .single-footer-caption .whats-right-single .whats-right-cap p {
@@ -4489,15 +4489,15 @@ hr {
 }
 
   .footer-bottom-area .footer-copy-right p i {
-    color: #ff2143
+    color: #24b4f4
   }
 
   .footer-bottom-area .footer-copy-right p a {
-    color: #ff2143
+    color: #24b4f4
   }
 
     .footer-bottom-area .footer-copy-right p a:hover {
-      color: #ff2143
+      color: #24b4f4
     }
 
 .hero-caption span {
@@ -4515,7 +4515,7 @@ hr {
     content: "";
     width: 75px;
     height: 3px;
-    background: #ff2143;
+    background: #24b4f4;
     left: 0;
     top: 52%;
     transform: translateY(-50%)
@@ -4538,7 +4538,7 @@ hr {
 }
 
   .blog_area a:hover, .blog_area a :hover {
-    background: -webkit-linear-gradient(131deg, #ff2143 0%, #ff2143 99%);
+    background: -webkit-linear-gradient(131deg, #24b4f4 0%, #24b4f4 99%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-decoration: none;
@@ -4985,7 +4985,7 @@ hr {
 }
 
   .blog_details a:hover {
-    color: #ff2143
+    color: #24b4f4
   }
 
 .blog_details h2 {
@@ -5042,7 +5042,7 @@ hr {
     left: 10px;
     display: block;
     color: #fff;
-    background-color: #ff2143;
+    background-color: #24b4f4;
     padding: 8px 15px;
     border-radius: 5px
   }
@@ -5124,7 +5124,7 @@ hr {
   }
 
 .blog_right_sidebar .search_widget .input-group button {
-  background: #ff2143;
+  background: #24b4f4;
   border-left: 0;
   border: 1px solid #f0e9ff;
   padding: 4px 15px;
@@ -5241,7 +5241,7 @@ hr {
   }
 
     .blog_right_sidebar .tag_cloud_widget ul li a:hover {
-      background: #ff2143;
+      background: #24b4f4;
       color: #fff !important;
       -webkit-text-fill-color: #fff;
       text-decoration: none;
@@ -5448,7 +5448,7 @@ hr {
 }
 
   .single-post-area .blog-author a:hover {
-    color: #ff2143
+    color: #24b4f4
   }
 
 .single-post-area .blog-author p {

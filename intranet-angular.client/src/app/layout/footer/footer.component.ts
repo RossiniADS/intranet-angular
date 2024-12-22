@@ -10,7 +10,7 @@ import { Component } from '@angular/core';
 export class FooterComponent {
   currentYear: number = new Date().getFullYear(); // Obtém o ano atual automaticamente
   footerData = {
-    logoSrc: 'assets/img/logo/logo2_footer.png',
+    logoSrc: 'assets/img/logo/logo.png',
     logoAlt: 'Logo',
     description: 'Lorem ipsum dolor sit amet, nsectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.',
     address: '198 West 21th Street, Suite 721 New York,NY 10010',
