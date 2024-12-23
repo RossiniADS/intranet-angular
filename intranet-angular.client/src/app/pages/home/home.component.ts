@@ -15,7 +15,7 @@ import { GrupoDeSlidesService } from '../../service/grupo.de.slides.service';
 export class HomeComponent implements AfterViewInit, OnInit {
   faPlay = faPlay;
   trendingSlides: any[] = [];
-  pageIdHome = 1;
+  pageIdHome = 2;
   currentIndex = 0;
   constructor(private noticiaService: NoticiaService, private slideService: SlideService, private grupoDeSlideService: GrupoDeSlidesService) {
   }

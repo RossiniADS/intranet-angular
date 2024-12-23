@@ -5,6 +5,7 @@
         public int Id { get; set; }
         public string Titulo { get; set; }
         public string Conteudo { get; set; }
+        public bool IsTredingTop { get; set; }
         public DateTime DataPublicacao { get; set; } = DateTime.Now;
 
         // Relacionamento com Usuario

@@ -24,6 +24,7 @@ namespace intranet_angular.Server.Services
                 {
                     Id = n.Id,
                     Titulo = n.Titulo,
+                    IsTredingTop = n.IsTredingTop,
                     AutorId = n.AutorId,
                     CategoriaIds = n.NoticiasCategorias.Select(cat => cat.CategoriaId).ToList(),
                     Conteudo = n.Conteudo,
@@ -44,6 +45,7 @@ namespace intranet_angular.Server.Services
                 {
                     Id = n.Id,
                     Titulo = n.Titulo,
+                    IsTredingTop = n.IsTredingTop,
                     AutorId = n.AutorId,
                     CategoriaIds = n.NoticiasCategorias.Select(cat => cat.CategoriaId).ToList(),
                     Conteudo = n.Conteudo,
@@ -62,6 +64,7 @@ namespace intranet_angular.Server.Services
                 {
                     Titulo = noticiaRequest.Titulo,
                     Conteudo = noticiaRequest.Conteudo,
+                    IsTredingTop = noticiaRequest.IsTredingTop,
                     DataPublicacao = noticiaRequest.DataPublicacao,
                     AutorId = noticiaRequest.AutorId,
                     NoticiasCategorias = noticiaRequest.CategoriaIds?.Select(id => new NoticiaCategoria { CategoriaId = id }).ToList()
@@ -97,6 +100,7 @@ namespace intranet_angular.Server.Services
 
                 noticia.Titulo = noticiaRequest.Titulo;
                 noticia.Conteudo = noticiaRequest.Conteudo;
+                noticia.IsTredingTop = noticiaRequest.IsTredingTop;
                 noticia.DataPublicacao = noticiaRequest.DataPublicacao;
                 noticia.AutorId = noticiaRequest.AutorId;
 
@@ -154,6 +158,7 @@ namespace intranet_angular.Server.Services
             AutorId = noticia.AutorId,
             CategoriaIds = noticia.NoticiasCategorias.Select(cat => cat.CategoriaId).ToList(),
             Conteudo = noticia.Conteudo,
+            IsTredingTop = noticia.IsTredingTop,
             DataPublicacao = noticia.DataPublicacao,
             MidiaUrl = noticia.Midias.Select(m => m.URL).ToList()
         };

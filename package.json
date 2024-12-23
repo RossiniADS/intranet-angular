@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "animate.css": "^4.1.1",
-    "ngx-lightbox": "^3.0.0",
-    "ngx-wow": "^2.0.1"
-  }
-}
