@@ -5,6 +5,9 @@ import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { NoticiaService } from '../../service/noticia.service';
 import { SlideService } from '../../service/slides.service';
 import { GrupoDeSlidesService } from '../../service/grupo.de.slides.service';
+import { NoticiaResponse } from '../../../response/noticiaResponse';
+import { CategoriaResponse } from '../../../response/categoriaResponse';
+import { CategoriaService } from '../../service/categoria.service';
 
 @Component({
   selector: 'app-home',
@@ -14,127 +17,231 @@ import { GrupoDeSlidesService } from '../../service/grupo.de.slides.service';
 })
 export class HomeComponent implements AfterViewInit, OnInit {
   faPlay = faPlay;
-  trendingSlides: any[] = [];
+  trendingSlides: any[] = [
+    {
+      imageUrl: '',
+      altText: '',
+      category: '',
+      title: '',
+      description: '',
+      link: '',
+    },
+  ];
+  trendingCards: any[] = [
+    {
+      imageUrl: '',
+      altText: '',
+      category: '',
+      categoryClass: '',
+      title: '',
+      description: '',
+      link: '',
+    },
+  ];
+  tabs: any[] = [
+    {
+      id: '',
+      label: '',
+      toggle: '',
+      href: '',
+      controls: '',
+      active: false,
+    },
+  ];
+  mostRecentNews: any[] = [
+    {
+      image: '',
+      category: '',
+      title: '',
+      time: '',
+      link: '',
+    },
+  ];
+  mainNews: any = {
+    image: '',
+    title: '',
+    author: '',
+    date: '',
+    description: '',
+  };
+  rightNews: any[] = [
+    {
+      image: '',
+      category: '',
+      title: '',
+      date: '',
+      colorClass: '',
+    },
+  ];
+  noticiasResponse: NoticiaResponse[] = [
+    {
+      id: 0,
+      titulo: '',
+      descricao: '',
+      conteudo: '',
+      autorId: 0,
+      midiaUrl: [],
+      dataPublicacao: new Date(),
+      categoria: [{ id: 0, nome: '' }],
+      isTrendingTop: false,
+    },
+  ];
+  categoriaResponse: CategoriaResponse[] = [
+    {
+      id: 0,
+      nome: '',
+    },
+  ];
+
   pageIdHome = 2;
   currentIndex = 0;
-  constructor(private noticiaService: NoticiaService, private slideService: SlideService, private grupoDeSlideService: GrupoDeSlidesService) {
-  }
 
-  ngOnInit() {
+  constructor(
+    private noticiaService: NoticiaService,
+    private slideService: SlideService,
+    private grupoDeSlideService: GrupoDeSlidesService,
+    private categoriaService: CategoriaService
+  ) { }
+
+  ngOnInit(): void {
     register();
     this.loadTrendingSlides();
+    this.loadTrendingTops();
+    this.loadMostRecentNews();
+    this.loadNoticias();
+    this.loadCategorias();
+    this.loadMainAndRightNews(1);
   }
 
-  loadTrendingSlides() {
-    this.grupoDeSlideService.getByPageId(this.pageIdHome)
-      .subscribe((grupos) => {
-        grupos[0].slides.forEach(slide => {
-          this.trendingSlides.push({
-            imageUrl: 'https://localhost:7227/' + slide.url,
-            altText: 'Slide',
-            category: slide.principalCategoriaNome,
-            title: slide.titulo,
-            description: slide.descricao,
-            link: '/latest-news/' + slide.noticiaId,
-          });
-        });
-      });
+  private loadNoticias(): void {
+    this.noticiaService.getNoticias().subscribe({
+      next: (data) => (this.noticiasResponse = data),
+      error: (err) => console.error('Erro ao carregar notícias:', err),
+    });
+  }
+
+  private loadCategorias(): void {
+    this.categoriaService.getAll().subscribe({
+      next: (data) => (this.categoriaResponse = data),
+      error: (err) => console.error('Erro ao carregar categorias:', err),
+    });
+  }
+
+  private loadTrendingSlides(): void {
+    this.grupoDeSlideService.getByPageId(this.pageIdHome).subscribe({
+      next: (grupos) => {
+        const slides = grupos[0]?.slides || [];
+        this.trendingSlides = slides.map((slide) => ({
+          imageUrl: `https://localhost:7227/${slide.url}`,
+          altText: 'Slide',
+          category: slide.principalCategoriaNome,
+          title: slide.titulo,
+          description: slide.descricao,
+          link: `/latest-news/${slide.noticiaId}`,
+        }));
+      },
+      error: (err) => console.error('Erro ao carregar slides:', err),
+    });
+  }
+
+  private loadTrendingTops(): void {
+    if (!this.noticiasResponse.length) return;
+
+    this.trendingCards = this.noticiasResponse
+      .filter((n) => n.isTrendingTop)
+      .map((noticia) => ({
+        imageUrl: `https://localhost:7227/${noticia.midiaUrl}`,
+        altText: 'Trending Card',
+        category: noticia.categoria[0]?.nome || 'Sem Categoria',
+        categoryClass: 'bgb',
+        title: noticia.titulo,
+        description: `by Rossini Alves - ${noticia.dataPublicacao}`,
+        link: `/latest-news/${noticia.id}`,
+      }));
+  }
+
+  private loadTabs(): void {
+    this.tabs = this.categoriaResponse.map((cat, index) => ({
+      id: `nav-${cat.nome}`,
+      label: cat.nome,
+      toggle: 'tab',
+      href: `#nav-${cat.nome}`,
+      controls: `nav-${cat.nome}`,
+      active: index === 0,
+    }));
+  }
+
+  loadMainAndRightNews(categoriaId: number): void {
+    const noticiasFiltradas = this.noticiasResponse.filter((not) =>
+      not.categoria.some((cat) => cat.id === categoriaId)
+    );
+
+    if (!noticiasFiltradas.length) {
+      console.warn('Nenhuma notícia encontrada para a categoria especificada.');
+      return;
+    }
+
+    const ultimaNoticia = noticiasFiltradas.reduce((maisAtual, atual) =>
+      new Date(atual.dataPublicacao) > new Date(maisAtual.dataPublicacao)
+        ? atual
+        : maisAtual
+    );
+
+    this.mainNews = {
+      image: `https://localhost:7227/${ultimaNoticia.midiaUrl}`,
+      title: ultimaNoticia.titulo,
+      author: ultimaNoticia.autorId,
+      date: ultimaNoticia.dataPublicacao,
+      description: ultimaNoticia.descricao,
+    };
+
+    this.rightNews = noticiasFiltradas
+      .filter((not) => not !== ultimaNoticia)
+      .map((not) => ({
+        image: `https://localhost:7227/${not.midiaUrl}`,
+        category: not.categoria[0]?.nome || 'Sem Categoria',
+        title: not.titulo,
+        date: not.dataPublicacao,
+        colorClass: 'colorb',
+      }));
+  }
+
+  private loadMostRecentNews(): void {
+    this.mostRecentNews = this.noticiasResponse.map((noticia) => ({
+      image: `https://localhost:7227/${noticia.midiaUrl}`,
+      category: noticia.categoria[0]?.nome || 'Sem Categoria',
+      title: noticia.titulo,
+      time: `${noticia.autorId} | ${noticia.dataPublicacao}`,
+      link: `/latest_news/${noticia.id}`,
+    }));
   }
 
   ngAfterViewInit(): void {
-    new Swiper('.mySwiper', {
-      loop: true,
-      speed: 600,
-      autoplay: {
-        delay: 10000,
-        disableOnInteraction: false
-      },
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-      slidesPerView: 1,
-      pagination: {
-        el: '.swiper-pagination',
-        "type": "bullets",
-        clickable: true,
-      }
-    });
+    this.initializeSwiper('.mySwiper', 1);
+    this.initializeSwiper('.mySwiper2', 3);
+    this.initializeSwiper('.mySwiper3', 3);
+    this.initializeSwiper('.mySwiper4', 3);
+    this.initializeSwiper('.mySwiper5', 4);
+  }
 
-    new Swiper('.mySwiper2', {
+  private initializeSwiper(selector: string, slidesPerView: number): void {
+    new Swiper(selector, {
       loop: true,
       speed: 600,
       autoplay: {
         delay: 10000,
-        disableOnInteraction: false
+        disableOnInteraction: false,
       },
       navigation: {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',
       },
-      slidesPerView: 3,
+      slidesPerView,
       pagination: {
         el: '.swiper-pagination',
-        "type": "bullets",
+        type: 'bullets',
         clickable: true,
-      }
-    });
-
-    new Swiper('.mySwiper3', {
-      loop: true,
-      speed: 600,
-      autoplay: {
-        delay: 10000,
-        disableOnInteraction: false
       },
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-      slidesPerView: 3,
-      pagination: {
-        el: '.swiper-pagination',
-        "type": "bullets",
-        clickable: true,
-      }
-    });
-
-    new Swiper('.mySwiper4', {
-      loop: true,
-      speed: 600,
-      autoplay: {
-        delay: 10000,
-        disableOnInteraction: false
-      },
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-      slidesPerView: 3,
-      pagination: {
-        el: '.swiper-pagination',
-        "type": "bullets",
-        clickable: true,
-      }
-    });
-
-    new Swiper('.mySwiper5', {
-      loop: true,
-      speed: 600,
-      autoplay: {
-        delay: 10000,
-        disableOnInteraction: false
-      },
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-      slidesPerView: 4,
-      pagination: {
-        el: '.swiper-pagination',
-        "type": "bullets",
-        clickable: true,
-      }
     });
   }
 
@@ -167,9 +274,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
     this.currentIndex = (this.currentIndex + 1) % this.slides.length;
   }
 
-
-
-  //PARTE UM 
+  //PARTE UM
   //trendingSlides = [
   //  {
   //    imageUrl: 'assets/img/trending/trending_top2.jpg',
@@ -197,77 +302,79 @@ export class HomeComponent implements AfterViewInit, OnInit {
   //  },
   //];
 
-  trendingCards = [
-    {
-      imageUrl: 'assets/img/trending/trending_top3.jpg',
-      altText: 'Trending Card 1',
-      category: 'Fashion',
-      categoryClass: 'bgb',
-      title: 'Secretary for Economic Airplane that looks like',
-      description: 'by Alice Cloe - Jun 19, 2020',
-      link: '/latest-news',
-    },
-    {
-      imageUrl: 'assets/img/trending/trending_top4.jpg',
-      altText: 'Trending Card 2',
-      category: 'Tech',
-      categoryClass: 'bgg',
-      title: 'Secretary for Economic Airplane that looks like',
-      description: 'by Alice Cloe - Jun 19, 2020',
-      link: '/latest-news',
-    },
-  ];
+  //trendingCards = [
+  //  {
+  //    imageUrl: 'assets/img/trending/trending_top3.jpg',
+  //    altText: 'Trending Card 1',
+  //    category: 'Fashion',
+  //    categoryClass: 'bgb',
+  //    title: 'Secretary for Economic Airplane that looks like',
+  //    description: 'by Alice Cloe - Jun 19, 2020',
+  //    link: '/latest-news',
+  //  },
+  //  {
+  //    imageUrl: 'assets/img/trending/trending_top4.jpg',
+  //    altText: 'Trending Card 2',
+  //    category: 'Tech',
+  //    categoryClass: 'bgg',
+  //    title: 'Secretary for Economic Airplane that looks like',
+  //    description: 'by Alice Cloe - Jun 19, 2020',
+  //    link: '/latest-news',
+  //  },
+  //];
 
   //PARTE 2
-  tabs = [
-    { id: 'nav-home', label: 'Lifestyle', toggle: 'tab', href: '#nav-home', controls: 'nav-home', active: true },
-    { id: 'nav-profile', label: 'Travel', toggle: 'tab', href: '#nav-profile', controls: 'nav-profile', active: false },
-    { id: 'nav-contact', label: 'Fashion', toggle: 'tab', href: '#nav-contact', controls: 'nav-contact', active: false },
-    { id: 'nav-last', label: 'Sports', toggle: 'tab', href: '#nav-last', controls: 'nav-last', active: false },
-    { id: 'nav-nav-Sport', label: 'Technology', toggle: 'tab', href: '#nav-nav-Sport', controls: 'nav-nav-Sport', active: false }
-  ];
+
+  //tabs = [
+  //  { id: 'nav-home', label: 'Lifestyle', toggle: 'tab', href: '#nav-home', controls: 'nav-home', active: true },
+  //  { id: 'nav-profile', label: 'Travel', toggle: 'tab', href: '#nav-profile', controls: 'nav-profile', active: false },
+  //  { id: 'nav-contact', label: 'Fashion', toggle: 'tab', href: '#nav-contact', controls: 'nav-contact', active: false },
+  //  { id: 'nav-last', label: 'Sports', toggle: 'tab', href: '#nav-last', controls: 'nav-last', active: false },
+  //  { id: 'nav-nav-Sport', label: 'Technology', toggle: 'tab', href: '#nav-nav-Sport', controls: 'nav-nav-Sport', active: false }
+  //];
 
   // Dados principais
-  mainNews = {
-    image: 'assets/img/gallery/whats_news_details1.png',
-    title: 'Secretart for Economic Air plane that looks like',
-    author: 'Alice cloe',
-    date: 'Jun 19, 2020',
-    description:
-      'Struggling to sell one multi-million dollar home currently on the market won’t stop actress and singer Jennifer Lopez.',
-  };
 
-  // Lista de notícias secundárias
-  rightNews = [
-    {
-      image: 'assets/img/gallery/whats_right_img1.png',
-      category: 'FASHION',
-      title: 'Portrait of group of friends ting eat. market in.',
-      date: 'Jun 19, 2020',
-      colorClass: 'colorb',
-    },
-    {
-      image: 'assets/img/gallery/whats_right_img2.png',
-      category: 'FASHION',
-      title: 'Portrait of group of friends ting eat. market in.',
-      date: 'Jun 19, 2020',
-      colorClass: 'colorb',
-    },
-    {
-      image: 'assets/img/gallery/whats_right_img3.png',
-      category: 'FASHION',
-      title: 'Portrait of group of friends ting eat. market in.',
-      date: 'Jun 19, 2020',
-      colorClass: 'colorg',
-    },
-    {
-      image: 'assets/img/gallery/whats_right_img4.png',
-      category: 'FASHION',
-      title: 'Portrait of group of friends ting eat. market in.',
-      date: 'Jun 19, 2020',
-      colorClass: 'colorr',
-    },
-  ];
+  //mainNews = {
+  //  image: 'assets/img/gallery/whats_news_details1.png',
+  //  title: 'Secretart for Economic Air plane that looks like',
+  //  author: 'Alice cloe',
+  //  date: 'Jun 19, 2020',
+  //  description:
+  //    'Struggling to sell one multi-million dollar home currently on the market won’t stop actress and singer Jennifer Lopez.',
+  //};
+
+  //// Lista de notícias secundárias
+  //rightNews = [
+  //  {
+  //    image: 'assets/img/gallery/whats_right_img1.png',
+  //    category: 'FASHION',
+  //    title: 'Portrait of group of friends ting eat. market in.',
+  //    date: 'Jun 19, 2020',
+  //    colorClass: 'colorb',
+  //  },
+  //  {
+  //    image: 'assets/img/gallery/whats_right_img2.png',
+  //    category: 'FASHION',
+  //    title: 'Portrait of group of friends ting eat. market in.',
+  //    date: 'Jun 19, 2020',
+  //    colorClass: 'colorb',
+  //  },
+  //  {
+  //    image: 'assets/img/gallery/whats_right_img3.png',
+  //    category: 'FASHION',
+  //    title: 'Portrait of group of friends ting eat. market in.',
+  //    date: 'Jun 19, 2020',
+  //    colorClass: 'colorg',
+  //  },
+  //  {
+  //    image: 'assets/img/gallery/whats_right_img4.png',
+  //    category: 'FASHION',
+  //    title: 'Portrait of group of friends ting eat. market in.',
+  //    date: 'Jun 19, 2020',
+  //    colorClass: 'colorr',
+  //  },
+  //];
 
   //Banner
   bannerImage2 = 'assets/img/gallery/body_card1.png';
@@ -301,115 +408,116 @@ export class HomeComponent implements AfterViewInit, OnInit {
   ];
 
   // Notícias mais recentes
-  mostRecentNews = [
-    {
-      image: 'assets/img/gallery/most_recent.png',
-      category: 'Vogue',
-      title: 'What to Wear: 9+ Cute Work Outfits to Wear This.',
-      time: 'Jhon | 2 hours ago',
-      link: 'latest_news.html',
-    },
-    {
-      image: 'assets/img/gallery/most_recent1.png',
-      title: 'Scarlett’s disappointment at latest accolade',
-      time: 'Jhon | 2 hours ago',
-      link: 'latest_news.html',
-    },
-    {
-      image: 'assets/img/gallery/most_recent2.png',
-      title: 'Most Beautiful Things to Do in Sidney with Your BF',
-      time: 'Jhon | 3 hours ago',
-      link: 'latest_news.html',
-    },
-  ];
+  //mostRecentNews = [
+  //  {
+  //    image: 'assets/img/gallery/most_recent.png',
+  //    category: 'Vogue',
+  //    title: 'What to Wear: 9+ Cute Work Outfits to Wear This.',
+  //    time: 'Jhon | 2 hours ago',
+  //    link: 'latest_news.html',
+  //  },
+  //  {
+  //    image: 'assets/img/gallery/most_recent1.png',
+  //    title: 'Scarlett’s disappointment at latest accolade',
+  //    time: 'Jhon | 2 hours ago',
+  //    link: 'latest_news.html',
+  //  },
+  //  {
+  //    image: 'assets/img/gallery/most_recent2.png',
+  //    title: 'Most Beautiful Things to Do in Sidney with Your BF',
+  //    time: 'Jhon | 3 hours ago',
+  //    link: 'latest_news.html',
+  //  },
+  //];
+
   //PARTE 3
   bannerImage: string = 'assets/img/gallery/body_card2.png';
 
-  popularNews = [
-    {
-      imageUrl: 'assets/img/gallery/weeklyNews1.png',
-      altText: 'Weekly News 1',
-      category: 'News',
-      title: "Scarlett’s disappointment at latest accolade",
-      description: 'Jhon | 2 hours ago',
-      link: '/news/1',
-    },
-    {
-      imageUrl: 'assets/img/gallery/weeklyNews2.png',
-      altText: 'Weekly News 2',
-      category: 'News',
-      title: "Scarlett’s disappointment at latest accolade",
-      description: 'Jhon | 3 hours ago',
-      link: '/news/2',
-    },
-    {
-      imageUrl: 'assets/img/gallery/weeklyNews3.png',
-      altText: 'Weekly News 3',
-      category: 'News',
-      title: "Scarlett’s disappointment at latest accolade",
-      description: 'Jhon | 4 hours ago',
-      link: '/news/3',
-    },
-    {
-      imageUrl: 'assets/img/gallery/weeklyNews3.png',
-      altText: 'Weekly News 3',
-      category: 'News',
-      title: "Scarlett’s disappointment at latest accolade",
-      description: 'Jhon | 4 hours ago',
-      link: '/news/3',
-    },
-  ];
+  //popularNews = [
+  //  {
+  //    imageUrl: 'assets/img/gallery/weeklyNews1.png',
+  //    altText: 'Weekly News 1',
+  //    category: 'News',
+  //    title: "Scarlett’s disappointment at latest accolade",
+  //    description: 'Jhon | 2 hours ago',
+  //    link: '/news/1',
+  //  },
+  //  {
+  //    imageUrl: 'assets/img/gallery/weeklyNews2.png',
+  //    altText: 'Weekly News 2',
+  //    category: 'News',
+  //    title: "Scarlett’s disappointment at latest accolade",
+  //    description: 'Jhon | 3 hours ago',
+  //    link: '/news/2',
+  //  },
+  //  {
+  //    imageUrl: 'assets/img/gallery/weeklyNews3.png',
+  //    altText: 'Weekly News 3',
+  //    category: 'News',
+  //    title: "Scarlett’s disappointment at latest accolade",
+  //    description: 'Jhon | 4 hours ago',
+  //    link: '/news/3',
+  //  },
+  //  {
+  //    imageUrl: 'assets/img/gallery/weeklyNews3.png',
+  //    altText: 'Weekly News 3',
+  //    category: 'News',
+  //    title: "Scarlett’s disappointment at latest accolade",
+  //    description: 'Jhon | 4 hours ago',
+  //    link: '/news/3',
+  //  },
+  //];
 
   //PARTE 4
-  sectionTitle = 'Trending News';
+  //sectionTitle = 'Trending News';
 
-  articles2 = [
-    {
-      imageUrl: 'assets/img/gallery/tranding1.png',
-      altText: 'Trending Image 1',
-      title: 'What to Expect From the 2020 Oscar Nominations',
-      description: 'Jun 19, 2020',
-      category: 'Entertainment',
-      link: '/latest-news',
-      videoLink: 'https://www.youtube.com/watch?v=1aP-TXUpNoU',
-    },
-    {
-      imageUrl: 'assets/img/gallery/tranding2.png',
-      altText: 'Trending Image 2',
-      title: 'Another Big Event on the Horizon',
-      description: 'Jul 10, 2020',
-      category: 'Lifestyle',
-      link: '/latest-news',
-      videoLink: 'https://www.youtube.com/watch?v=2bP-TXUpNoV',
-    },
-    {
-      imageUrl: 'assets/img/gallery/tranding1.png',
-      altText: 'Trending Image 1',
-      title: 'What to Expect From the 2020 Oscar Nominations',
-      description: 'Jun 19, 2020',
-      category: 'Entertainment',
-      link: '/latest-news',
-      videoLink: 'https://www.youtube.com/watch?v=1aP-TXUpNoU',
-    },
-    {
-      imageUrl: 'assets/img/gallery/tranding2.png',
-      altText: 'Trending Image 2',
-      title: 'Another Big Event on the Horizon',
-      description: 'Jul 10, 2020',
-      category: 'Lifestyle',
-      link: '/latest-news',
-      videoLink: 'https://www.youtube.com/watch?v=2bP-TXUpNoV',
-    },
-    {
-      imageUrl: 'assets/img/gallery/tranding2.png',
-      altText: 'Trending Image 2',
-      title: 'Another Big Event on the Horizon',
-      description: 'Jul 10, 2020',
-      category: 'Lifestyle',
-      link: '/latest-news',
-      videoLink: 'https://www.youtube.com/watch?v=2bP-TXUpNoV',
-    }
-  ];
+  //articles2 = [
+  //  {
+  //    imageUrl: 'assets/img/gallery/tranding1.png',
+  //    altText: 'Trending Image 1',
+  //    title: 'What to Expect From the 2020 Oscar Nominations',
+  //    description: 'Jun 19, 2020',
+  //    category: 'Entertainment',
+  //    link: '/latest-news',
+  //    videoLink: 'https://www.youtube.com/watch?v=1aP-TXUpNoU',
+  //  },
+  //  {
+  //    imageUrl: 'assets/img/gallery/tranding2.png',
+  //    altText: 'Trending Image 2',
+  //    title: 'Another Big Event on the Horizon',
+  //    description: 'Jul 10, 2020',
+  //    category: 'Lifestyle',
+  //    link: '/latest-news',
+  //    videoLink: 'https://www.youtube.com/watch?v=2bP-TXUpNoV',
+  //  },
+  //  {
+  //    imageUrl: 'assets/img/gallery/tranding1.png',
+  //    altText: 'Trending Image 1',
+  //    title: 'What to Expect From the 2020 Oscar Nominations',
+  //    description: 'Jun 19, 2020',
+  //    category: 'Entertainment',
+  //    link: '/latest-news',
+  //    videoLink: 'https://www.youtube.com/watch?v=1aP-TXUpNoU',
+  //  },
+  //  {
+  //    imageUrl: 'assets/img/gallery/tranding2.png',
+  //    altText: 'Trending Image 2',
+  //    title: 'Another Big Event on the Horizon',
+  //    description: 'Jul 10, 2020',
+  //    category: 'Lifestyle',
+  //    link: '/latest-news',
+  //    videoLink: 'https://www.youtube.com/watch?v=2bP-TXUpNoV',
+  //  },
+  //  {
+  //    imageUrl: 'assets/img/gallery/tranding2.png',
+  //    altText: 'Trending Image 2',
+  //    title: 'Another Big Event on the Horizon',
+  //    description: 'Jul 10, 2020',
+  //    category: 'Lifestyle',
+  //    link: '/latest-news',
+  //    videoLink: 'https://www.youtube.com/watch?v=2bP-TXUpNoV',
+  //  }
+  //];
 
   //PARTE 5
 
@@ -437,41 +545,41 @@ export class HomeComponent implements AfterViewInit, OnInit {
   }
 
   //PARTE 6
-  weeklyNews = [
-    {
-      imgSrc: 'assets/img/gallery/weekly2News1.png',
-      title: 'What to Expect From the 2020 Oscar Nominations',
-      date: '19 Jan 2020',
-      link: '/latest-news',
-      category: 'Entertainment'
-    },
-    {
-      imgSrc: 'assets/img/gallery/weekly2News2.png',
-      title: 'What to Expect From the 2020 Oscar Nominations',
-      date: '19 Jan 2020',
-      link: '/latest-news',
-      category: 'Entertainment'
-    },
-    {
-      imgSrc: 'assets/img/gallery/weekly2News3.png',
-      title: 'What to Expect From the 2020 Oscar Nominations',
-      date: '19 Jan 2020',
-      link: '/latest-news',
-      category: 'Entertainment'
-    },
-    {
-      imgSrc: 'assets/img/gallery/weekly2News4.png',
-      title: 'What to Expect From the 2020 Oscar Nominations',
-      date: '19 Jan 2020',
-      link: '/latest-news',
-      category: 'Entertainment'
-    },
-    {
-      imgSrc: 'assets/img/gallery/weekly2News1.png',
-      title: 'What to Expect From the 2020 Oscar Nominations',
-      date: '19 Jan 2020',
-      link: '/latest-news',
-      category: 'Entertainment'
-    }
-  ];
+  //weeklyNews = [
+  //  {
+  //    imgSrc: 'assets/img/gallery/weekly2News1.png',
+  //    title: 'What to Expect From the 2020 Oscar Nominations',
+  //    date: '19 Jan 2020',
+  //    link: '/latest-news',
+  //    category: 'Entertainment'
+  //  },
+  //  {
+  //    imgSrc: 'assets/img/gallery/weekly2News2.png',
+  //    title: 'What to Expect From the 2020 Oscar Nominations',
+  //    date: '19 Jan 2020',
+  //    link: '/latest-news',
+  //    category: 'Entertainment'
+  //  },
+  //  {
+  //    imgSrc: 'assets/img/gallery/weekly2News3.png',
+  //    title: 'What to Expect From the 2020 Oscar Nominations',
+  //    date: '19 Jan 2020',
+  //    link: '/latest-news',
+  //    category: 'Entertainment'
+  //  },
+  //  {
+  //    imgSrc: 'assets/img/gallery/weekly2News4.png',
+  //    title: 'What to Expect From the 2020 Oscar Nominations',
+  //    date: '19 Jan 2020',
+  //    link: '/latest-news',
+  //    category: 'Entertainment'
+  //  },
+  //  {
+  //    imgSrc: 'assets/img/gallery/weekly2News1.png',
+  //    title: 'What to Expect From the 2020 Oscar Nominations',
+  //    date: '19 Jan 2020',
+  //    link: '/latest-news',
+  //    category: 'Entertainment'
+  //  }
+  //];
 }

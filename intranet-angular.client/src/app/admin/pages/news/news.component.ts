@@ -22,8 +22,10 @@ export class NewsComponent implements OnInit {
     this.noticiaForm = this.fb.group({
       titulo: ['', Validators.required],
       conteudo: ['', Validators.required],
+      descricao: ['', Validators.required],
       autorId: [null],
-      categoriaIds: [[], Validators.required]
+      categoriaIds: [[], Validators.required],
+      isTrendingTop: [false]
     });
   }
 
@@ -46,7 +48,6 @@ export class NewsComponent implements OnInit {
 
   saveNoticia(): void {
     if (this.noticiaForm.invalid) return;
-
     const formData = new FormData();
 
     // Adiciona os campos do formulário ao FormData

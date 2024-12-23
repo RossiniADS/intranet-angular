@@ -24,10 +24,11 @@ namespace intranet_angular.Server.Services
                 {
                     Id = n.Id,
                     Titulo = n.Titulo,
-                    IsTredingTop = n.IsTredingTop,
+                    IsTrendingTop = n.IsTrendingTop,
                     AutorId = n.AutorId,
                     CategoriaIds = n.NoticiasCategorias.Select(cat => cat.CategoriaId).ToList(),
                     Conteudo = n.Conteudo,
+                    Descricao = n.Descricao,
                     DataPublicacao = n.DataPublicacao,
                     MidiaUrl = n.Midias.Select(m => m.URL).ToList()
                 })
@@ -45,7 +46,8 @@ namespace intranet_angular.Server.Services
                 {
                     Id = n.Id,
                     Titulo = n.Titulo,
-                    IsTredingTop = n.IsTredingTop,
+                    IsTrendingTop = n.IsTrendingTop,
+                    Descricao = n.Descricao,
                     AutorId = n.AutorId,
                     CategoriaIds = n.NoticiasCategorias.Select(cat => cat.CategoriaId).ToList(),
                     Conteudo = n.Conteudo,
@@ -64,7 +66,8 @@ namespace intranet_angular.Server.Services
                 {
                     Titulo = noticiaRequest.Titulo,
                     Conteudo = noticiaRequest.Conteudo,
-                    IsTredingTop = noticiaRequest.IsTredingTop,
+                    Descricao = noticiaRequest.Descricao,
+                    IsTrendingTop = noticiaRequest.IsTrendingTop,
                     DataPublicacao = noticiaRequest.DataPublicacao,
                     AutorId = noticiaRequest.AutorId,
                     NoticiasCategorias = noticiaRequest.CategoriaIds?.Select(id => new NoticiaCategoria { CategoriaId = id }).ToList()
@@ -99,8 +102,9 @@ namespace intranet_angular.Server.Services
                     throw new KeyNotFoundException("Notícia não encontrada.");
 
                 noticia.Titulo = noticiaRequest.Titulo;
+                noticia.Descricao = noticiaRequest.Descricao;
                 noticia.Conteudo = noticiaRequest.Conteudo;
-                noticia.IsTredingTop = noticiaRequest.IsTredingTop;
+                noticia.IsTrendingTop = noticiaRequest.IsTrendingTop;
                 noticia.DataPublicacao = noticiaRequest.DataPublicacao;
                 noticia.AutorId = noticiaRequest.AutorId;
 
@@ -155,10 +159,11 @@ namespace intranet_angular.Server.Services
         {
             Id = noticia.Id,
             Titulo = noticia.Titulo,
+            Descricao = noticia.Descricao,
             AutorId = noticia.AutorId,
             CategoriaIds = noticia.NoticiasCategorias.Select(cat => cat.CategoriaId).ToList(),
             Conteudo = noticia.Conteudo,
-            IsTredingTop = noticia.IsTredingTop,
+            IsTrendingTop = noticia.IsTrendingTop,
             DataPublicacao = noticia.DataPublicacao,
             MidiaUrl = noticia.Midias.Select(m => m.URL).ToList()
         };
