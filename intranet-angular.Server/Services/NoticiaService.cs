@@ -26,7 +26,11 @@ namespace intranet_angular.Server.Services
                     Titulo = n.Titulo,
                     IsTrendingTop = n.IsTrendingTop,
                     AutorId = n.AutorId,
-                    CategoriaIds = n.NoticiasCategorias.Select(cat => cat.CategoriaId).ToList(),
+                    Categoria = n.NoticiasCategorias.Select(cat => new CategoriaResponse
+                    {
+                        Id = cat.Categoria.Id,
+                        Nome = cat.Categoria.Nome
+                    }).ToList(),
                     Conteudo = n.Conteudo,
                     Descricao = n.Descricao,
                     DataPublicacao = n.DataPublicacao,
@@ -49,7 +53,11 @@ namespace intranet_angular.Server.Services
                     IsTrendingTop = n.IsTrendingTop,
                     Descricao = n.Descricao,
                     AutorId = n.AutorId,
-                    CategoriaIds = n.NoticiasCategorias.Select(cat => cat.CategoriaId).ToList(),
+                    Categoria = n.NoticiasCategorias.Select(cat => new CategoriaResponse
+                    {
+                        Id = cat.Categoria.Id,
+                        Nome = cat.Categoria.Nome
+                    }).ToList(),
                     Conteudo = n.Conteudo,
                     DataPublicacao = n.DataPublicacao,
                     MidiaUrl = n.Midias.Select(m => m.URL).ToList()
@@ -161,7 +169,11 @@ namespace intranet_angular.Server.Services
             Titulo = noticia.Titulo,
             Descricao = noticia.Descricao,
             AutorId = noticia.AutorId,
-            CategoriaIds = noticia.NoticiasCategorias.Select(cat => cat.CategoriaId).ToList(),
+            Categoria = noticia.NoticiasCategorias.Select(cat => new CategoriaResponse
+            {
+                Id = cat.Categoria.Id,
+                Nome = cat.Categoria.Nome
+            }).ToList(),
             Conteudo = noticia.Conteudo,
             IsTrendingTop = noticia.IsTrendingTop,
             DataPublicacao = noticia.DataPublicacao,

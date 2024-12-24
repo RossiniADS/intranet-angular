@@ -9,7 +9,7 @@
         public bool IsTrendingTop { get; set; }
         public DateTime DataPublicacao { get; set; }
         public int? AutorId { get; set; }
-        public List<int> CategoriaIds { get; set; }
+        public List<CategoriaResponse> Categoria { get; set; }
         public List<string> MidiaUrl { get; set; }
     }
 }
