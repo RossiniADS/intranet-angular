@@ -103,6 +103,7 @@ namespace intranet_angular.Server.Services
             {
                 var noticia = await _context.Noticias
                     .Include(n => n.NoticiasCategorias)
+                    .ThenInclude(c => c.Categoria)
                     .Include(n => n.Midias)
                     .FirstOrDefaultAsync(n => n.Id == id);
 

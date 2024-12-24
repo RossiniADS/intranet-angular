@@ -98,7 +98,12 @@ export class NewsComponent implements OnInit {
   editNoticia(noticia: NoticiaResponse): void {
     this.isEditing = true;
     this.selectedNoticiaId = noticia.id;
-    this.noticiaForm.patchValue(noticia);
+    const categoriaIds = noticia.categoria.map(categoria => categoria.id);
+
+    this.noticiaForm.patchValue({
+      ...noticia,
+      categoriaIds
+    })
   }
 
   deleteNoticia(id: number): void {
