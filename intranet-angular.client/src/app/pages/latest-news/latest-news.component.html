@@ -9,16 +9,16 @@
           <div class="heading-news mb-30 pt-30">
             <h3>{{ aboutContent.heading }}</h3>
           </div>
-          <div class="about-prea" *ngFor="let paragraph of aboutContent.paragraphs">
-            <p class="about-pera1 mb-25">{{ paragraph }}</p>
+          <div class="about-prea">
+            <p [innerHTML]="aboutContent.body" class="noticia-content mb-25"></p>
           </div>
-          <div class="section-tittle mb-30 pt-30">
+          <!--<div class="section-tittle mb-30 pt-30">
             <h3>{{ aboutContent.unorderedListHeading }}</h3>
-          </div>
-          <div class="about-prea" *ngFor="let paragraph of aboutContent.paragraphs">
+          </div>-->
+          <!--<div class="about-prea" *ngFor="let paragraph of aboutContent.paragraphs">
             <p class="about-pera1 mb-25">{{ paragraph }}</p>
-          </div>
-          <div class="social-share pt-30">
+          </div>-->
+          <!--<div class="social-share pt-30">
             <div class="section-tittle">
               <h3 class="mr-20">Share:</h3>
               <ul>
@@ -27,9 +27,9 @@
                 </li>
               </ul>
             </div>
-          </div>
+          </div>-->
         </div>
-        <div class="row">
+        <!--<div class="row">
           <div class="col-lg-8">
             <form class="form-contact contact_form mb-80" novalidate>
               <div class="row">
@@ -55,10 +55,10 @@
               </div>
             </form>
           </div>
-        </div>
+        </div>-->
       </div>
       <div class="col-lg-4">
-        <div class="single-follow mb-45">
+        <!--<div class="single-follow mb-45">
           <div class="single-box">
             <div *ngFor="let follower of aboutContent.followers"
                  class="follow-us d-flex align-items-center">
@@ -71,7 +71,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div>-->
         <div class="news-poster d-none d-lg-block">
           <img [src]="aboutContent.newsPoster" alt="">
         </div>

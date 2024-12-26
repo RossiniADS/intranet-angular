@@ -15,6 +15,7 @@ namespace intranet_angular.Server.Services
         {
             _context = context;
         }
+
         public async Task<IEnumerable<NoticiaResponse>> GetAllAsync()
         {
             return await _context.Noticias
@@ -38,7 +39,6 @@ namespace intranet_angular.Server.Services
                 })
                 .ToListAsync();
         }
-
 
         public async Task<NoticiaResponse?> GetByIdAsync(int id)
         {

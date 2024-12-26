@@ -63,6 +63,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
     author: '',
     date: '',
     description: '',
+    link: '',
   };
   rightNews: any[] = [
     {
@@ -71,6 +72,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
       title: '',
       date: '',
       colorClass: '',
+      link: '',
     },
   ];
   noticiasResponse: NoticiaResponse[] = [
@@ -199,6 +201,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
       author: ultimaNoticia.autorId,
       date: ultimaNoticia.dataPublicacao,
       description: ultimaNoticia.descricao,
+      link: `/latest-news/${ultimaNoticia.id}`,
     };
 
     this.rightNews = noticiasFiltradas
@@ -209,6 +212,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
         title: not.titulo,
         date: not.dataPublicacao,
         colorClass: 'colorb',
+        link: `/latest-news/${not.id}`,
       }));
   }
 
@@ -218,7 +222,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
       category: noticia.categoria[0]?.nome || 'Sem Categoria',
       title: noticia.titulo,
       time: `${noticia.autorId} | ${noticia.dataPublicacao}`,
-      link: `/latest_news/${noticia.id}`,
+      link: `/latest-news/${noticia.id}`,
     }));
   }
 

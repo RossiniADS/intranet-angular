@@ -160,7 +160,7 @@
                         </div>
                         <div class="whates-caption">
                           <h4>
-                            <a href="latest_news.html">{{ mainNews.title }}</a>
+                            <a [routerLink]="mainNews.link">{{ mainNews.title }}</a>
                           </h4>
                           <span>{{ mainNews.author }} - {{ mainNews.date }}</span>
                           <p>{{ mainNews.description }}</p>
@@ -180,7 +180,7 @@
                             <div class="whats-right-cap">
                               <span [class]="news.colorClass">{{ news.category }}</span>
                               <h4>
-                                <a href="latest_news.html">{{ news.title }}</a>
+                                <a [routerLink]="news.link">{{ news.title }}</a>
                               </h4>
                               <p>{{ news.date }}</p>
                             </div>
@@ -216,7 +216,6 @@
             </div>
           </div>
         </div>-->
-
         <!-- Most Recent Area -->
         <div class="most-recent-area">
           <!-- Section Title -->
@@ -230,7 +229,7 @@
               <div class="most-recent-cap">
                 <span class="bgbeg">{{ mostRecentNews[0].category }}</span>
                 <h4>
-                  <a [href]="mostRecentNews[0].link">{{ mostRecentNews[0].title }}</a>
+                  <a [routerLink]="mostRecentNews[0].link">{{ mostRecentNews[0].title }}</a>
                 </h4>
                 <p>{{ mostRecentNews[0].time }}</p>
               </div>
@@ -243,7 +242,7 @@
             </div>
             <div class="most-recent-capt">
               <h4>
-                <a [href]="news.link">{{ news.title }}</a>
+                <a [routerLink]="news.link">{{ news.title }}</a>
               </h4>
               <p>{{ news.time }}</p>
             </div>
@@ -259,43 +258,43 @@
   <div class="container">
     <div class="weekly2-wrapper">
       <div class="row">-->
-        <!-- Banner -->
-        <!--<div class="col-lg-3">
-          <div class="home-banner2 d-none d-lg-block">
-            <img src="assets/img/gallery/body_card2.png" alt="Banner" />
+<!-- Banner -->
+<!--<div class="col-lg-3">
+  <div class="home-banner2 d-none d-lg-block">
+    <img src="assets/img/gallery/body_card2.png" alt="Banner" />
+  </div>
+</div>
+<div class="col-lg-9">
+  <div class="slider-wrapper">-->
+<!-- section Tittle -->
+<!--<div class="row">
+  <div class="col-lg-12">
+    <div class="small-tittle mb-30">
+      <h4>Most Popular</h4>
+    </div>
+  </div>
+</div>-->
+<!-- Slider -->
+<!--<div class="row">
+  <div class="col-lg-12">
+    <div class="swiper mySwiper2">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" *ngFor="let slide of popularNews">
+          <div class="weekly2-single">
+            <div class="weekly2-img">
+              <img [src]="slide.imageUrl" [alt]="slide.altText" />
+            </div>
+            <div class="weekly2-caption">
+              <h4><a [routerLink]="slide.link">{{ slide.title }}</a></h4>
+              <p>{{ slide.description }}</p>
+            </div>
           </div>
         </div>
-        <div class="col-lg-9">
-          <div class="slider-wrapper">-->
-            <!-- section Tittle -->
-            <!--<div class="row">
-              <div class="col-lg-12">
-                <div class="small-tittle mb-30">
-                  <h4>Most Popular</h4>
-                </div>
-              </div>
-            </div>-->
-            <!-- Slider -->
-            <!--<div class="row">
-              <div class="col-lg-12">
-                <div class="swiper mySwiper2">
-                  <div class="swiper-wrapper">
-                    <div class="swiper-slide" *ngFor="let slide of popularNews">
-                      <div class="weekly2-single">
-                        <div class="weekly2-img">
-                          <img [src]="slide.imageUrl" [alt]="slide.altText" />
-                        </div>
-                        <div class="weekly2-caption">
-                          <h4><a [routerLink]="slide.link">{{ slide.title }}</a></h4>
-                          <p>{{ slide.description }}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>-->
-                  <!-- Paginação -->
-                  <!--<div class="swiper-pagination"></div>-->
-                  <!-- Botões de Navegação -->
-                  <!--<div class="swiper-button-next"></div>
+      </div>-->
+<!-- Paginação -->
+<!--<div class="swiper-pagination"></div>-->
+<!-- Botões de Navegação -->
+<!--<div class="swiper-button-next"></div>
                   <div class="swiper-button-prev"></div>
                 </div>
               </div>
@@ -311,45 +310,45 @@
 <!--<div class="recent-articles pt-80 pb-80">
   <div class="container">
     <div class="recent-wrapper">-->
-      <!-- Título da Seção -->
-      <!--<div class="row">
-        <div class="col-lg-12">
-          <div class="section-tittle mb-30">
-            <h3>{{sectionTitle}}</h3>
+<!-- Título da Seção -->
+<!--<div class="row">
+  <div class="col-lg-12">
+    <div class="section-tittle mb-30">
+      <h3>{{sectionTitle}}</h3>
+    </div>
+  </div>
+</div>-->
+<!-- Slider com Swiper -->
+<!--<div class="row">
+  <div class="col-12">
+    <div class="swiper mySwiper3">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" *ngFor="let slide of articles2">
+          <div class="single-recent">
+            <div class="what-img">
+              <img [src]="slide.imageUrl" [alt]="slide.altText" />
+            </div>
+            <div class="what-cap">
+              <h4>
+                <a [routerLink]="slide.link">{{ slide.title }}</a>
+              </h4>
+              <p>{{ slide.description }}</p>
+              <a class="popup-video btn-icon"
+                 [href]="slide.videoLink"
+                 target="_blank"
+                 rel="noopener noreferrer">
+                <span class="fa-regular fa-circle-play"></span>
+              </a>
+            </div>
           </div>
         </div>
       </div>-->
-      <!-- Slider com Swiper -->
-      <!--<div class="row">
-        <div class="col-12">
-          <div class="swiper mySwiper3">
-            <div class="swiper-wrapper">
-              <div class="swiper-slide" *ngFor="let slide of articles2">
-                <div class="single-recent">
-                  <div class="what-img">
-                    <img [src]="slide.imageUrl" [alt]="slide.altText" />
-                  </div>
-                  <div class="what-cap">
-                    <h4>
-                      <a [routerLink]="slide.link">{{ slide.title }}</a>
-                    </h4>
-                    <p>{{ slide.description }}</p>
-                    <a class="popup-video btn-icon"
-                       [href]="slide.videoLink"
-                       target="_blank"
-                       rel="noopener noreferrer">
-                      <span class="fa-regular fa-circle-play"></span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>-->
-            <!-- Botões de Navegação -->
-            <!--<div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>-->
-            <!-- Paginação -->
-            <!--<div class="swiper-pagination"></div>-->
-          <!--</div>
+<!-- Botões de Navegação -->
+<!--<div class="swiper-button-next"></div>
+<div class="swiper-button-prev"></div>-->
+<!-- Paginação -->
+<!--<div class="swiper-pagination"></div>-->
+<!--</div>
         </div>
       </div>
     </div>
@@ -410,28 +409,28 @@
 <!--<div class="weekly3-news-area pt-5 pb-5">
   <div class="container">
     <div class="weekly3-wrapper">-->
-      <!-- Swiper -->
-      <!--<div class="swiper mySwiper5">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide" *ngFor="let news of weeklyNews">
-            <div class="weekly3-single">
-              <div class="weekly3-img">
-                <img [src]="news.imgSrc" [alt]="news.title" />
-              </div>
-              <div class="weekly3-caption">
-                <h4>
-                  <a [routerLink]="news.link">{{ news.title }}</a>
-                </h4>
-                <p>{{ news.date }}</p>
-              </div>
-            </div>
-          </div>
-        </div>-->
-        <!-- Botões de Navegação -->
-        <!--<div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>-->
-        <!-- Paginação -->
-        <!--<div class="swiper-pagination"></div>
+<!-- Swiper -->
+<!--<div class="swiper mySwiper5">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide" *ngFor="let news of weeklyNews">
+      <div class="weekly3-single">
+        <div class="weekly3-img">
+          <img [src]="news.imgSrc" [alt]="news.title" />
+        </div>
+        <div class="weekly3-caption">
+          <h4>
+            <a [routerLink]="news.link">{{ news.title }}</a>
+          </h4>
+          <p>{{ news.date }}</p>
+        </div>
+      </div>
+    </div>
+  </div>-->
+<!-- Botões de Navegação -->
+<!--<div class="swiper-button-next"></div>
+<div class="swiper-button-prev"></div>-->
+<!-- Paginação -->
+<!--<div class="swiper-pagination"></div>
       </div>
     </div>
   </div>

@@ -1,0 +1,4 @@
+.noticia-content {
+  white-space: pre-wrap; /* Preserva as quebras de linha */
+  word-wrap: break-word; /* Quebra palavras longas */
+}

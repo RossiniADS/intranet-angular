@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'category', component: CategoryComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'element', component: ElementComponent },
-  { path: 'latest-news', component: LatestNewsComponent },
+  { path: 'latest-news/:id', component: LatestNewsComponent },
   { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
