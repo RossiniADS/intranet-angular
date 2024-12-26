@@ -23,6 +23,15 @@ namespace intranet_angular.Server.Controllers
             return Ok(noticias);
         }
 
+        [HttpGet("noticias-pagination")]
+        public async Task<IActionResult> GetAllPagination(int page = 1, int pageSize = 10)
+        {
+            var noticias = await _noticiaService.GetAllPagination(page, pageSize);
+            return Ok(noticias);
+        }
+
+
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {

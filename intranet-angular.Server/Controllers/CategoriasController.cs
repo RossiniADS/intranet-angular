@@ -34,6 +34,17 @@ namespace intranet_angular.Server.Controllers
             return Ok(categoria);
         }
 
+        [HttpGet("qtd-noticia")]
+        public async Task<IActionResult> GetQtdNoticiaPorCategoria()
+        {
+            var categoria = await _categoriaService.GetQtdNoticiaPorCategoria();
+            if (categoria == null)
+            {
+                return NotFound();
+            }
+            return Ok(categoria);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] CategoriaRequest categoriaRequest)
         {

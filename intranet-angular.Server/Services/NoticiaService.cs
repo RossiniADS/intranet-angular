@@ -4,6 +4,7 @@ using intranet_angular.Server.Interfaces;
 using intranet_angular.Server.Request;
 using intranet_angular.Server.Response;
 using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace intranet_angular.Server.Services
 {
@@ -38,6 +39,41 @@ namespace intranet_angular.Server.Services
                     MidiaUrl = n.Midias.Select(m => m.URL).ToList()
                 })
                 .ToListAsync();
+        }
+        public async Task<BaseResponse<IEnumerable<NoticiaResponse>>> GetAllPagination(int page = 1, int pageSize = 10)
+        {
+            var query = _context.Noticias.AsQueryable();
+
+            var totalRecords = await query.CountAsync();
+
+            var noticias = await query
+                .Include(n => n.Midias)
+                .Include(n => n.NoticiasCategorias)
+                .Select(n => new NoticiaResponse
+                {
+                    Id = n.Id,
+                    Titulo = n.Titulo,
+                    IsTrendingTop = n.IsTrendingTop,
+                    AutorId = n.AutorId,
+                    Categoria = n.NoticiasCategorias.Select(cat => new CategoriaResponse
+                    {
+                        Id = cat.Categoria.Id,
+                        Nome = cat.Categoria.Nome
+                    }).ToList(),
+                    Conteudo = n.Conteudo,
+                    Descricao = n.Descricao,
+                    DataPublicacao = n.DataPublicacao,
+                    MidiaUrl = n.Midias.Select(m => m.URL).ToList()
+                })
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return new BaseResponse<IEnumerable<NoticiaResponse>>
+            {
+                TotalRecords = totalRecords,
+                Data = noticias
+            };
         }
 
         public async Task<NoticiaResponse?> GetByIdAsync(int id)

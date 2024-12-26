@@ -15,6 +15,10 @@ export class CategoriaService {
     return this.http.get<CategoriaResponse[]>(this.apiUrl);
   }
 
+  getQtdNoticiaPorCategoria(): Observable<CategoriaResponse[]> {
+    return this.http.get<CategoriaResponse[]>(`${this.apiUrl}/qtd-noticia`);
+  }
+
   add(categoria: any): Observable<CategoriaResponse> {
     return this.http.post<CategoriaResponse>(this.apiUrl, categoria);
   }

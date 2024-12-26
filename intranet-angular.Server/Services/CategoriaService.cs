@@ -27,6 +27,18 @@ namespace intranet_angular.Server.Services
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<CategoriaResponse>> GetQtdNoticiaPorCategoria()
+        {
+            return await _context.Categorias
+                .Select(c => new CategoriaResponse
+                {
+                    Id = c.Id,
+                    Nome = c.Nome,
+                    QtdNoticia = c.NoticiasCategorias.Count
+                })
+                .ToListAsync();
+        }
+
         public async Task<CategoriaResponse?> GetByIdAsync(int id)
         {
             return await _context.Categorias.Where(c => c.Id == id)

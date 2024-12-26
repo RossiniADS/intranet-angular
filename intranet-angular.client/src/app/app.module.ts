@@ -13,14 +13,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AboutComponent } from './pages/about/about.component';
 import { CategoryComponent } from './pages/category/category.component';
-import { LatestNewsComponent } from './pages/latest-news/latest-news.component';
+import { NoticiaDetailsComponent } from './pages/noticia-details/noticia-details.component';
 import { ContactComponent } from './pages/contact/contact.component';
-import { BlogComponent } from './pages/blog/blog.component';
+import { NoticiasComponent } from './pages/noticias/noticias.component';
 import { BlogDetailsComponent } from './pages/blog-details/blog-details.component';
 import { ElementComponent } from './pages/element/element.component';
 import { FormsModule } from '@angular/forms';
 import { BackToTopComponent } from './layout/back-to-top/back-to-top.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
+import { AniversariantesComponent } from './pages/aniversariantes/aniversariantes.component';
 
 @NgModule({
   declarations: [
@@ -31,12 +33,13 @@ import { ReactiveFormsModule } from '@angular/forms';
     FooterComponent,
     AboutComponent,
     CategoryComponent,
-    LatestNewsComponent,
+    NoticiaDetailsComponent,
     ContactComponent,
-    BlogComponent,
+    NoticiasComponent,
     BlogDetailsComponent,
     ElementComponent,
-    BackToTopComponent
+    BackToTopComponent,
+    AniversariantesComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +52,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule
   ],
   providers: [
+    DatePipe,
+    DatePipe,
     provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]

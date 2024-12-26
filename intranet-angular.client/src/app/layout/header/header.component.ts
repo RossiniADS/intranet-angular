@@ -64,19 +64,19 @@ export class HeaderComponent {
 
   menuItems = [
     { label: 'Home', link: '' },
-    { label: 'Noticias', link: '/about' },
+    { label: 'Noticias', link: '/noticias' },
     {
       label: 'Informações',
       link: '#',
       submenu: [
-        { label: 'Aniversariantes', link: '/blog' },
+        { label: 'Aniversariantes', link: '/aniversariantes' },
         { label: 'Eventos', link: '/blog-details' },
         { label: 'Cardápio', link: '/element' }
       ],
       isOpen: false
     },
     { label: 'Gestão de documentos', link: '/category' },
-    { label: 'Feedback/Sugestões', link: '/latest-news' }
+    { label: 'Feedback/Sugestões', link: '/category' }
     //{ label: 'Contact', link: '/contact' }
   ];
 

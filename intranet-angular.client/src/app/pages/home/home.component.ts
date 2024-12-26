@@ -84,7 +84,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
       autorId: 0,
       midiaUrl: [],
       dataPublicacao: new Date(),
-      categoria: [{ id: 0, nome: '' }],
+      categoria: [{ id: 0, nome: '', qtdNoticia: 0 }],
       isTrendingTop: false,
     },
   ];
@@ -92,6 +92,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
     {
       id: 0,
       nome: '',
+      qtdNoticia: 0
     },
   ];
 
@@ -144,7 +145,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
           category: slide.principalCategoriaNome,
           title: slide.titulo,
           description: slide.descricao,
-          link: `/latest-news/${slide.noticiaId}`,
+          link: `/noticia/${slide.noticiaId}`,
         }));
       },
       error: (err) => console.error('Erro ao carregar slides:', err),
@@ -163,7 +164,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
         categoryClass: 'bgb',
         title: noticia.titulo,
         description: `by Rossini Alves - ${noticia.dataPublicacao}`,
-        link: `/latest-news/${noticia.id}`,
+        link: `/noticia/${noticia.id}`,
       }));
   }
 
@@ -201,7 +202,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
       author: ultimaNoticia.autorId,
       date: ultimaNoticia.dataPublicacao,
       description: ultimaNoticia.descricao,
-      link: `/latest-news/${ultimaNoticia.id}`,
+      link: `/noticia/${ultimaNoticia.id}`,
     };
 
     this.rightNews = noticiasFiltradas
@@ -212,7 +213,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
         title: not.titulo,
         date: not.dataPublicacao,
         colorClass: 'colorb',
-        link: `/latest-news/${not.id}`,
+        link: `/noticia/${not.id}`,
       }));
   }
 
@@ -222,7 +223,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
       category: noticia.categoria[0]?.nome || 'Sem Categoria',
       title: noticia.titulo,
       time: `${noticia.autorId} | ${noticia.dataPublicacao}`,
-      link: `/latest-news/${noticia.id}`,
+      link: `/noticia/${noticia.id}`,
     }));
   }
 

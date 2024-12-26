@@ -7,6 +7,7 @@ namespace intranet_angular.Server.Interfaces
     public interface INoticiaService
     {
         Task<IEnumerable<NoticiaResponse>> GetAllAsync();
+        Task<BaseResponse<IEnumerable<NoticiaResponse>>> GetAllPagination(int page = 1, int pageSize = 10);
         Task<NoticiaResponse?> GetByIdAsync(int id);
         Task<NoticiaResponse> AddAsync(NoticiaRequest noticiaRequest);
         Task<NoticiaResponse> UpdateAsync(int id, NoticiaRequest noticiaRequest);

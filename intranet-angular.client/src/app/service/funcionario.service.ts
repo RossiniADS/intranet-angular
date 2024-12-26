@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { FuncionarioResponse } from '../../response/funcionaResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -10,19 +11,19 @@ export class FuncionarioService {
 
   constructor(private http: HttpClient) { }
 
-  getFuncionarios(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}`);
+  getFuncionarios(): Observable<FuncionarioResponse[]> {
+    return this.http.get<FuncionarioResponse[]>(`${this.baseUrl}`);
   }
 
-  createFuncionario(funcionario: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}`, funcionario);
+  createFuncionario(funcionario: any): Observable<FuncionarioResponse> {
+    return this.http.post<FuncionarioResponse>(`${this.baseUrl}`, funcionario);
   }
 
-  updateFuncionario(id: number, funcionario: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/${id}`, funcionario);
+  updateFuncionario(id: number, funcionario: any): Observable<FuncionarioResponse> {
+    return this.http.put<FuncionarioResponse>(`${this.baseUrl}/${id}`, funcionario);
   }
 
-  deleteFuncionario(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}`);
+  deleteFuncionario(id: number): Observable<FuncionarioResponse> {
+    return this.http.delete<FuncionarioResponse>(`${this.baseUrl}/${id}`);
   }
 }

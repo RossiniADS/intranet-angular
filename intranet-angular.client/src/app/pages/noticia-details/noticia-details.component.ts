@@ -3,13 +3,13 @@ import { ActivatedRoute } from '@angular/router';
 import { NoticiaService } from '../../service/noticia.service';
 
 @Component({
-  selector: 'app-latest-news',
+  selector: 'app-noticia-details',
   standalone: false,
 
-  templateUrl: './latest-news.component.html',
-  styleUrl: './latest-news.component.css'
+  templateUrl: './noticia-details.component.html',
+  styleUrl: './noticia-details.component.css'
 })
-export class LatestNewsComponent implements OnInit {
+export class NoticiaDetailsComponent implements OnInit {
   newsId: number = 0;
   aboutContent = {
     heading: '',
