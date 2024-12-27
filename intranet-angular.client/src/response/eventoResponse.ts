@@ -5,4 +5,5 @@ export interface EventoResponse {
   dataInicio: Date;
   dataFim: Date;
   localizacao: string;
+  imagemUrl: string;
 }

@@ -1,0 +1,91 @@
+/* Estilo do título e alinhamento */
+h5 {
+  font-size: 1rem;
+  color: #333;
+  margin: 0;
+}
+
+/* Botão dropdown mais discreto */
+.btn-light {
+  background-color: #f8f9fa; /* Cor de fundo leve */
+  border: 1px solid #ced4da; /* Borda cinza clara */
+  color: #333; /* Texto escuro */
+  font-size: 0.9rem;
+  padding: 6px 12px;
+  border-radius: 4px;
+  box-shadow: none;
+}
+
+  .btn-light:hover {
+    background-color: #e2e6ea; /* Fundo cinza claro ao passar o mouse */
+  }
+
+/* Dropdown menu */
+.dropdown-menu {
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra leve */
+}
+
+  .dropdown-menu .dropdown-item {
+    font-size: 0.9rem;
+    padding: 8px 12px;
+  }
+
+    .dropdown-menu .dropdown-item:hover {
+      background-color: #f1f1f1;
+      color: #333;
+    }
+
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  }
+
+.card-title {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.card-text {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.badge {
+  font-size: 1.2rem;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.date-box {
+  width: 50px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+  flex-shrink: 0; /* Impede que o bloco de data seja redimensionado */
+}
+
+.date-day {
+  background-color: #e74c3c; /* Vermelho */
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 5px 0;
+}
+
+.date-month {
+  background-color: #333; /* Preto */
+  color: white;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  padding: 2px 0;
+}

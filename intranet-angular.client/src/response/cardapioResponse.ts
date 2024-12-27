@@ -1,6 +1,6 @@
 export interface CardapioResponse {
   id: number;
-  diaDaSemana: string;
+  diaDaSemana: number;
   titulo: string;
   descricao: string;
   imagemUrl: string;

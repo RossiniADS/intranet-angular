@@ -1,1 +1,11 @@
-<p>cardapio works!</p>
+<div class="menu-container">
+  <h2>Cardápio Semanal</h2>
+  <div *ngFor="let item of cardapios" class="menu-item">
+    <img [src]="item.imagemUrl" alt="{{ item.titulo }}" class="menu-image" />
+    <div class="menu-details">
+      <h3 class="menu-title">{{ item.titulo }}</h3>
+      <p class="menu-description">{{ item.descricao }}</p>
+      <span class="menu-day">{{ getDiaSemanaTexto(item.diaDaSemana) }}</span>
+    </div>
+  </div>
+</div>
