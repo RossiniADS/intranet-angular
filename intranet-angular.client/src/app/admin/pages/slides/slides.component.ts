@@ -5,6 +5,7 @@ import { PaginaService } from '../../../service/pagina.service';
 import { GroupDeSlideResponse } from '../../../../response/groupDeSlideResponse'
 import { NoticiaResponse } from '../../../../response/noticiaResponse';
 import { NoticiaService } from '../../../service/noticia.service';
+import { PaginaResponse } from '../../../../response/paginaResponse';
 
 @Component({
   selector: 'app-slides',
@@ -14,7 +15,7 @@ import { NoticiaService } from '../../../service/noticia.service';
   styleUrl: './slides.component.css',
 })
 export class SlidesComponent implements OnInit {
-  paginas: any[] = [];
+  paginas: PaginaResponse[] = [];
   grupoForm: FormGroup;
   isEditing = false;
   gruposResponse: GroupDeSlideResponse[] = [];

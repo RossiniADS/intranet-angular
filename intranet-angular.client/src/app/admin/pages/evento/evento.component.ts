@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EventoService } from '../../../service/evento.service'; // Importe o serviço que irá gerenciar os eventos
+import { EventoResponse } from '../../../../response/eventoResponse';
 
 @Component({
   selector: 'app-evento',
@@ -11,7 +12,15 @@ import { EventoService } from '../../../service/evento.service'; // Importe o se
 })
 export class EventoComponent {
   eventoForm: FormGroup;
-  eventos: any[] = [];
+  eventos: EventoResponse[] = [{
+    id: 0,
+    dataFim: new Date(),
+    dataInicio: new Date(),
+    descricao: '',
+    imagemUrl: '',
+    localizacao: '',
+    nome: ''
+  }];
   isEditing = false;
   currentEventoId: number | null = null;
   selectedFile: File | null = null;
@@ -32,7 +41,15 @@ export class EventoComponent {
 
   loadEventos() {
     this.eventoService.getAll().subscribe(data => {
-      this.eventos = data;
+      this.eventos = data.map(eve => ({
+        id: eve.id,
+        dataFim: eve.dataFim,
+        dataInicio: eve.dataInicio,
+        descricao: eve.descricao,
+        imagemUrl: eve.imagemUrl,
+        localizacao: eve.localizacao,
+        nome: eve.nome
+      }));
     });
   }
 

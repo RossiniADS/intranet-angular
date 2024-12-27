@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FuncionarioService } from '../../../service/funcionario.service';
 import { formatDate } from '@angular/common';
+import { FuncionarioResponse } from '../../../../response/funcionaResponse';
 
 @Component({
   selector: 'app-employees',
@@ -10,7 +11,15 @@ import { formatDate } from '@angular/common';
   styleUrl: './employees.component.css'
 })
 export class EmployeesComponent {
-  funcionarios: any[] = [];
+  funcionarios: FuncionarioResponse[] = [{
+    id: 0,
+    cargo: '',
+    dataNascimento: new Date(),
+    departamento: '',
+    email: '',
+    imagemUrl: '',
+    nome: ''
+  }];
   funcionarioForm: FormGroup;
   isEditing = false;
   currentFuncionarioId: number | null = null;
@@ -32,7 +41,15 @@ export class EmployeesComponent {
 
   loadFuncionarios(): void {
     this.funcionarioService.getFuncionarios().subscribe((data) => {
-      this.funcionarios = data;
+      this.funcionarios = data.map(fun => ({
+        id: fun.id,
+        cargo: fun.cargo,
+        imagemUrl: fun.imagemUrl,
+        nome: fun.nome,
+        dataNascimento: fun.dataNascimento,
+        departamento: fun.departamento,
+        email: fun.email
+      }));
     });
   }
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CardapioService } from '../../../service/cardapio.service';
+import { CardapioResponse } from '../../../../response/cardapioResponse';
 
 @Component({
   selector: 'app-cardapio',
@@ -10,7 +11,13 @@ import { CardapioService } from '../../../service/cardapio.service';
 })
 export class CardapioComponent {
   cardapioForm: FormGroup;
-  cardapios: any[] = [];
+  cardapios: CardapioResponse[] = [{
+    id: 0,
+    descricao: '',
+    diaDaSemana: 0,
+    imagemUrl: '',
+    titulo: ''
+  }];
   isEditing = false;
   currentCardapioId: number | null = null;
   selectedFile: File | null = null;
@@ -29,7 +36,13 @@ export class CardapioComponent {
 
   loadCardapios() {
     this.cardapioService.getAll().subscribe(data => {
-      this.cardapios = data;
+      this.cardapios = data.map(car => ({
+        id: car.id,
+        titulo: car.titulo,
+        descricao: car.descricao,
+        diaDaSemana: car.diaDaSemana,
+        imagemUrl: car.imagemUrl
+      }));
     });
   }
 

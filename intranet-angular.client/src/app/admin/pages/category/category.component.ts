@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoriaService } from '../../../service/categoria.service';
+import { CategoriaResponse } from '../../../../response/categoriaResponse';
 
 @Component({
   selector: 'app-category',
@@ -11,7 +12,11 @@ import { CategoriaService } from '../../../service/categoria.service';
 })
 export class CategoryComponent {
   categoriaForm: FormGroup;
-  categorias: any[] = [];
+  categorias: CategoriaResponse[] = [{
+    id: 0,
+    nome: '',
+    qtdNoticia: 0
+  }];
   isEditing = false;
   currentCategoriaId: number | null = null;
 
@@ -27,7 +32,11 @@ export class CategoryComponent {
 
   loadCategorias() {
     this.categoriaService.getAll().subscribe(data => {
-      this.categorias = data;
+      this.categorias = data.map(cat => ({
+        id: cat.id,
+        nome: cat.nome,
+        qtdNoticia: cat.qtdNoticia
+      }));
     });
   }
 

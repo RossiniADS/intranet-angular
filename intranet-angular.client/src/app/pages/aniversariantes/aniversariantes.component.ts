@@ -14,7 +14,10 @@ export class AniversariantesComponent implements OnInit {
       id: 0,
       cargo: '',
       imagemUrl: '',
-      nome: ''
+      nome: '',
+      dataNascimento: new Date(),
+      departamento: '',
+      email: ''
     }
   ];
 
@@ -26,7 +29,10 @@ export class AniversariantesComponent implements OnInit {
         id: funcionario.id,
         nome: funcionario.nome,
         cargo: funcionario.cargo,
-        imagemUrl: `https://localhost:7227/${funcionario.imagemUrl}`
+        imagemUrl: `https://localhost:7227/${funcionario.imagemUrl}`,
+        dataNascimento: funcionario.dataNascimento,
+        departamento: funcionario.departamento,
+        email: funcionario.email
       }));
     })
   }
