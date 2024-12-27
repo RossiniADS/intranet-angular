@@ -1,74 +1,35 @@
-<!-- Sidebar -->
-<nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
+<nav id="sidebarMenu" class="collapse d-lg-block sidebar bg-white">
   <div class="position-sticky">
     <div class="list-group list-group-flush mx-3 mt-4">
-      <!-- Dashboard -->
       <a [routerLink]="'/admin/dashboard'"
          class="list-group-item list-group-item-action py-2 ripple"
          aria-current="true">
-        <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Main Dashboard</span>
+        <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Dashboard</span>
       </a>
-
-      <!-- Dropdown Pages -->
-      <a class="list-group-item list-group-item-action py-2 ripple d-flex justify-content-between align-items-center"
-         data-bs-toggle="collapse" href="#pagesMenu" role="button" aria-expanded="false" aria-controls="pagesMenu">
-        <span>
-          <i class="fas fa-folder fa-fw me-3"></i>Pages
-        </span>
-        <i class="fas fa-chevron-down"></i>
+      <a [routerLink]="'/admin/usuarios'" class="list-group-item list-group-item-action py-2 ripple">
+        <i class="fas fa-users fa-fw me-3"></i>Usuários
       </a>
-      <div class="collapse ms-3" id="pagesMenu">
-        <a href="#" class="list-group-item list-group-item-action py-2 ripple">
-          <i class="fas fa-home fa-fw me-3"></i>Home
-        </a>
-        <a href="#" class="list-group-item list-group-item-action py-2 ripple">
-          <i class="fas fa-info-circle fa-fw me-3"></i>About
-        </a>
-        <a href="#" class="list-group-item list-group-item-action py-2 ripple">
-          <i class="fas fa-list fa-fw me-3"></i>Category
-        </a>
-        <a href="#" class="list-group-item list-group-item-action py-2 ripple">
-          <i class="fas fa-newspaper fa-fw me-3"></i>Latest News
-        </a>
-        <a href="#" class="list-group-item list-group-item-action py-2 ripple">
-          <i class="fas fa-envelope fa-fw me-3"></i>Contact
-        </a>
-      </div>
-      <!-- Dropdown Cadastro -->
-      <a class="list-group-item list-group-item-action py-2 ripple d-flex justify-content-between align-items-center"
-         data-bs-toggle="collapse" href="#cadastroMenu" role="button" aria-expanded="false" aria-controls="cadastroMenu">
-        <span>
-          <i class="fas fa-users fa-fw me-3"></i>Cadastro
-        </span>
-        <i class="fas fa-chevron-down"></i>
+      <a [routerLink]="'/admin/categorias'" class="list-group-item list-group-item-action py-2 ripple">
+        <i class="fas fa-tags fa-fw me-3"></i>Categorias
       </a>
-      <div class="collapse ms-3" id="cadastroMenu">
-        <a [routerLink]="'/admin/usuarios'" class="list-group-item list-group-item-action py-2 ripple">
-          <i class="fas fa-home fa-fw me-3"></i>Usuários
-        </a>
-        <a [routerLink]="'/admin/categorias'" class="list-group-item list-group-item-action py-2 ripple">
-          <i class="fas fa-info-circle fa-fw me-3"></i>Categorias
-        </a>
-        <a [routerLink]="'/admin/funcionarios'" class="list-group-item list-group-item-action py-2 ripple">
-          <i class="fas fa-list fa-fw me-3"></i>Funcionários
-        </a>
-        <a [routerLink]="'/admin/news'" class="list-group-item list-group-item-action py-2 ripple">
-          <i class="fas fa-newspaper fa-fw me-3"></i>Noticias
-        </a>
-        <a [routerLink]="'/admin/paginas'" class="list-group-item list-group-item-action py-2 ripple">
-          <i class="fas fa-envelope fa-fw me-3"></i>Paginas
-        </a>
-        <a [routerLink]="'/admin/slides'" class="list-group-item list-group-item-action py-2 ripple">
-          <i class="fas fa-envelope fa-fw me-3"></i>Slides
-        </a>
-        <a [routerLink]="'/admin/cardapios'" class="list-group-item list-group-item-action py-2 ripple">
-          <i class="fas fa-envelope fa-fw me-3"></i>Cardapios
-        </a>
-        <a [routerLink]="'/admin/eventos'" class="list-group-item list-group-item-action py-2 ripple">
-          <i class="fas fa-envelope fa-fw me-3"></i>Eventos
-        </a>
-      </div>
+      <a [routerLink]="'/admin/funcionarios'" class="list-group-item list-group-item-action py-2 ripple">
+        <i class="fas fa-user-tie fa-fw me-3"></i>Funcionários
+      </a>
+      <a [routerLink]="'/admin/news'" class="list-group-item list-group-item-action py-2 ripple">
+        <i class="fas fa-newspaper fa-fw me-3"></i>Notícias
+      </a>
+      <a [routerLink]="'/admin/paginas'" class="list-group-item list-group-item-action py-2 ripple">
+        <i class="fas fa-file-alt fa-fw me-3"></i>Páginas
+      </a>
+      <a [routerLink]="'/admin/slides'" class="list-group-item list-group-item-action py-2 ripple">
+        <i class="fas fa-images fa-fw me-3"></i>Slides
+      </a>
+      <a [routerLink]="'/admin/cardapios'" class="list-group-item list-group-item-action py-2 ripple">
+        <i class="fas fa-utensils fa-fw me-3"></i>Cardápios
+      </a>
+      <a [routerLink]="'/admin/eventos'" class="list-group-item list-group-item-action py-2 ripple">
+        <i class="fas fa-calendar-alt fa-fw me-3"></i>Eventos
+      </a>
     </div>
   </div>
 </nav>
-<!-- Sidebar -->

@@ -50,7 +50,7 @@
         <td>{{ usuario.nome }}</td>
         <td>{{ usuario.email }}</td>
         <td>{{ usuario.login }}</td>
-        <td>{{ usuario.aniversario | date }}</td>
+        <td>{{ usuario.aniversario | date: 'dd/MM/yyyy' }}</td>
         <td>
           <button class="btn btn-edit" (click)="editUsuario(usuario)">Editar</button>
           <button class="btn btn-delete" (click)="deleteUsuario(usuario.id)">Excluir</button>

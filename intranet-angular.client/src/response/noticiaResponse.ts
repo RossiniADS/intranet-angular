@@ -10,4 +10,5 @@ export interface NoticiaResponse {
   autorId?: number;
   categoria: CategoriaResponse[];
   dataPublicacao: Date;
+  categoriaNomes?: string;
 }

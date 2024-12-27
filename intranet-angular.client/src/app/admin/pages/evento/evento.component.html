@@ -51,7 +51,7 @@
       <tr *ngFor="let evento of eventos">
         <td>{{ evento.id }}</td>
         <td>{{ evento.nome }}</td>
-        <td>{{ evento.dataInicio | date:'short' }}</td>
+        <td>{{ evento.dataInicio | date: 'dd/MM/yyyy HH:MM' }}</td>
         <td>
           <button class="btn btn-edit" (click)="editEvento(evento)">Editar</button>
           <button class="btn btn-delete" (click)="deleteEvento(evento.id)">Excluir</button>

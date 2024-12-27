@@ -1,13 +1,14 @@
-﻿using intranet_angular.Server.Entities;
+﻿using intranet_angular.Server.Request;
+using intranet_angular.Server.Response;
 
 namespace intranet_angular.Server.Interfaces
 {
     public interface IFuncionarioService
     {
-        Task<IEnumerable<Funcionario>> GetAllAsync();
-        Task<Funcionario> GetByIdAsync(int id);
-        Task AddAsync(Funcionario funcionario);
-        Task UpdateAsync(Funcionario funcionario);
+        Task<IEnumerable<FuncionarioResponse>> GetAllAsync();
+        Task<FuncionarioResponse> GetByIdAsync(int id);
+        Task<FuncionarioResponse> AddAsync(FuncionarioRequest funcionarioRequest);
+        Task<FuncionarioResponse> UpdateAsync(int id, FuncionarioRequest funcionarioRequest);
         Task DeleteAsync(int id);
     }
 }

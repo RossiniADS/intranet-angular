@@ -27,6 +27,11 @@
       <input id="departamento" formControlName="departamento" type="text" placeholder="Digite o departamento" />
     </div>
 
+    <div class="form-group">
+      <label for="file">Imagem:</label>
+      <input type="file" id="file" (change)="onFileSelected($event)" class="form-control" />
+    </div>
+
     <div class="button-group">
       <button class="btn btn-primary" type="submit">{{ isEditing ? 'Atualizar' : 'Cadastrar' }}</button>
       <button class="btn btn-secondary" type="button" (click)="resetForm()" *ngIf="isEditing">Cancelar</button>
@@ -52,7 +57,7 @@
         <td>{{ funcionario.email }}</td>
         <td>{{ funcionario.cargo }}</td>
         <td>{{ funcionario.departamento }}</td>
-        <td>{{ funcionario.dataNascimento | date }}</td>
+        <td>{{ funcionario.dataNascimento | date: 'dd/MM/yyyy' }}</td>
         <td>
           <button class="btn btn-edit" (click)="editFuncionario(funcionario)">Editar</button>
           <button class="btn btn-delete" (click)="deleteFuncionario(funcionario.id)">Excluir</button>

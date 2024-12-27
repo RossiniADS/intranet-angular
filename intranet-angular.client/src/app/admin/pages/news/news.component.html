@@ -1,25 +1,20 @@
-<div class="noticia-container">
-  <form [formGroup]="noticiaForm" (ngSubmit)="saveNoticia()" class="noticia-form">
-    <h2>{{ isEditing ? 'Editar Notícia' : 'Nova Notícia' }}</h2>
+<div class="container">
+  <h1>Gerenciamento de Notícias</h1>
 
+  <form class="form-container" [formGroup]="noticiaForm" (ngSubmit)="saveNoticia()">
     <div class="form-group">
       <label for="titulo">Título:</label>
-      <input id="titulo" formControlName="titulo" class="form-control" placeholder="Digite o título da notícia" />
+      <input id="titulo" formControlName="titulo" type="text" placeholder="Digite o título da notícia" />
     </div>
 
     <div class="form-group">
       <label for="descricao">Descrição:</label>
-      <textarea formControlName="descricao" class="form-control" placeholder="Digite uma breve descrição para a notícia"></textarea>
+      <textarea id="descricao" formControlName="descricao" placeholder="Digite a descrição"></textarea>
     </div>
 
     <div class="form-group">
       <label for="conteudo">Conteúdo:</label>
-      <quill-editor formControlName="conteudo" class="form-control"></quill-editor>
-    </div>
-
-    <div class="form-check form-switch">
-      <input class="form-check-input" type="checkbox" role="checkbox" id="isTrendingTop" formControlName="isTrendingTop">
-      <label class="form-check-label" for="isTrendingTop">Trending Tops da Home?</label>
+      <quill-editor id="conteudo" formControlName="conteudo" placeholder="Digite o conteúdo completo" class="form-control"></quill-editor>
     </div>
 
     <div class="form-group">
@@ -36,30 +31,44 @@
     </div>
 
     <div class="form-group">
-      <label for="midia">Mídia (Imagem ou Vídeo):</label>
+      <label for="midia">Mídia:</label>
       <input type="file" id="midia" (change)="onFileSelected($event)" class="form-control" />
     </div>
 
-    <div class="form-actions">
-      <button type="submit" class="btn btn-primary">{{ isEditing ? 'Atualizar' : 'Salvar' }}</button>
-      <button type="button" class="btn btn-secondary" (click)="resetForm()">Cancelar</button>
+    <div class="form-check form-switch">
+      <input class="form-check-input" type="checkbox" role="checkbox" id="isTrendingTop" formControlName="isTrendingTop">
+      <label class="form-check-label" for="isTrendingTop">Destaque na página inicial?</label>
+    </div>
+
+    <div class="button-group">
+      <button class="btn btn-primary" type="submit">{{ isEditing ? 'Atualizar' : 'Cadastrar' }}</button>
+      <button class="btn btn-secondary" type="button" (click)="resetForm()" *ngIf="isEditing">Cancelar</button>
     </div>
   </form>
 
-  <div class="noticia-list">
-    <h3>Lista de Notícias</h3>
-    <ul class="noticia-items">
-      <li *ngFor="let noticia of noticias" class="noticia-item">
-        <div class="noticia-header">
-          <h4>{{ noticia.titulo }}</h4>
-          <span class="noticia-date">{{ noticia.dataPublicacao | date: 'shortDate' }}</span>
-        </div>
-        <!--<p [innerHTML]="noticia.conteudo" class="noticia-content"></p>-->
-        <div class="noticia-actions">
-          <button class="btn btn-warning" (click)="editNoticia(noticia)">Editar</button>
-          <button class="btn btn-danger" (click)="deleteNoticia(noticia.id)">Deletar</button>
-        </div>
-      </li>
-    </ul>
-  </div>
+  <table class="noticia-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Título</th>
+        <th>Descrição</th>
+        <th>Categorias</th>
+        <th>Destaque</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let noticia of noticias">
+        <td>{{ noticia.id }}</td>
+        <td>{{ noticia.titulo }}</td>
+        <td>{{ noticia.descricao }}</td>
+        <td>{{ noticia.categoriaNomes }}</td>
+        <td>{{ noticia.isTrendingTop ? 'Sim' : 'Não' }}</td>
+        <td>
+          <button class="btn btn-edit" (click)="editNoticia(noticia)">Editar</button>
+          <button class="btn btn-delete" (click)="deleteNoticia(noticia.id)">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

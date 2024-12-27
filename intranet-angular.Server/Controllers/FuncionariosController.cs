@@ -1,5 +1,6 @@
 ﻿using intranet_angular.Server.Entities;
 using intranet_angular.Server.Interfaces;
+using intranet_angular.Server.Request;
 using Microsoft.AspNetCore.Mvc;
 
 namespace intranet_angular.Server.Controllers
@@ -34,31 +35,26 @@ namespace intranet_angular.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] Funcionario funcionario)
+        public async Task<IActionResult> Add([FromForm] FuncionarioRequest funcionarioRequest)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            await _funcionarioService.AddAsync(funcionario);
+            var funcionario = await _funcionarioService.AddAsync(funcionarioRequest);
             return CreatedAtAction(nameof(GetById), new { id = funcionario.Id }, funcionario);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] Funcionario funcionario)
+        public async Task<IActionResult> Update(int id, [FromForm] FuncionarioRequest funcionarioRequest)
         {
-            if (id != funcionario.Id)
-            {
-                return BadRequest("ID mismatch.");
-            }
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            await _funcionarioService.UpdateAsync(funcionario);
+            await _funcionarioService.UpdateAsync(id, funcionarioRequest);
             return NoContent();
         }
 

@@ -37,6 +37,7 @@ export class NewsComponent implements OnInit {
   loadNoticias(): void {
     this.noticiaService.getNoticias().subscribe(data => {
       this.noticias = data;
+      this.processNoticias();
     });
   }
 
@@ -119,5 +120,12 @@ export class NewsComponent implements OnInit {
       dataPublicacao: new Date()
     });
     this.selectedFile = null;
+  }
+
+  processNoticias() {
+    this.noticias = this.noticias.map(noticia => ({
+      ...noticia,
+      categoriaNomes: noticia.categoria?.map(cat => cat.nome).join(', ') || ''
+    }));
   }
 }

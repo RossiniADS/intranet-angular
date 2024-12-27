@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FuncionarioService } from '../../../service/funcionario.service';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-employees',
@@ -13,6 +14,7 @@ export class EmployeesComponent {
   funcionarioForm: FormGroup;
   isEditing = false;
   currentFuncionarioId: number | null = null;
+  selectedFile: File | null = null;
 
   constructor(private funcionarioService: FuncionarioService, private fb: FormBuilder) {
     this.funcionarioForm = this.fb.group({
@@ -37,15 +39,24 @@ export class EmployeesComponent {
   submitForm(): void {
     if (this.funcionarioForm.invalid) return;
 
-    const funcionario = this.funcionarioForm.value;
+    const formData = new FormData();
+    formData.append('nome', this.funcionarioForm.get('nome')?.value);
+    formData.append('cargo', this.funcionarioForm.get('cargo')?.value);
+    formData.append('departamento', this.funcionarioForm.get('departamento')?.value);
+    formData.append('dataNascimento', this.funcionarioForm.get('dataNascimento')?.value);
+    formData.append('email', this.funcionarioForm.get('email')?.value);
+
+    if (this.selectedFile) {
+      formData.append('file', this.selectedFile, this.selectedFile.name);
+    }
 
     if (this.isEditing && this.currentFuncionarioId !== null) {
-      this.funcionarioService.updateFuncionario(this.currentFuncionarioId, funcionario).subscribe(() => {
+      this.funcionarioService.updateFuncionario(this.currentFuncionarioId, formData).subscribe(() => {
         this.loadFuncionarios();
         this.resetForm();
       });
     } else {
-      this.funcionarioService.createFuncionario(funcionario).subscribe(() => {
+      this.funcionarioService.createFuncionario(formData).subscribe(() => {
         this.loadFuncionarios();
         this.resetForm();
       });
@@ -55,7 +66,16 @@ export class EmployeesComponent {
   editFuncionario(funcionario: any): void {
     this.isEditing = true;
     this.currentFuncionarioId = funcionario.id;
-    this.funcionarioForm.patchValue(funcionario);
+
+    // Verifica e formata a data de nascimento
+    const formattedFuncionario = {
+      ...funcionario,
+      dataNascimento: funcionario.dataNascimento
+        ? formatDate(funcionario.dataNascimento, 'yyyy-MM-dd', 'en-US')
+        : ''
+    };
+
+    this.funcionarioForm.patchValue(formattedFuncionario);
   }
 
   deleteFuncionario(id: number): void {
@@ -68,5 +88,13 @@ export class EmployeesComponent {
     this.funcionarioForm.reset();
     this.isEditing = false;
     this.currentFuncionarioId = null;
+    this.selectedFile = null;
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+    }
   }
 }
