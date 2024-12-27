@@ -9,6 +9,8 @@
         public DateTime DataPublicacao { get; set; }
         public int? AutorId { get; set; }
         public List<int> CategoriaIds { get; set; }
-        public List<IFormFile>? Midias { get; set; }
+        public IFormFile? MidiaPrincipal { get; set; }
+        public IFormFile? MidiaSecundaria { get; set; }
+        public IFormFile? MidiaTerciaria { get; set; }
     }
 }

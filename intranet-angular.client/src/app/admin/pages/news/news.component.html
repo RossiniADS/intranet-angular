@@ -14,7 +14,10 @@
 
     <div class="form-group">
       <label for="conteudo">Conteúdo:</label>
-      <quill-editor id="conteudo" formControlName="conteudo" placeholder="Digite o conteúdo completo" class="form-control"></quill-editor>
+      <quill-editor id="conteudo"
+                    formControlName="conteudo"
+                    placeholder="Digite o conteúdo completo"
+                    class="form-control"></quill-editor>
     </div>
 
     <div class="form-group">
@@ -26,26 +29,52 @@
                  bindValue="id"
                  [multiple]="true"
                  placeholder="Selecione as categorias"
-                 class="form-control">
-      </ng-select>
+                 class="form-control"></ng-select>
     </div>
 
+    <!-- Upload 1 -->
     <div class="form-group">
-      <label for="midia">Mídia:</label>
-      <input type="file" id="midia" (change)="onFileSelected($event)" class="form-control" />
+      <label for="midia">Mídia Principal (750x645):</label>
+      <input type="file" id="midia" (change)="onFileSelected($event, 'main')" class="form-control" />
+      <div *ngIf="imageErrors['mmain']" class="error-message">
+        {{ imageErrors['main'] }}
+      </div>
+    </div>
+
+    <!-- Upload 2 -->
+    <div class="form-group">
+      <label for="midiaSecundaria">Mídia Secundária (750x375):</label>
+      <input type="file" id="midiaSecundaria" (change)="onFileSelected($event, 'secondary')" class="form-control" />
+      <div *ngIf="imageErrors['msecondary']" class="error-message">
+        {{ imageErrors['secondary'] }}
+      </div>
+    </div>
+
+    <!-- Upload 3 -->
+    <div class="form-group">
+      <label for="midiaTerciaria">Mídia Terciária (360x245):</label>
+      <input type="file" id="midiaTerciaria" (change)="onFileSelected($event, 'tertiary')" class="form-control" />
+      <div *ngIf="imageErrors['tertiary']" class="error-message">
+        {{ imageErrors['tertiary'] }}
+      </div>
     </div>
 
     <div class="form-check form-switch">
-      <input class="form-check-input" type="checkbox" role="checkbox" id="isTrendingTop" formControlName="isTrendingTop">
+      <input class="form-check-input"
+             type="checkbox"
+             role="checkbox"
+             id="isTrendingTop"
+             formControlName="isTrendingTop" />
       <label class="form-check-label" for="isTrendingTop">Destaque na página inicial?</label>
     </div>
 
     <div class="button-group">
-      <button class="btn btn-primary" type="submit">{{ isEditing ? 'Atualizar' : 'Cadastrar' }}</button>
+      <button class="btn btn-primary" type="submit" [disabled]="hasImageErrors() || noticiaForm.invalid">
+        {{ isEditing ? 'Atualizar' : 'Cadastrar' }}
+      </button>
       <button class="btn btn-secondary" type="button" (click)="resetForm()" *ngIf="isEditing">Cancelar</button>
     </div>
   </form>
-
   <table class="noticia-table">
     <thead>
       <tr>

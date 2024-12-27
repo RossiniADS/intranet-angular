@@ -16,7 +16,20 @@ export class NewsComponent implements OnInit {
   noticiaForm: FormGroup;
   isEditing = false;
   selectedNoticiaId: number | null = null;
-  selectedFile: File | null = null;
+
+  // Armazena os arquivos selecionados
+  selectedFiles: { [key: string]: File | null } = {
+    main: null,       // 750x645
+    secondary: null,  // 750x375
+    tertiary: null,   // 360x245
+  };
+
+  // Armazena mensagens de erro por tipo de imagem
+  imageErrors: { [key: string]: string | null } = {
+    main: null,
+    secondary: null,
+    tertiary: null,
+  };
 
   constructor(private fb: FormBuilder, private noticiaService: NoticiaService, private categoriaService: CategoriaService) {
     this.noticiaForm = this.fb.group({
@@ -48,11 +61,12 @@ export class NewsComponent implements OnInit {
   }
 
   saveNoticia(): void {
-    if (this.noticiaForm.invalid) return;
+    if (this.noticiaForm.invalid || this.hasImageErrors()) return;
+
     const formData = new FormData();
 
     // Adiciona os campos do formulário ao FormData
-    Object.keys(this.noticiaForm.value).forEach(key => {
+    Object.keys(this.noticiaForm.value).forEach((key) => {
       if (key === 'categoriaIds') {
         this.noticiaForm.value[key]?.forEach((id: number) => {
           formData.append('categoriaIds', id.toString());
@@ -64,9 +78,15 @@ export class NewsComponent implements OnInit {
       }
     });
 
-    // Adiciona o arquivo ao FormData, se selecionado
-    if (this.selectedFile) {
-      formData.append('midias', this.selectedFile);
+    // Adiciona os arquivos ao FormData
+    if (this.selectedFiles['main']) {
+      formData.append('midiaPrincipal', this.selectedFiles['main']);
+    }
+    if (this.selectedFiles['secondary']) {
+      formData.append('midiaSecundaria', this.selectedFiles['secondary']);
+    }
+    if (this.selectedFiles['tertiary']) {
+      formData.append('midiaTerciaria', this.selectedFiles['tertiary']);
     }
 
     if (this.isEditing && this.selectedNoticiaId !== null) {
@@ -89,11 +109,44 @@ export class NewsComponent implements OnInit {
     return tempDiv.innerHTML;
   }
 
-  onFileSelected(event: Event): void {
+  onFileSelected(event: Event, type: string): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0];
+      const file = input.files[0];
+
+      const image = new Image();
+      const reader = new FileReader();
+
+      reader.onload = (e: any) => {
+        image.src = e.target.result;
+        image.onload = () => {
+          const width = image.width;
+          const height = image.height;
+
+          // Validação das dimensões por tipo
+          if (type === 'main' && (width !== 750 || height !== 645)) {
+            this.imageErrors['main'] = 'A imagem principal precisa ter exatamente 750x645 pixels.';
+            this.selectedFiles['main'] = null;
+          } else if (type === 'secondary' && (width !== 750 || height !== 375)) {
+            this.imageErrors['secondary'] = 'A imagem secundária precisa ter exatamente 750x375 pixels.';
+            this.selectedFiles['secondary'] = null;
+          } else if (type === 'tertiary' && (width !== 360 || height !== 245)) {
+            this.imageErrors['tertiary'] = 'A imagem terciária precisa ter exatamente 360x245 pixels.';
+            this.selectedFiles['tertiary'] = null;
+          } else {
+            // Se for válido, limpa o erro e armazena o arquivo
+            this.imageErrors[type] = null;
+            this.selectedFiles[type] = file;
+          }
+        };
+      };
+
+      reader.readAsDataURL(file);
     }
+  }
+
+  hasImageErrors(): boolean {
+    return !!this.imageErrors['main'] || !!this.imageErrors['secondary'] || !!this.imageErrors['tertiary'];
   }
 
   editNoticia(noticia: NoticiaResponse): void {
@@ -117,15 +170,24 @@ export class NewsComponent implements OnInit {
     this.isEditing = false;
     this.selectedNoticiaId = null;
     this.noticiaForm.reset({
-      dataPublicacao: new Date()
+      dataPublicacao: new Date(),
     });
-    this.selectedFile = null;
+    this.selectedFiles = {
+      main: null,
+      secondary: null,
+      tertiary: null,
+    };
+    this.imageErrors = {
+      main: null,
+      secondary: null,
+      tertiary: null,
+    };
   }
 
   processNoticias() {
-    this.noticias = this.noticias.map(noticia => ({
+    this.noticias = this.noticias.map((noticia) => ({
       ...noticia,
-      categoriaNomes: noticia.categoria?.map(cat => cat.nome).join(', ') || ''
+      categoriaNomes: noticia.categoria?.map((cat) => cat.nome).join(', ') || '',
     }));
   }
 }

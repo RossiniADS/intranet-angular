@@ -1,5 +1,6 @@
 ﻿using intranet_angular.Server.Context;
 using intranet_angular.Server.Entities;
+using intranet_angular.Server.Enuns;
 using intranet_angular.Server.Interfaces;
 using intranet_angular.Server.Request;
 using intranet_angular.Server.Response;
@@ -120,7 +121,15 @@ namespace intranet_angular.Server.Services
                 _context.Noticias.Add(noticia);
                 await _context.SaveChangesAsync();
 
-                await ProcessarMidiasAsync(noticiaRequest.Midias, noticia.Id);
+                if (noticiaRequest.MidiaPrincipal != null)
+                    await ProcessarMidiasAsync(noticiaRequest.MidiaPrincipal, MidiaTamanhoEnum.Principal, noticia.Id);
+
+                if (noticiaRequest.MidiaSecundaria != null)
+                    await ProcessarMidiasAsync(noticiaRequest.MidiaSecundaria, MidiaTamanhoEnum.Secundaria, noticia.Id);
+
+                if (noticiaRequest.MidiaTerciaria != null)
+                    await ProcessarMidiasAsync(noticiaRequest.MidiaTerciaria, MidiaTamanhoEnum.Terciaria, noticia.Id);
+
                 await transaction.CommitAsync();
 
                 return ToNoticiaResponse(noticia);
@@ -161,7 +170,15 @@ namespace intranet_angular.Server.Services
                 }
 
                 _context.MidiasNoticias.RemoveRange(noticia.Midias);
-                await ProcessarMidiasAsync(noticiaRequest.Midias, noticia.Id);
+
+                if (noticiaRequest.MidiaPrincipal != null)
+                    await ProcessarMidiasAsync(noticiaRequest.MidiaPrincipal, MidiaTamanhoEnum.Principal, noticia.Id);
+
+                if (noticiaRequest.MidiaSecundaria != null)
+                    await ProcessarMidiasAsync(noticiaRequest.MidiaSecundaria, MidiaTamanhoEnum.Secundaria, noticia.Id);
+
+                if (noticiaRequest.MidiaTerciaria != null)
+                    await ProcessarMidiasAsync(noticiaRequest.MidiaTerciaria, MidiaTamanhoEnum.Terciaria, noticia.Id);
 
                 _context.Noticias.Update(noticia);
                 await _context.SaveChangesAsync();
@@ -216,29 +233,27 @@ namespace intranet_angular.Server.Services
             MidiaUrl = noticia.Midias.Select(m => m.URL).ToList()
         };
 
-        private async Task ProcessarMidiasAsync(IEnumerable<IFormFile>? midias, int noticiaId)
+        private async Task ProcessarMidiasAsync(IFormFile midia, MidiaTamanhoEnum midiaTamanho, int noticiaId)
         {
-            if (midias == null) return;
+            if (midia == null) return;
 
-            foreach (var file in midias)
+            var filePath = Path.Combine("Uploads", Guid.NewGuid() + Path.GetExtension(midia.FileName));
+
+            Directory.CreateDirectory(Path.GetDirectoryName(filePath) ?? "Uploads");
+
+            await using (var stream = new FileStream(filePath, FileMode.Create))
             {
-                var filePath = Path.Combine("Uploads", Guid.NewGuid() + Path.GetExtension(file.FileName));
-
-                Directory.CreateDirectory(Path.GetDirectoryName(filePath) ?? "Uploads");
-
-                await using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    await file.CopyToAsync(stream);
-                }
-
-                _context.MidiasNoticias.Add(new MidiaNoticia
-                {
-                    URL = filePath,
-                    NoticiaId = noticiaId,
-                    Ordem = 1,
-                    Tipo = Enuns.TipoMidiaEnum.Imagem
-                });
+                await midia.CopyToAsync(stream);
             }
+
+            _context.MidiasNoticias.Add(new MidiaNoticia
+            {
+                URL = filePath,
+                NoticiaId = noticiaId,
+                MidiaTamanho = midiaTamanho,
+                Tipo = TipoMidiaEnum.Imagem
+            });
+
 
             await _context.SaveChangesAsync();
         }

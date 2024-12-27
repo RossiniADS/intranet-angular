@@ -180,7 +180,6 @@ export class HomeComponent implements AfterViewInit, OnInit {
   }
 
   loadMainAndRightNews(categoriaId: number): void {
-    console.log(this.noticiasResponse)
     const noticiasFiltradas = this.noticiasResponse.filter((not) =>
       not.categoria.some((cat) => cat.id === categoriaId)
     );
