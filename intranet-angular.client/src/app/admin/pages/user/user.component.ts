@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from '../../../service/usuario.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-user',
@@ -55,7 +56,14 @@ export class UserComponent implements OnInit {
   editUsuario(usuario: any): void {
     this.isEditing = true;
     this.currentUserId = usuario.id;
-    this.usuarioForm.patchValue(usuario);
+
+    const formattedUsuario = {
+      ...usuario,
+      aniversario: usuario.aniversario
+        ? formatDate(usuario.aniversario, 'yyyy-MM-dd', 'en-US')
+        : ''
+    };
+    this.usuarioForm.patchValue(formattedUsuario);
   }
 
   deleteUsuario(id: number): void {
