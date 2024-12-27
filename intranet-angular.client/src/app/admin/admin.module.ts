@@ -16,6 +16,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { PageComponent } from './pages/page/page.component';
 import { EmployeesComponent } from './pages/employees/employees.component';
 import { SlidesComponent } from './pages/slides/slides.component';
+import { CardapioComponent } from './pages/cardapio/cardapio.component';
+import { EventoComponent } from './pages/evento/evento.component';
+import { DiaSemanaPipe } from '../pipes/dia-semana.pipe';
 
 
 @NgModule({
@@ -31,7 +34,10 @@ import { SlidesComponent } from './pages/slides/slides.component';
     CategoryComponent,
     PageComponent,
     EmployeesComponent,
-    SlidesComponent
+    SlidesComponent,
+    CardapioComponent,
+    DiaSemanaPipe,
+    EventoComponent,
   ],
   imports: [
     CommonModule,

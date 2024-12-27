@@ -9,6 +9,8 @@ import { CategoryComponent } from './pages/category/category.component';
 import { PageComponent } from './pages/page/page.component';
 import { EmployeesComponent } from './pages/employees/employees.component';
 import { SlidesComponent } from './pages/slides/slides.component';
+import { CardapioComponent } from './pages/cardapio/cardapio.component';
+import { EventoComponent } from './pages/evento/evento.component';
 
 const routes: Routes = [
   {
@@ -23,6 +25,8 @@ const routes: Routes = [
       { path: 'paginas', component: PageComponent },
       { path: 'funcionarios', component: EmployeesComponent },
       { path: 'slides', component: SlidesComponent },
+      { path: 'cardapios', component: CardapioComponent },
+      { path: 'eventos', component: EventoComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ],
   },

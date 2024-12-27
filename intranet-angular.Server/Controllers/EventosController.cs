@@ -1,5 +1,6 @@
 ﻿using intranet_angular.Server.Entities;
 using intranet_angular.Server.Interfaces;
+using intranet_angular.Server.Request;
 using Microsoft.AspNetCore.Mvc;
 
 namespace intranet_angular.Server.Controllers
@@ -34,31 +35,26 @@ namespace intranet_angular.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] Evento evento)
+        public async Task<IActionResult> Add([FromForm] EventoRequest eventoRequest)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            await _eventoService.AddAsync(evento);
+            var evento = await _eventoService.AddAsync(eventoRequest);
             return CreatedAtAction(nameof(GetById), new { id = evento.Id }, evento);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] Evento evento)
+        public async Task<IActionResult> Update(int id, [FromForm] EventoRequest eventoRequest)
         {
-            if (id != evento.Id)
-            {
-                return BadRequest("ID mismatch.");
-            }
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            await _eventoService.UpdateAsync(evento);
+            await _eventoService.UpdateAsync(id, eventoRequest);
             return NoContent();
         }
 

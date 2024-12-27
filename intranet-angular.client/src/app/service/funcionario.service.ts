@@ -7,23 +7,27 @@ import { FuncionarioResponse } from '../../response/funcionaResponse';
   providedIn: 'root'
 })
 export class FuncionarioService {
-  private baseUrl = 'https://localhost:7227/api/funcionarios';
+  private apiUrl = 'https://localhost:7227/api/funcionarios';
 
   constructor(private http: HttpClient) { }
 
   getFuncionarios(): Observable<FuncionarioResponse[]> {
-    return this.http.get<FuncionarioResponse[]>(`${this.baseUrl}`);
+    return this.http.get<FuncionarioResponse[]>(`${this.apiUrl}`);
+  }
+
+  getById(id: number): Observable<FuncionarioResponse> {
+    return this.http.get<FuncionarioResponse>(`${this.apiUrl}/${id}`);
   }
 
   createFuncionario(funcionario: any): Observable<FuncionarioResponse> {
-    return this.http.post<FuncionarioResponse>(`${this.baseUrl}`, funcionario);
+    return this.http.post<FuncionarioResponse>(`${this.apiUrl}`, funcionario);
   }
 
   updateFuncionario(id: number, funcionario: any): Observable<FuncionarioResponse> {
-    return this.http.put<FuncionarioResponse>(`${this.baseUrl}/${id}`, funcionario);
+    return this.http.put<FuncionarioResponse>(`${this.apiUrl}/${id}`, funcionario);
   }
 
   deleteFuncionario(id: number): Observable<FuncionarioResponse> {
-    return this.http.delete<FuncionarioResponse>(`${this.baseUrl}/${id}`);
+    return this.http.delete<FuncionarioResponse>(`${this.apiUrl}/${id}`);
   }
 }

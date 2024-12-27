@@ -70,8 +70,8 @@ export class HeaderComponent {
       link: '#',
       submenu: [
         { label: 'Aniversariantes', link: '/aniversariantes' },
-        { label: 'Eventos', link: '/blog-details' },
-        { label: 'Cardápio', link: '/element' }
+        { label: 'Eventos', link: '/eventos' },
+        { label: 'Cardápio', link: '/cardapio' }
       ],
       isOpen: false
     },

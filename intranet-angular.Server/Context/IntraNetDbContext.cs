@@ -21,6 +21,7 @@ namespace intranet_angular.Server.Context
         public DbSet<Pagina> Paginas { get; set; }
         public DbSet<Slide> Slides { get; set; }
         public DbSet<GrupoDeSlides> GrupoDeSlides { get; set; }
+        public DbSet<Cardapio> Cardapios { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

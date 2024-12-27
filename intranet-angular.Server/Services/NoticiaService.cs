@@ -141,10 +141,7 @@ namespace intranet_angular.Server.Services
                     .Include(n => n.NoticiasCategorias)
                     .ThenInclude(c => c.Categoria)
                     .Include(n => n.Midias)
-                    .FirstOrDefaultAsync(n => n.Id == id);
-
-                if (noticia == null)
-                    throw new KeyNotFoundException("Notícia não encontrada.");
+                    .FirstOrDefaultAsync(n => n.Id == id) ?? throw new KeyNotFoundException("Notícia não encontrada.");
 
                 noticia.Titulo = noticiaRequest.Titulo;
                 noticia.Descricao = noticiaRequest.Descricao;
@@ -206,7 +203,9 @@ namespace intranet_angular.Server.Services
             Titulo = noticia.Titulo,
             Descricao = noticia.Descricao,
             AutorId = noticia.AutorId,
-            Categoria = noticia.NoticiasCategorias.Select(cat => new CategoriaResponse
+            Categoria = noticia.NoticiasCategorias
+            .Where(cat => cat.Categoria != null)
+            .Select(cat => new CategoriaResponse
             {
                 Id = cat.Categoria.Id,
                 Nome = cat.Categoria.Nome

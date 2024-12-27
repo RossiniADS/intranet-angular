@@ -1,13 +1,12 @@
-﻿namespace intranet_angular.Server.Entities
+﻿namespace intranet_angular.Server.Request
 {
-    public class Evento
+    public class EventoRequest
     {
-        public int Id { get; set; }
         public string Nome { get; set; }
         public string Descricao { get; set; }
         public DateTime DataInicio { get; set; }
         public DateTime? DataFim { get; set; }
         public string Localizacao { get; set; }
-        public string ImagemUrl { get; set; }
+        public IFormFile File { get; set; }
     }
 }

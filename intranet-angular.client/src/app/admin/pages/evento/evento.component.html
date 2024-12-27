@@ -1,0 +1,62 @@
+<div class="container">
+  <h1>Gerenciamento de Eventos</h1>
+
+  <form class="form-container" [formGroup]="eventoForm" (ngSubmit)="submitForm()">
+    <div class="form-group">
+      <label for="nome">Nome do Evento:</label>
+      <input id="nome" formControlName="nome" type="text" placeholder="Digite o nome do evento" />
+    </div>
+
+    <div class="form-group">
+      <label for="descricao">Descrição:</label>
+      <textarea id="descricao" formControlName="descricao" placeholder="Digite a descrição do evento"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="dataInicio">Data de Início:</label>
+      <input id="dataInicio" formControlName="dataInicio" type="datetime-local" />
+    </div>
+
+    <div class="form-group">
+      <label for="dataFim">Data de Fim:</label>
+      <input id="dataFim" formControlName="dataFim" type="datetime-local" />
+    </div>
+
+    <div class="form-group">
+      <label for="localizacao">Localização:</label>
+      <input id="localizacao" formControlName="localizacao" type="text" placeholder="Digite a localização" />
+    </div>
+
+    <div class="form-group">
+      <label for="file">Imagem:</label>
+      <input type="file" id="file" (change)="onFileSelected($event)" class="form-control" />
+    </div>
+
+    <div class="button-group">
+      <button class="btn btn-primary" type="submit">{{ isEditing ? 'Atualizar' : 'Cadastrar' }}</button>
+      <button class="btn btn-secondary" type="button" (click)="resetForm()" *ngIf="isEditing">Cancelar</button>
+    </div>
+  </form>
+
+  <table class="evento-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Data de Início</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let evento of eventos">
+        <td>{{ evento.id }}</td>
+        <td>{{ evento.nome }}</td>
+        <td>{{ evento.dataInicio | date:'short' }}</td>
+        <td>
+          <button class="btn btn-edit" (click)="editEvento(evento)">Editar</button>
+          <button class="btn btn-delete" (click)="deleteEvento(evento.id)">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

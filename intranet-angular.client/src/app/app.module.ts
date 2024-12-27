@@ -23,6 +23,8 @@ import { BackToTopComponent } from './layout/back-to-top/back-to-top.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { AniversariantesComponent } from './pages/aniversariantes/aniversariantes.component';
+import { EventosComponent } from './pages/eventos/eventos.component';
+import { CardapioComponent } from './pages/cardapio/cardapio.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { AniversariantesComponent } from './pages/aniversariantes/aniversariante
     BlogDetailsComponent,
     ElementComponent,
     BackToTopComponent,
-    AniversariantesComponent
+    AniversariantesComponent,
+    EventosComponent,
+    CardapioComponent
   ],
   imports: [
     BrowserModule,
