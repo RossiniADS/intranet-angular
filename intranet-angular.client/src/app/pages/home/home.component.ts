@@ -124,8 +124,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
     this.noticiaService.getNoticias().subscribe({
       next: (data) => {
         this.noticiasResponse = data
-        console.log(this.noticiasResponse);
-        this.loadMainAndRightNews(1)
+        this.loadMainAndRightNews(this.categoriaResponse[0].id)
         this.loadTrendingTops()
         this.loadMostRecentNews();
       },
@@ -180,7 +179,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
 
   private loadTabs(): void {
     this.tabs = this.categoriaResponse.map((cat, index) => ({
-      id: `nav-${cat.nome}`,
+      id: `${cat.id}`,
       label: cat.nome,
       toggle: 'tab',
       href: `#nav-${cat.nome}`,
@@ -316,6 +315,17 @@ export class HomeComponent implements AfterViewInit, OnInit {
     videoElement.load(); // Recarrega o vídeo
     videoElement.play(); // Opcional: inicia o vídeo automaticamente
   }
+
+  onTabClick(tab: any): void {
+    // Atualizar o estado ativo das abas
+    this.tabs.forEach(t => t.active = false);
+    tab.active = true;
+
+    if (tab.id) {
+      this.loadMainAndRightNews(Number(tab.id));
+    }
+  }
+
   socialMedia = [
     {
       icon: 'assets/img/news/icon-fb.png',

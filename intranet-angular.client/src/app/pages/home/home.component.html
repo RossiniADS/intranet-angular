@@ -133,7 +133,8 @@
                        [href]="tab.href"
                        role="tab"
                        [attr.aria-controls]="tab.controls"
-                       [attr.aria-selected]="tab.active.toString()">
+                       [attr.aria-selected]="tab.active.toString()"
+                       (click)="onTabClick(tab)">
                       {{ tab.label }}
                     </a>
                   </div>
@@ -220,7 +221,7 @@
         <div class="most-recent-area">
           <!-- Section Title -->
           <div class="small-tittle mb-20">
-            <h4>Most Recent</h4>
+            <h4>Mais recentes</h4>
           </div>
           <!-- Details -->
           <div class="most-recent mb-40">
