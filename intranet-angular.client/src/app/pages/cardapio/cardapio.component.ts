@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CardapioResponse } from '../../../response/cardapioResponse';
 import { CardapioService } from '../../service/cardapio.service';
 import { DiaSemana } from '../../enum/dia-semana.enum';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-cardapio',
@@ -21,7 +22,7 @@ export class CardapioComponent implements OnInit {
         id: car.id,
         descricao: car.descricao,
         diaDaSemana: car.diaDaSemana,
-        imagemUrl: `https://localhost:7227/${car.imagemUrl}`,
+        imagemUrl: `${environment.serverUrl}${car.imagemUrl}`,
         titulo: car.titulo
       }));
     })

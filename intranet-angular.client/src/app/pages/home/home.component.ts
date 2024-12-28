@@ -8,6 +8,7 @@ import { GrupoDeSlidesService } from '../../service/grupo.de.slides.service';
 import { NoticiaResponse } from '../../../response/noticiaResponse';
 import { CategoriaResponse } from '../../../response/categoriaResponse';
 import { CategoriaService } from '../../service/categoria.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -140,7 +141,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
       next: (grupos) => {
         const slides = grupos[0]?.slides || [];
         this.trendingSlides = slides.map((slide) => ({
-          imageUrl: `https://localhost:7227/${slide.url}`,
+          imageUrl: `${environment.serverUrl}${slide.url}`,
           altText: 'Slide',
           category: slide.principalCategoriaNome,
           title: slide.titulo,
@@ -158,7 +159,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
     this.trendingCards = this.noticiasResponse
       .filter((n) => n.isTrendingTop)
       .map((noticia) => ({
-        imageUrl: `https://localhost:7227/${noticia.midiaUrl}`,
+        imageUrl: `${environment.serverUrl}${noticia.midiaUrl}`,
         altText: 'Trending Card',
         category: noticia.categoria[0]?.nome || 'Sem Categoria',
         categoryClass: 'bgb',
@@ -196,7 +197,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
     );
 
     this.mainNews = {
-      image: `https://localhost:7227/${ultimaNoticia.midiaUrl}`,
+      image: `${environment.serverUrl}${ultimaNoticia.midiaUrl}`,
       title: ultimaNoticia.titulo,
       author: ultimaNoticia.autorId,
       date: ultimaNoticia.dataPublicacao,
@@ -207,7 +208,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
     this.rightNews = noticiasFiltradas
       .filter((not) => not !== ultimaNoticia)
       .map((not) => ({
-        image: `https://localhost:7227/${not.midiaUrl}`,
+        image: `${environment.serverUrl}${not.midiaUrl}`,
         category: not.categoria[0]?.nome || 'Sem Categoria',
         title: not.titulo,
         date: not.dataPublicacao,
@@ -218,7 +219,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
 
   private loadMostRecentNews(): void {
     this.mostRecentNews = this.noticiasResponse.map((noticia) => ({
-      image: `https://localhost:7227/${noticia.midiaUrl}`,
+      image: `${environment.serverUrl}${noticia.midiaUrl}`,
       category: noticia.categoria[0]?.nome || 'Sem Categoria',
       title: noticia.titulo,
       time: `${noticia.autorId} | ${noticia.dataPublicacao}`,

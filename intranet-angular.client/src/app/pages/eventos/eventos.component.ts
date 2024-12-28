@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EventoService } from '../../service/evento.service';
 import { EventoResponse } from '../../../response/eventoResponse';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-eventos',
@@ -28,7 +29,7 @@ export class EventosComponent {
           localizacao: even.localizacao,
           dataFim: even.dataFim,
           dataInicio: even.dataInicio,
-          imagemUrl: `https://localhost:7227/${even.imagemUrl}`
+          imagemUrl: `${environment.serverUrl}${even.imagemUrl}`
         }));
 
         this.totalEventos = data.length;

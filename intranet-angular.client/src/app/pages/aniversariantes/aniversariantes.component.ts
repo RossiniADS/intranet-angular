@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FuncionarioService } from '../../service/funcionario.service';
 import { FuncionarioResponse } from '../../../response/funcionaResponse';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-aniversariantes',
@@ -29,7 +30,7 @@ export class AniversariantesComponent implements OnInit {
         id: funcionario.id,
         nome: funcionario.nome,
         cargo: funcionario.cargo,
-        imagemUrl: `https://localhost:7227/${funcionario.imagemUrl}`,
+        imagemUrl: `${environment.serverUrl}${funcionario.imagemUrl}`,
         dataNascimento: funcionario.dataNascimento,
         departamento: funcionario.departamento,
         email: funcionario.email

@@ -36,7 +36,8 @@ namespace intranet_angular.Server.Services
                 Cargo = funcionarioRequest.Cargo,
                 DataNascimento = funcionarioRequest.DataNascimento,
                 Departamento = funcionarioRequest.Departamento,
-                ImagemUrl = await ProcessarMidiasAsync(funcionarioRequest.File)
+                ImagemUrl = await ProcessarMidiasAsync(funcionarioRequest.File),
+                Nome = funcionarioRequest.Nome
             };
 
             _context.Funcionarios.Add(funcionario);
@@ -57,6 +58,7 @@ namespace intranet_angular.Server.Services
             funcionario.Cargo = funcionarioRequest.Cargo;
             funcionario.DataNascimento = funcionarioRequest.DataNascimento;
             funcionario.Departamento = funcionarioRequest.Departamento;
+            funcionario.Nome = funcionarioRequest.Nome;
 
             if (!string.IsNullOrEmpty(funcionario.ImagemUrl) && funcionarioRequest.File != null)
             {

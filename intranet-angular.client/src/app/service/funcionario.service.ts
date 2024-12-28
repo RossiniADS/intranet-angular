@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { FuncionarioResponse } from '../../response/funcionaResponse';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FuncionarioService {
-  private apiUrl = 'https://localhost:7227/api/funcionarios';
+  private apiUrl = `${environment.apiUrl}/funcionarios`;
 
   constructor(private http: HttpClient) { }
 

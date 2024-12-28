@@ -177,6 +177,7 @@ export class SlidesComponent implements OnInit {
     this.grupoForm.reset();
     this.grupos.clear();
     this.isEditing = false;
+    this.resetFileInputs();
   }
 
   editGrupo(index: number): void {
@@ -224,7 +225,6 @@ export class SlidesComponent implements OnInit {
     this.grupos.push(grupoFormGroup);
   }
 
-
   excluir(id: number): void {
     if (confirm('Deseja realmente excluir este grupo?')) {
       this.grupoDeSlidesService.deleteGrupoDeSlide(id).subscribe({
@@ -232,5 +232,13 @@ export class SlidesComponent implements OnInit {
         error: (err) => alert('Erro ao excluir o grupo: ' + err.message),
       });
     }
+  }
+
+  resetFileInputs(): void {
+    // Limpar os inputs de arquivos na tela
+    const fileInputs = document.querySelectorAll('input[type="file"]');
+    fileInputs.forEach((input: any) => {
+      input.value = '';  // Limpa o campo de arquivo
+    });
   }
 }

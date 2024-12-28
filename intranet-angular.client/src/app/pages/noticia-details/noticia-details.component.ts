@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NoticiaService } from '../../service/noticia.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-noticia-details',
@@ -55,7 +56,7 @@ export class NoticiaDetailsComponent implements OnInit {
               { icon: 'assets/img/news/icon-yo.png', count: '8,045', label: 'Fans' }
             ],
             newsPoster: 'assets/img/news/news_card.jpg',
-            mainImage: `https://localhost:7227/${data.midiaUrl}`,
+            mainImage: `${environment.serverUrl}${data.midiaUrl}`,
           }
         })
       }

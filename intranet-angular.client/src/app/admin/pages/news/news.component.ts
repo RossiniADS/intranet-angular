@@ -182,6 +182,8 @@ export class NewsComponent implements OnInit {
       secondary: null,
       tertiary: null,
     };
+
+    this.resetFileInputs();
   }
 
   processNoticias() {
@@ -189,5 +191,13 @@ export class NewsComponent implements OnInit {
       ...noticia,
       categoriaNomes: noticia.categoria?.map((cat) => cat.nome).join(', ') || '',
     }));
+  }
+
+  resetFileInputs(): void {
+    // Limpar os inputs de arquivos na tela
+    const fileInputs = document.querySelectorAll('input[type="file"]');
+    fileInputs.forEach((input: any) => {
+      input.value = '';  // Limpa o campo de arquivo
+    });
   }
 }

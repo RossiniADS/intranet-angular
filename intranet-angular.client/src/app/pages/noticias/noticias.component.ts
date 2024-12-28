@@ -3,6 +3,7 @@ import { NoticiaService } from '../../service/noticia.service';
 import { CategoriaService } from '../../service/categoria.service';
 import { DatePipe } from '@angular/common';
 import { NoticiaResponse } from '../../../response/noticiaResponse';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-noticias',
@@ -63,7 +64,7 @@ export class NoticiasComponent implements OnInit {
         .fill(0)
         .map((_, i) => i + 1); // Cria o array [1, 2, 3, ...]
       this.noticiasItems = data.data.map((noticia) => ({
-        imgSrc: `https://localhost:7227/${noticia.midiaUrl}`,
+        imgSrc: `${environment.serverUrl}${noticia.midiaUrl}`,
         date: {
           day: this.datePipe.transform(noticia.dataPublicacao, 'd') || '',
           month: this.datePipe.transform(noticia.dataPublicacao, 'MMM') || '',
@@ -80,7 +81,7 @@ export class NoticiasComponent implements OnInit {
 
   private loadMostRecentNews(noticiasResponse: NoticiaResponse[]): void {
     this.recentPosts = noticiasResponse.map((noticia) => ({
-      imgSrc: `https://localhost:7227/${noticia.midiaUrl}`,
+      imgSrc: `${environment.serverUrl}${noticia.midiaUrl}`,
       title: noticia.titulo,
       date: noticia.dataPublicacao.toString(),
       link: `/noticia/${noticia.id}`,
