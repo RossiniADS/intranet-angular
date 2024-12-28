@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NoticiaService } from '../../service/noticia.service';
 import { environment } from '../../../environments/environment';
+import { MidiaTamanhoEnum } from '../../enum/midia-tamanho.enum';
 
 @Component({
   selector: 'app-noticia-details',
@@ -56,7 +57,7 @@ export class NoticiaDetailsComponent implements OnInit {
               { icon: 'assets/img/news/icon-yo.png', count: '8,045', label: 'Fans' }
             ],
             newsPoster: 'assets/img/news/news_card.jpg',
-            mainImage: `${environment.serverUrl}${data.midiaUrl}`,
+            mainImage: `${environment.serverUrl}${data.midiaNoticia.filter(midia => midia.midiaTamanho == MidiaTamanhoEnum.Secundaria)[0].url}`,
           }
         })
       }

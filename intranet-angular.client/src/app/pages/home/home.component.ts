@@ -9,6 +9,7 @@ import { NoticiaResponse } from '../../../response/noticiaResponse';
 import { CategoriaResponse } from '../../../response/categoriaResponse';
 import { CategoriaService } from '../../service/categoria.service';
 import { environment } from '../../../environments/environment';
+import { MidiaTamanhoEnum } from '../../enum/midia-tamanho.enum';
 
 @Component({
   selector: 'app-home',
@@ -83,7 +84,13 @@ export class HomeComponent implements AfterViewInit, OnInit {
       descricao: '',
       conteudo: '',
       autorId: 0,
-      midiaUrl: [],
+      midiaNoticia: [{
+        id: 0,
+        midiaTamanho: 0,
+        noticiaId: 0,
+        tipo: 0,
+        url: ''
+      }],
       dataPublicacao: new Date(),
       categoria: [{ id: 0, nome: '', qtdNoticia: 0 }],
       isTrendingTop: false,
@@ -97,7 +104,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
     },
   ];
 
-  pageIdHome = 2;
+  pageIdHome = 1;
   currentIndex = 0;
 
   constructor(
@@ -117,6 +124,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
     this.noticiaService.getNoticias().subscribe({
       next: (data) => {
         this.noticiasResponse = data
+        console.log(this.noticiasResponse);
         this.loadMainAndRightNews(1)
         this.loadTrendingTops()
         this.loadMostRecentNews();
@@ -155,11 +163,12 @@ export class HomeComponent implements AfterViewInit, OnInit {
 
   private loadTrendingTops(): void {
     if (!this.noticiasResponse.length) return;
-
     this.trendingCards = this.noticiasResponse
       .filter((n) => n.isTrendingTop)
+      .sort((a, b) => new Date(b.dataPublicacao).getTime() - new Date(a.dataPublicacao).getTime())
+      .slice(0, 2)
       .map((noticia) => ({
-        imageUrl: `${environment.serverUrl}${noticia.midiaUrl}`,
+        imageUrl: `${environment.serverUrl}${noticia.midiaNoticia.filter(midia => midia.midiaTamanho == MidiaTamanhoEnum.Principal)[0]?.url || ''}`,
         altText: 'Trending Card',
         category: noticia.categoria[0]?.nome || 'Sem Categoria',
         categoryClass: 'bgb',
@@ -197,7 +206,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
     );
 
     this.mainNews = {
-      image: `${environment.serverUrl}${ultimaNoticia.midiaUrl}`,
+      image: `${environment.serverUrl}${ultimaNoticia.midiaNoticia.filter(midia => midia.midiaTamanho == MidiaTamanhoEnum.Terciaria)[0].url}`,
       title: ultimaNoticia.titulo,
       author: ultimaNoticia.autorId,
       date: ultimaNoticia.dataPublicacao,
@@ -208,7 +217,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
     this.rightNews = noticiasFiltradas
       .filter((not) => not !== ultimaNoticia)
       .map((not) => ({
-        image: `${environment.serverUrl}${not.midiaUrl}`,
+        image: `${environment.serverUrl}${not.midiaNoticia.filter(midia => midia.midiaTamanho == MidiaTamanhoEnum.Terciaria)[0].url}`,
         category: not.categoria[0]?.nome || 'Sem Categoria',
         title: not.titulo,
         date: not.dataPublicacao,
@@ -219,7 +228,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
 
   private loadMostRecentNews(): void {
     this.mostRecentNews = this.noticiasResponse.map((noticia) => ({
-      image: `${environment.serverUrl}${noticia.midiaUrl}`,
+      image: `${environment.serverUrl}${noticia.midiaNoticia.filter(midia => midia.midiaTamanho == MidiaTamanhoEnum.Terciaria)[0].url}`,
       category: noticia.categoria[0]?.nome || 'Sem Categoria',
       title: noticia.titulo,
       time: `${noticia.autorId} | ${noticia.dataPublicacao}`,

@@ -1,0 +1,7 @@
+.fixed-size-img {
+  width: 80px; /* Largura fixa */
+  height: 80px; /* Altura fixa */
+  object-fit: cover; /* Ajusta a imagem para preencher o espaço sem distorção */
+  object-position: center; /* Centraliza a área visível */
+  border-radius: 5px; /* Opcional: bordas arredondadas */
+}

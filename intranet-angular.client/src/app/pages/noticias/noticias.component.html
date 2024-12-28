@@ -14,7 +14,7 @@
             </div>
 
             <div class="blog_details">
-              <a class="d-inline-block" [href]="noticia.link">
+              <a class="d-inline-block" [routerLink]="noticia.link">
                 <h2>{{ noticia.title }}</h2>
               </a>
               <p>{{ noticia.description }}</p>
@@ -81,9 +81,9 @@
           <aside class="single_sidebar_widget popular_post_widget">
             <h3 class="widget_title">Recent Post</h3>
             <div class="media post_item" *ngFor="let post of recentPosts">
-              <img [src]="post.imgSrc" alt="post">
+              <img [src]="post.imgSrc" alt="post" class="fixed-size-img">
               <div class="media-body">
-                <a [href]="post.link">
+                <a [routerLink]="post.link">
                   <h3>{{ post.title }}</h3>
                 </a>
                 <p>{{ post.date }}</p>

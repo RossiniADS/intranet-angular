@@ -10,6 +10,6 @@
         public DateTime DataPublicacao { get; set; }
         public int? AutorId { get; set; }
         public List<CategoriaResponse> Categoria { get; set; }
-        public List<string> MidiaUrl { get; set; }
+        public List<MidiaNoticiaResponse> MidiaNoticia { get; set; }
     }
 }

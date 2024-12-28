@@ -262,3 +262,14 @@
     padding: 8px 16px;
   }
 }
+
+.whates-img img, .whats-right-img img, .most-recent-img img, .most-recent-images img {
+  width: 100%;
+  max-width: 400px; /* Ajuste este valor conforme necessário */
+  object-fit: cover; /* Ajusta o enquadramento para cobrir o espaço */
+}
+
+.most-recent-single img {
+  width: 80px; /* Ajuste para as miniaturas */
+  height: 80px; /* Proporcional às miniaturas */
+}

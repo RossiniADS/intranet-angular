@@ -4,11 +4,11 @@ import { CategoriaService } from '../../service/categoria.service';
 import { DatePipe } from '@angular/common';
 import { NoticiaResponse } from '../../../response/noticiaResponse';
 import { environment } from '../../../environments/environment';
+import { MidiaTamanhoEnum } from '../../enum/midia-tamanho.enum';
 
 @Component({
   selector: 'app-noticias',
   standalone: false,
-
   templateUrl: './noticias.component.html',
   styleUrl: './noticias.component.css'
 })
@@ -64,7 +64,7 @@ export class NoticiasComponent implements OnInit {
         .fill(0)
         .map((_, i) => i + 1); // Cria o array [1, 2, 3, ...]
       this.noticiasItems = data.data.map((noticia) => ({
-        imgSrc: `${environment.serverUrl}${noticia.midiaUrl}`,
+        imgSrc: `${environment.serverUrl}${noticia.midiaNoticia.filter(midia => midia.midiaTamanho == MidiaTamanhoEnum.Secundaria)[0].url}`,
         date: {
           day: this.datePipe.transform(noticia.dataPublicacao, 'd') || '',
           month: this.datePipe.transform(noticia.dataPublicacao, 'MMM') || '',
@@ -74,14 +74,14 @@ export class NoticiasComponent implements OnInit {
         infoLinks: [
           { icon: 'fa fa-user', text: noticia.autorId + ', ' + noticia.categoria[0].nome },
         ],
-        link: '/noticia/id=' + noticia.id
+        link: '/noticia/' + noticia.id
       }));
     });
   }
 
   private loadMostRecentNews(noticiasResponse: NoticiaResponse[]): void {
     this.recentPosts = noticiasResponse.map((noticia) => ({
-      imgSrc: `${environment.serverUrl}${noticia.midiaUrl}`,
+      imgSrc: `${environment.serverUrl}${noticia.midiaNoticia.filter(midia => midia.midiaTamanho == MidiaTamanhoEnum.Terciaria)[0].url}`,
       title: noticia.titulo,
       date: noticia.dataPublicacao.toString(),
       link: `/noticia/${noticia.id}`,

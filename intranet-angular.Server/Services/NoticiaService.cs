@@ -37,7 +37,14 @@ namespace intranet_angular.Server.Services
                     Conteudo = n.Conteudo,
                     Descricao = n.Descricao,
                     DataPublicacao = n.DataPublicacao,
-                    MidiaUrl = n.Midias.Select(m => m.URL).ToList()
+                    MidiaNoticia = n.Midias.Select(m => new MidiaNoticiaResponse
+                    {
+                        Id = m.Id,
+                        MidiaTamanho = m.MidiaTamanho,
+                        NoticiaId = m.NoticiaId,
+                        Tipo = m.Tipo,
+                        URL = m.URL
+                    }).ToList()
                 })
                 .ToListAsync();
         }
@@ -64,7 +71,14 @@ namespace intranet_angular.Server.Services
                     Conteudo = n.Conteudo,
                     Descricao = n.Descricao,
                     DataPublicacao = n.DataPublicacao,
-                    MidiaUrl = n.Midias.Select(m => m.URL).ToList()
+                    MidiaNoticia = n.Midias.Select(m => new MidiaNoticiaResponse
+                    {
+                        Id = m.Id,
+                        MidiaTamanho = m.MidiaTamanho,
+                        NoticiaId = m.NoticiaId,
+                        Tipo = m.Tipo,
+                        URL = m.URL
+                    }).ToList()
                 })
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
@@ -97,7 +111,14 @@ namespace intranet_angular.Server.Services
                     }).ToList(),
                     Conteudo = n.Conteudo,
                     DataPublicacao = n.DataPublicacao,
-                    MidiaUrl = n.Midias.Select(m => m.URL).ToList()
+                    MidiaNoticia = n.Midias.Select(m => new MidiaNoticiaResponse
+                    {
+                        Id = m.Id,
+                        MidiaTamanho = m.MidiaTamanho,
+                        NoticiaId = m.NoticiaId,
+                        Tipo = m.Tipo,
+                        URL = m.URL
+                    }).ToList()
                 })
                 .FirstOrDefaultAsync();
         }
@@ -230,7 +251,14 @@ namespace intranet_angular.Server.Services
             Conteudo = noticia.Conteudo,
             IsTrendingTop = noticia.IsTrendingTop,
             DataPublicacao = noticia.DataPublicacao,
-            MidiaUrl = noticia.Midias.Select(m => m.URL).ToList()
+            MidiaNoticia = noticia.Midias.Select(m => new MidiaNoticiaResponse
+            {
+                Id = m.Id,
+                MidiaTamanho = m.MidiaTamanho,
+                NoticiaId = m.NoticiaId,
+                Tipo = m.Tipo,
+                URL = m.URL
+            }).ToList()
         };
 
         private async Task ProcessarMidiasAsync(IFormFile midia, MidiaTamanhoEnum midiaTamanho, int noticiaId)

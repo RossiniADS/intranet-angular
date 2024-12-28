@@ -1,4 +1,5 @@
 import { CategoriaResponse } from "./categoriaResponse";
+import { MidiaNoticiaResponse } from "./midiaNoticiaResponse";
 
 export interface NoticiaResponse {
   id: number;
@@ -6,7 +7,7 @@ export interface NoticiaResponse {
   conteudo: string;
   descricao: string;
   isTrendingTop: boolean;
-  midiaUrl: string[];
+  midiaNoticia: MidiaNoticiaResponse[];
   autorId?: number;
   categoria: CategoriaResponse[];
   dataPublicacao: Date;
