@@ -43,7 +43,7 @@ export class SlidesComponent implements OnInit {
   loadNoticia() {
     this.noticiaService.getNoticias().subscribe((data) => {
       this.noticiasResponse = data;
-     })
+    })
   }
 
   loadGrupo() {
@@ -67,6 +67,7 @@ export class SlidesComponent implements OnInit {
     this.grupos.push(
       this.fb.group({
         nome: ['', Validators.required],
+        posicao: [1, Validators.required],
         slides: this.fb.array([]),
       })
     );
@@ -118,6 +119,7 @@ export class SlidesComponent implements OnInit {
     grupos.forEach((grupo: any, grupoIndex: number) => {
       formData.append(`Grupos[${grupoIndex}].Nome`, grupo.nome);
       formData.append(`Grupos[${grupoIndex}].PaginaId`, this.grupoForm.value.paginaId);
+      formData.append(`Grupos[${grupoIndex}].Posicao`, grupo.posicao);
 
       grupo.slides.forEach((slide: any, slideIndex: number) => {
         if (slide.file) {
@@ -205,6 +207,7 @@ export class SlidesComponent implements OnInit {
     // Adiciona o grupo ao formulário
     const grupoFormGroup = this.fb.group({
       nome: [grupo.nome, Validators.required],
+      posicao: [grupo.posicao, Validators.required],
       slides: this.fb.array([]),
     });
 

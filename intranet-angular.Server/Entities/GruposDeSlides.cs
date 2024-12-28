@@ -5,6 +5,7 @@
         public int Id { get; set; }
         public int PaginaId { get; set; }
         public string Nome { get; set; }
+        public int Posicao { get; set; }
 
         // Relacionamento com Página
         public Pagina Pagina { get; set; }

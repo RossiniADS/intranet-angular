@@ -28,6 +28,7 @@ namespace intranet_angular.Server.Services
                     Id = g.Id,
                     Nome = g.Nome,
                     PaginaId = g.PaginaId,
+                    Posicao = g.Posicao,
                     Slides = g.Slides.Select(slides => new SlideResponse()
                     {
                         Id = slides.Id,
@@ -57,6 +58,7 @@ namespace intranet_angular.Server.Services
                     Id = g.Id,
                     Nome = g.Nome,
                     PaginaId = g.PaginaId,
+                    Posicao = g.Posicao,
                     Slides = g.Slides.Select(slides => new SlideResponse()
                     {
                         Id = slides.Id,
@@ -86,6 +88,7 @@ namespace intranet_angular.Server.Services
                     Id = g.Id,
                     Nome = g.Nome,
                     PaginaId = g.PaginaId,
+                    Posicao = g.Posicao,
                     Slides = g.Slides.Select(slides => new SlideResponse()
                     {
                         Id = slides.Id,
@@ -114,6 +117,7 @@ namespace intranet_angular.Server.Services
                     {
                         Nome = grupoDeSlideRequest.Nome,
                         PaginaId = grupoDeSlideRequest.PaginaId,
+                        Posicao = grupoDeSlideRequest.Posicao
                     };
 
                     var slidesRequest = grupoDeSlideRequest.Slides.ToList();
@@ -164,6 +168,7 @@ namespace intranet_angular.Server.Services
                 // Atualizar propriedades do grupo de slides
                 grupoDeSlides.Nome = grupoDeSlideRequest.Nome;
                 grupoDeSlides.PaginaId = grupoDeSlideRequest.PaginaId;
+                grupoDeSlides.Posicao = grupoDeSlideRequest.Posicao;
 
                 // Atualizar slides existentes e remover os que não estão no request
                 var slidesIdsRequest = grupoDeSlideRequest.Slides.Select(s => s.Id).ToList();
@@ -246,6 +251,7 @@ namespace intranet_angular.Server.Services
             Id = grupoDeSlides.Id,
             Nome = grupoDeSlides.Nome,
             PaginaId = grupoDeSlides.PaginaId,
+            Posicao = grupoDeSlides.Posicao,
             Slides = slide.Select(slide => new SlideResponse()
             {
                 Id = slide.Id,

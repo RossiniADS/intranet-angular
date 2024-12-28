@@ -25,6 +25,15 @@
                  placeholder="Digite o nome do grupo" />
         </div>
 
+        <div class="form-group">
+          <label for="grupoPosicao-{{ i }}">Posição:</label>
+          <input id="grupoPosicao-{{ i }}"
+                 formControlName="posicao"
+                 type="number"
+                 class="form-control"
+                 placeholder="Digite a posição do grupo" />
+        </div>
+
         <!-- Gerenciamento de Slides -->
         <div formArrayName="slides">
           <div *ngFor="let slide of getSlides(i).controls; let j = index"
@@ -83,6 +92,7 @@
       <tr>
         <th>ID</th>
         <th>Nome</th>
+        <th>Posição</th>
         <th>PaginaId</th>
         <th>Ações</th>
       </tr>
@@ -91,6 +101,7 @@
       <tr *ngFor="let grupo of gruposResponse; let i = index">
         <td>{{ grupo.id }}</td>
         <td>{{ grupo.nome }}</td>
+        <td>{{ grupo.posicao }}</td>
         <td>{{ grupo.paginaId }}</td>
         <td>
           <button class="btn btn-edit" (click)="editGrupo(i)">Editar</button>

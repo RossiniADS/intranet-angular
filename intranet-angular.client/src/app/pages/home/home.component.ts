@@ -103,7 +103,14 @@ export class HomeComponent implements AfterViewInit, OnInit {
       qtdNoticia: 0
     },
   ];
-
+  slides = [
+    {
+      type: 0,
+      src: '',
+      title: '',
+      description: '',
+    }
+  ];
   pageIdHome = 1;
   currentIndex = 0;
 
@@ -146,8 +153,17 @@ export class HomeComponent implements AfterViewInit, OnInit {
   private loadTrendingSlides(): void {
     this.grupoDeSlideService.getByPageId(this.pageIdHome).subscribe({
       next: (grupos) => {
-        const slides = grupos[0]?.slides || [];
-        this.trendingSlides = slides.map((slide) => ({
+        const primeiroSlide = grupos.find(gr => gr.posicao === 1)?.slides || [];
+        const segundoSlide = grupos.find(gr => gr.posicao === 2)?.slides || [];
+
+        this.slides = primeiroSlide.map((slide) => ({
+          type: slide.tipo,
+          src: `${environment.serverUrl}${slide.url}`,
+          title: slide.titulo,
+          description: slide.descricao,
+        }))
+
+        this.trendingSlides = segundoSlide.map((slide) => ({
           imageUrl: `${environment.serverUrl}${slide.url}`,
           altText: 'Slide',
           category: slide.principalCategoriaNome,
@@ -263,27 +279,6 @@ export class HomeComponent implements AfterViewInit, OnInit {
       },
     });
   }
-
-  slides = [
-    {
-      type: 'image',
-      src: 'https://via.placeholder.com/600x400',
-      title: 'Imagem 1',
-      description: 'Descrição para a imagem 1.',
-    },
-    {
-      type: 'video',
-      src: 'https://www.w3schools.com/html/mov_bbb.mp4',
-      title: 'Vídeo 1',
-      description: 'Descrição para o vídeo 1.',
-    },
-    {
-      type: 'image',
-      src: 'https://via.placeholder.com/600x400?text=Slide+2',
-      title: 'Imagem 2',
-      description: 'Descrição para a imagem 2.',
-    },
-  ];
 
   prevSlide() {
     this.currentIndex = (this.currentIndex - 1 + this.slides.length) % this.slides.length;

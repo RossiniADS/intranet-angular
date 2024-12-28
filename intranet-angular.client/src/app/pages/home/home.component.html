@@ -27,8 +27,8 @@
                  [class.active]="i === currentIndex">
               <!-- Metade esquerda: Imagem ou vídeo -->
               <div class="carousel-half media-section">
-                <img *ngIf="slide.type === 'image'" [src]="slide.src" alt="Slide Image" />
-                <div class="video-container" *ngIf="slide.type === 'video'">
+                <img *ngIf="slide.type === 0" [src]="slide.src" alt="Slide Image" />
+                <div class="video-container" *ngIf="slide.type === 1">
                   <video [src]="slide.src" controls></video>
                   <div class="play-button">&#9658;</div>
                 </div>
@@ -45,7 +45,7 @@
                 </div>
                 <h2>{{ slide.title }}</h2>
                 <p>{{ slide.description }}</p>
-                <button class="cta-button">Learn More</button>
+                <button class="cta-button">Leia mais</button>
               </div>
             </div>
 

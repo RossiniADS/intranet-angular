@@ -7,10 +7,10 @@
   max-width: 100%;
   margin: auto;
   overflow: hidden;
-  height: 550px;
-  background: #f9f9f9;
+  height: 480px;
+  background: linear-gradient(135deg, #ffffff, #f3f6f9);
   border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 /* Cabeçalho acima do slide */
@@ -18,22 +18,64 @@
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 10px 20px;
-  background: transparent; /* Removido o fundo branco */
+  padding: 15px 20px;
+  background: #ffffff;
   border-bottom: 1px solid #ddd;
-  z-index: 2; /* Certifique-se de que o cabeçalho está acima do slide */
+  z-index: 2;
   position: relative;
 }
 
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-photo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+  object-fit: cover;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin: 0;
+}
+
+.user-time {
+  font-size: 0.9rem;
+  color: #7f8c8d;
+  margin: 5px 0;
+}
+
+.user-icons span {
+  font-size: 0.85rem;
+  color: #3498db;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+  .user-icons span:hover {
+    text-decoration: underline;
+  }
+
 /* Corpo do carrossel */
 .carousel-slide {
-  flex-direction: row;
+  display: flex;
   align-items: center;
-  justify-content: center;
   width: 100%;
-  height: calc(100% - 60px); /* Subtraindo a altura do cabeçalho */
+  height: calc(100% - 80px); /* Subtraindo a altura do cabeçalho */
   position: absolute;
-  top: 60px; /* Altura do cabeçalho */
+  top: 80px;
   opacity: 0;
   display: none;
   transition: opacity 0.5s ease-in-out;
@@ -60,80 +102,7 @@
   height: auto;
   border-radius: 10px;
   object-fit: cover;
-}
-
-.video-container {
-  position: relative;
-  display: inline-block;
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
-}
-
-  .video-container video {
-    width: 100%;
-    border-radius: 10px;
-  }
-
-  .video-container .play-button {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 3rem;
-    color: white;
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 50%;
-    padding: 10px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-.user-info {
-  display: flex;
-  align-items: center;
-}
-
-.user-photo {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-right: 15px;
-}
-
-/* Garantir que as imagens sejam perfeitamente redondas */
-.user-photo, .profile-photo {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  object-fit: cover; /* Garantir que a imagem se ajuste corretamente */
-  margin-right: 15px;
-}
-
-.user-details {
-  display: flex;
-  flex-direction: column;
-}
-
-.user-name {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin: 0;
-  color: #333;
-}
-
-.user-time {
-  font-size: 0.9rem;
-  margin: 0;
-  color: #666;
-}
-
-.user-icons {
-  font-size: 0.85rem;
-  color: #666;
-  margin-top: 5px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 /* Metade direita: Texto e perfil */
@@ -152,7 +121,9 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  object-fit: cover;
   margin-right: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .profile-details {
@@ -163,42 +134,46 @@
 .profile-name {
   font-size: 1.1rem;
   font-weight: bold;
+  color: #2c3e50;
   margin: 0;
-  color: #333;
 }
 
 .profile-time {
   font-size: 0.85rem;
+  color: #7f8c8d;
   margin: 0;
-  color: #666;
 }
 
 .text-section h2 {
-  font-size: 2rem;
-  color: #333;
+  font-size: 1.8rem;
+  color: #2c3e50;
   margin-bottom: 10px;
 }
 
 .text-section p {
   font-size: 1rem;
-  color: #666;
-  line-height: 1.5;
+  color: #7f8c8d;
+  line-height: 1.6;
   margin-bottom: 20px;
 }
 
 .cta-button {
-  background: #007b5e;
+  background: #3498db;
   color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 12px 25px;
   font-size: 1rem;
-  border-radius: 5px;
+  font-weight: bold;
+  border-radius: 50px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
 }
 
   .cta-button:hover {
-    background: #005a43;
+    background: #2980b9;
+    box-shadow: 0 6px 12px rgba(41, 128, 185, 0.5);
+    transform: translateY(-2px);
   }
 
 /* Controles do carrossel */
@@ -212,7 +187,7 @@
 }
 
   .carousel-controls button {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.6);
     color: white;
     border: none;
     padding: 10px;
@@ -222,26 +197,28 @@
     align-items: center;
     justify-content: center;
     font-size: 1.5rem;
-    transition: background 0.3s ease;
+    transition: all 0.3s ease;
   }
 
     .carousel-controls button:hover {
       background: rgba(0, 0, 0, 0.8);
+      transform: scale(1.1);
     }
 
 .control-left {
   position: absolute;
-  left: 20px;
+  left: 30px;
 }
 
 .control-right {
   position: absolute;
-  right: 20px;
+  right: 30px;
 }
 
+/* Responsividade */
 @media (max-width: 768px) {
   .carousel-container {
-    height: 750px;
+    height: 600px;
   }
 
   .carousel-slide {
@@ -259,7 +236,7 @@
 
   .cta-button {
     font-size: 0.9rem;
-    padding: 8px 16px;
+    padding: 10px 20px;
   }
 }
 
