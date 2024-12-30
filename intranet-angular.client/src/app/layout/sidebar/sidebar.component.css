@@ -1,0 +1,70 @@
+.sidebar {
+  width: 300px;
+  max-height: 100%;
+  background-color: #f8f9fa;
+  overflow-y: auto;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+  .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+  }
+
+  .sidebar li {
+    position: relative;
+    margin: 5px 0;
+  }
+
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 4px;
+  position: relative;
+}
+
+  .menu-item:hover {
+    background-color: #e9ecef;
+  }
+
+.submenu {
+  margin-left: 20px; /* Deslocamento para o nível filho */
+  border-left: 2px solid #ddd; /* Linha vertical */
+  padding-left: 10px;
+}
+
+.expand-btn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #555;
+  margin-left: 5px;
+}
+
+  .expand-btn:focus {
+    outline: none;
+  }
+
+/* Hierarquia - Indicador visual */
+.menu-item > span {
+  display: block;
+  color: #333;
+  font-weight: 500;
+}
+
+.submenu .menu-item > span {
+  font-weight: 400;
+  color: #666;
+}
+
+.submenu .menu-item:hover > span {
+  color: #333;
+}

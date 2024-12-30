@@ -1,0 +1,13 @@
+.pdf-container {
+  width: 100%;
+  height: calc(100vh - 64px); /* Subtraia a altura do header */
+  padding: 10px;
+  box-sizing: border-box;
+  border-left: 1px solid #ddd;
+  background: #f8f9fa;
+}
+
+ngx-extended-pdf-viewer {
+  width: 100%;
+  height: 100%;
+}

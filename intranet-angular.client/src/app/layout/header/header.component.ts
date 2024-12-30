@@ -75,7 +75,7 @@ export class HeaderComponent {
       ],
       isOpen: false
     },
-    { label: 'Gestão de documentos', link: '/category' },
+    { label: 'Gestão de documentos', link: '/documentos' },
     { label: 'Feedback/Sugestões', link: '/category' }
     //{ label: 'Contact', link: '/contact' }
   ];

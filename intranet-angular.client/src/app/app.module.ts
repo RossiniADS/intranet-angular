@@ -25,6 +25,10 @@ import { DatePipe } from '@angular/common';
 import { AniversariantesComponent } from './pages/aniversariantes/aniversariantes.component';
 import { EventosComponent } from './pages/eventos/eventos.component';
 import { CardapioComponent } from './pages/cardapio/cardapio.component';
+import { DocumentsManagerComponent } from './pages/documents-manager/documents-manager.component';
+import { SidebarComponent } from './layout/sidebar/sidebar.component';
+import { PdfViewerComponent } from './layout/pdf-viewer/pdf-viewer.component';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 @NgModule({
   declarations: [
@@ -43,7 +47,10 @@ import { CardapioComponent } from './pages/cardapio/cardapio.component';
     BackToTopComponent,
     AniversariantesComponent,
     EventosComponent,
-    CardapioComponent
+    CardapioComponent,
+    DocumentsManagerComponent,
+    SidebarComponent,
+    PdfViewerComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +60,8 @@ import { CardapioComponent } from './pages/cardapio/cardapio.component';
     BrowserAnimationsModule,
     FontAwesomeModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxExtendedPdfViewerModule
   ],
   providers: [
     DatePipe,
