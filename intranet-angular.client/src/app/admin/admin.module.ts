@@ -19,6 +19,7 @@ import { SlidesComponent } from './pages/slides/slides.component';
 import { CardapioComponent } from './pages/cardapio/cardapio.component';
 import { EventoComponent } from './pages/evento/evento.component';
 import { DiaSemanaPipe } from '../pipes/dia-semana.pipe';
+import { MenuManagerComponent } from './pages/menu-manager/menu-manager.component';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { DiaSemanaPipe } from '../pipes/dia-semana.pipe';
     CardapioComponent,
     DiaSemanaPipe,
     EventoComponent,
+    MenuManagerComponent,
   ],
   imports: [
     CommonModule,

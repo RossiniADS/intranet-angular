@@ -246,7 +246,12 @@
   object-fit: cover; /* Ajusta o enquadramento para cobrir o espaço */
 }
 
+.recent-news img {
+  width: 124px; /* Ajuste para as miniaturas */
+  height: 104px; /* Proporcional às miniaturas */
+}
+
 .most-recent-single img {
-  width: 80px; /* Ajuste para as miniaturas */
-  height: 80px; /* Proporcional às miniaturas */
+  width: 85px; /* Ajuste para as miniaturas */
+  height: 79px; /* Proporcional às miniaturas */
 }

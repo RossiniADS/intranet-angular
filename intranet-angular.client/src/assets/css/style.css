@@ -407,7 +407,7 @@ hr {
     background: #ff3500
   }
 
-.btn {
+/*.btn {
   background: #24b4f4;
   text-transform: uppercase;
   color: #fff;
@@ -427,9 +427,9 @@ hr {
   border: 0;
   overflow: hidden;
   margin: 0
-}
+}*/
 
-  .btn::before {
+ /* .btn::before {
     content: "";
     position: absolute;
     left: 0;
@@ -444,9 +444,9 @@ hr {
     transform-origin: 0 0;
     transition-timing-function: cubic-bezier(0.5, 1.6, 0.4, 0.7);
     transform: scaleX(0)
-  }
+  }*/
 
-  .btn:hover::before {
+ /* .btn:hover::before {
     transform: scaleX(1);
     color: #fff !important;
     z-index: -1
@@ -457,8 +457,8 @@ hr {
   border: 1px solid #ddd;
   color: #fff !important;
   width: 100%
-}
-
+}*/
+/*
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .btn.post-btn {
     background: #000;
@@ -468,9 +468,9 @@ hr {
     .btn.post-btn::before {
       background: #fff
     }
-}
+}*/
 
-@media only screen and (min-width: 768px) and (max-width: 991px) {
+/*@media only screen and (min-width: 768px) and (max-width: 991px) {
   .btn.post-btn {
     background: #000;
     color: #24b4f4 !important
@@ -479,9 +479,9 @@ hr {
     .btn.post-btn::before {
       background: #fff
     }
-}
+}*/
 
-@media only screen and (min-width: 576px) and (max-width: 767px) {
+/*@media only screen and (min-width: 576px) and (max-width: 767px) {
   .btn.post-btn {
     background: #000;
     color: #24b4f4 !important
@@ -501,13 +501,13 @@ hr {
     .btn.post-btn::before {
       background: #fff
     }
-}
+}*/
 
 .header-btn {
   text-transform: uppercase
 }
 
-.btn.focus, .btn:focus {
+/*.btn.focus, .btn:focus {
   outline: 0;
   box-shadow: none
 }
@@ -601,7 +601,7 @@ hr {
     transform: scaleY(1);
     order: 2px solid transparent;
     color: red
-  }
+  }*/
 
 .breadcrumb > .active {
   color: #888

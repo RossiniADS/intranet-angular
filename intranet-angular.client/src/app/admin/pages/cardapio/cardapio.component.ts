@@ -90,6 +90,7 @@ export class CardapioComponent {
     this.currentCardapioId = null;
     this.cardapioForm.reset();
     this.selectedFile = null;
+    this.resetFileInputs();
   }
 
   onFileSelected(event: Event): void {
@@ -97,5 +98,13 @@ export class CardapioComponent {
     if (input.files && input.files.length > 0) {
       this.selectedFile = input.files[0];
     }
+  }
+
+  resetFileInputs(): void {
+    // Limpar os inputs de arquivos na tela
+    const fileInputs = document.querySelectorAll('input[type="file"]');
+    fileInputs.forEach((input: any) => {
+      input.value = '';  // Limpa o campo de arquivo
+    });
   }
 }

@@ -1,17 +1,169 @@
-.documentos-container {
+button,
+input {
+  overflow: visible;
+}
+
+.wrapper {
+  width: 100%;
+}
+
+#sidebarDocuments {
+  min-width: 270px;
+  max-width: 270px;
+  background: #24b4f4;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  position: relative;
+  z-index: 0;
+}
+
+  #sidebarDocuments.active {
+    margin-left: -270px;
+  }
+
+  #sidebarDocuments ul.components {
+    padding: 0;
+  }
+
+  #sidebarDocuments ul li {
+    font-size: 16px;
+  }
+
+    #sidebarDocuments ul li > ul {
+      margin-left: 10px;
+    }
+
+      #sidebarDocuments ul li > ul li {
+        font-size: 14px;
+      }
+
+@media (max-width: 991.98px) {
+  #sidebarDocuments {
+    margin-left: -270px;
+  }
+
+    #sidebarDocuments.active {
+      margin-left: 0;
+    }
+}
+
+#sidebarDocuments .custom-menu {
+  display: inline-block;
+  position: absolute;
+  top: 20px;
+  right: 0;
+  margin-right: -20px;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #sidebarDocuments .custom-menu {
+    -webkit-transition: none;
+    -o-transition: none;
+    transition: none;
+  }
+}
+
+#sidebarDocuments .custom-menu .btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  position: relative;
+}
+
+  #sidebarDocuments .custom-menu .btn i {
+    margin-right: -40px;
+    font-size: 14px;
+  }
+
+  #sidebarDocuments .custom-menu .btn.btn-primary {
+    background: transparent;
+    border-color: transparent;
+  }
+
+    #sidebarDocuments .custom-menu .btn.btn-primary:after {
+      z-index: -1;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      content: '';
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+      background: #24b4f4;
+      border-radius: 10px;
+    }
+
+    #sidebarDocuments .custom-menu .btn.btn-primary:hover, #sidebarDocuments .custom-menu .btn.btn-primary:focus {
+      background: transparent !important;
+      border-color: transparent !important;
+    }
+
+@media (max-width: 991.98px) {
+  #sidebarDocumentsCollapse span {
+    display: none;
+  }
+}
+
+#content {
+  width: 100%;
+  padding: 0;
+  min-height: 100vh;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.menu-item {
   display: flex;
-  flex-direction: row;
-  height: calc(100vh - 64px); /* Subtraia a altura do header */
-  overflow: hidden;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 4px;
+  position: relative;
 }
 
-app-sidebar {
-  flex: 0 0 300px;
-  height: 100%;
-  overflow-y: auto;
+  .menu-item:hover {
+    background-color: #1696e7;
+  }
+
+.submenu {
+  margin-left: 20px; /* Deslocamento para o nível filho */
+  border-left: 2px solid #ddd; /* Linha vertical */
+  padding-left: 10px;
 }
 
-app-pdf-viewer {
-  flex: 1;
-  overflow: hidden;
+.expand-btn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: white;
+  margin-left: 5px;
+}
+
+  .expand-btn:focus {
+    outline: none;
+  }
+
+/* Hierarquia - Indicador visual */
+.menu-item > span {
+  display: block;
+  color: white;
+  font-weight: 500;
+}
+
+.submenu .menu-item > span {
+  font-weight: 400;
+  color: white;
+}
+
+.submenu .menu-item:hover > span {
+  color: white;
 }

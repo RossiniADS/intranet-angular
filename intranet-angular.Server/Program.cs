@@ -53,6 +53,7 @@ builder.Services.AddScoped<ISlideService, SlideService>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<IGrupoDeSlidesService, GrupoDeSlidesService>();
 builder.Services.AddScoped<ICardapioService, CardapioService>();
+builder.Services.AddScoped<IMenuItemService, MenuItemService>();
 
 
 builder.Services.AddControllers();

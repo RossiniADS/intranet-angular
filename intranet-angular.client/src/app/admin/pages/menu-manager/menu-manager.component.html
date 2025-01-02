@@ -1,0 +1,53 @@
+<div class="container">
+  <h1>Gerenciamento de Menu</h1>
+
+  <form class="form-container" [formGroup]="menuForm" (ngSubmit)="submitForm()">
+    <div class="form-group">
+      <label for="label">Nome do Item:</label>
+      <input id="label" formControlName="label" type="text" placeholder="Digite o nome do item" />
+    </div>
+
+    <div class="form-group">
+      <label for="pdfUrl">PDF:</label>
+      <input id="file" type="file" (change)="onFileSelected($event)" class="form-control"/>
+
+    </div>
+
+    <div class="form-group">
+      <label for="parentId">Item Pai:</label>
+      <select id="parentId" formControlName="parentId">
+        <option [value]="null">Nenhum</option>
+        <option *ngFor="let item of menuItems" [value]="item.id">{{ item.label }}</option>
+      </select>
+    </div>
+
+    <div class="button-group">
+      <button class="btn btn-primary" type="submit">{{ isEditing ? 'Atualizar' : 'Cadastrar' }}</button>
+      <button class="btn btn-secondary" type="button" (click)="resetForm()" *ngIf="isEditing">Cancelar</button>
+    </div>
+  </form>
+
+  <table class="menu-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>URL PDF</th>
+        <th>Item Pai</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of menuItems">
+        <td>{{ item.id }}</td>
+        <td>{{ item.label }}</td>
+        <td>{{ item.pdfUrl || '-' }}</td>
+        <td>{{ getParentLabel(item.parentId) }}</td>
+        <td>
+          <button class="btn btn-edit" (click)="editMenuItem(item)">Editar</button>
+          <button class="btn btn-delete" (click)="deleteMenuItem(item.id)">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

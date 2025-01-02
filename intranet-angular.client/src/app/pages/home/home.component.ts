@@ -3,7 +3,6 @@ import Swiper from 'swiper';
 import { register } from 'swiper/element/bundle';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { NoticiaService } from '../../service/noticia.service';
-import { SlideService } from '../../service/slides.service';
 import { GrupoDeSlidesService } from '../../service/grupo.de.slides.service';
 import { NoticiaResponse } from '../../../response/noticiaResponse';
 import { CategoriaResponse } from '../../../response/categoriaResponse';
@@ -111,12 +110,11 @@ export class HomeComponent implements AfterViewInit, OnInit {
       description: '',
     }
   ];
-  pageIdHome = 1;
+  pageIdHome = 2;
   currentIndex = 0;
 
   constructor(
     private noticiaService: NoticiaService,
-    private slideService: SlideService,
     private grupoDeSlideService: GrupoDeSlidesService,
     private categoriaService: CategoriaService
   ) { }
@@ -291,11 +289,12 @@ export class HomeComponent implements AfterViewInit, OnInit {
   @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
 
   videos = [
+    { src: 'assets/video/news1.mp4', title: 'Video institucional' },
     { src: 'assets/video/news2.mp4', title: 'Old Spondon News - 2020' },
-    { src: 'assets/video/news1.mp4', title: 'Banglades News Video' },
     { src: 'assets/video/news3.mp4', title: 'Latest Video - 2020' },
-    { src: 'assets/video/news1.mp4', title: 'Spondon News - 2019' },
-    { src: 'assets/video/news3.mp4', title: 'Latest Video - 2020' },
+    { src: 'assets/video/news4.mp4', title: 'Spondon News - 2019' },
+    { src: 'assets/video/news1.mp4', title: 'Old Spondon News - 2020' },
+    { src: 'assets/video/news2.mp4', title: 'Latest Video - 2020' },
   ];
 
   selectedVideo = this.videos[0];

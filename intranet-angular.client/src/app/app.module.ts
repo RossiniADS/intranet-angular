@@ -26,7 +26,6 @@ import { AniversariantesComponent } from './pages/aniversariantes/aniversariante
 import { EventosComponent } from './pages/eventos/eventos.component';
 import { CardapioComponent } from './pages/cardapio/cardapio.component';
 import { DocumentsManagerComponent } from './pages/documents-manager/documents-manager.component';
-import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { PdfViewerComponent } from './layout/pdf-viewer/pdf-viewer.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
@@ -49,7 +48,6 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     EventosComponent,
     CardapioComponent,
     DocumentsManagerComponent,
-    SidebarComponent,
     PdfViewerComponent
   ],
   imports: [

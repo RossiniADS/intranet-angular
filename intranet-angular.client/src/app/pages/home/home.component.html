@@ -36,13 +36,13 @@
 
               <!-- Metade direita: Título, descrição e detalhes -->
               <div class="carousel-half text-section">
-                <div class="user-profile">
+                <!--<div class="user-profile">
                   <img src="../../../assets/img/team/2.png" alt="Profile Photo" class="profile-photo" />
                   <div class="profile-details">
                     <h4 class="profile-name">Christine Holgate</h4>
                     <p class="profile-time">1 day ago</p>
                   </div>
-                </div>
+                </div>-->
                 <h2>{{ slide.title }}</h2>
                 <p>{{ slide.description }}</p>
                 <button class="cta-button">Leia mais</button>
@@ -172,11 +172,10 @@
                     <div class="col-xl-6 col-lg-12">
                       <div class="row">
                         <!-- single -->
-                        <div *ngFor="let news of rightNews"
-                             class="col-xl-12 col-lg-6 col-md-6 col-sm-10">
+                        <div *ngFor="let news of rightNews" class="col-xl-12 col-lg-6 col-md-6 col-sm-10">
                           <div class="whats-right-single mb-20">
-                            <div class="whats-right-img">
-                              <img [src]="news.image" alt="" />
+                            <div class="whats-right-img recent-news">
+                              <img *ngIf="news.image" [src]="news.image" alt="" />
                             </div>
                             <div class="whats-right-cap">
                               <span [class]="news.colorClass">{{ news.category }}</span>

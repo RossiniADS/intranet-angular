@@ -22,7 +22,7 @@ namespace intranet_angular.Server.Context
         public DbSet<Slide> Slides { get; set; }
         public DbSet<GrupoDeSlides> GrupoDeSlides { get; set; }
         public DbSet<Cardapio> Cardapios { get; set; }
-
+        public DbSet<MenuItem> MenuItems { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configuração do relacionamento Many-to-Many
