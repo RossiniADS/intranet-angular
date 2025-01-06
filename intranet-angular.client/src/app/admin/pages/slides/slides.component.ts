@@ -137,7 +137,7 @@ export class SlidesComponent implements OnInit {
         formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].Titulo`, slide.titulo);
         formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].Descricao`, slide.descricao);
         formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].Ordem`, slideIndex.toString());
-        if (this.isEditing) {
+        if (this.isEditing && slide.id && slide.grupoDeSlidesId) {
           formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].Id`, slide.id);
           formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].GrupoDeSlidesId`, slide.grupoDeSlidesId);
         }

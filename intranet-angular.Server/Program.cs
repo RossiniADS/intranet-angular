@@ -54,7 +54,7 @@ builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<IGrupoDeSlidesService, GrupoDeSlidesService>();
 builder.Services.AddScoped<ICardapioService, CardapioService>();
 builder.Services.AddScoped<IMenuItemService, MenuItemService>();
-
+builder.Services.AddScoped<ISugestaoService, SugestaoService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

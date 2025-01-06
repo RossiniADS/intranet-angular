@@ -12,6 +12,7 @@ import { SlidesComponent } from './pages/slides/slides.component';
 import { CardapioComponent } from './pages/cardapio/cardapio.component';
 import { EventoComponent } from './pages/evento/evento.component';
 import { MenuManagerComponent } from './pages/menu-manager/menu-manager.component';
+import { FeedbackComponent } from './pages/feedback/feedback.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,7 @@ const routes: Routes = [
       { path: 'cardapios', component: CardapioComponent },
       { path: 'eventos', component: EventoComponent },
       { path: 'documentos', component: MenuManagerComponent },
+      { path: 'feedback', component: FeedbackComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ],
   },

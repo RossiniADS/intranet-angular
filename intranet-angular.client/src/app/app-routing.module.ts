@@ -10,6 +10,7 @@ import { AniversariantesComponent } from './pages/aniversariantes/aniversariante
 import { EventosComponent } from './pages/eventos/eventos.component';
 import { CardapioComponent } from './pages/cardapio/cardapio.component';
 import { DocumentsManagerComponent } from './pages/documents-manager/documents-manager.component';
+import { FeedbackComponent } from './pages/feedback/feedback.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'aniversariantes', component: AniversariantesComponent },
   { path: 'documentos', component: DocumentsManagerComponent },
   { path: 'noticia/:id', component: NoticiaDetailsComponent },
+  { path: 'feedback', component: FeedbackComponent },
   { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];

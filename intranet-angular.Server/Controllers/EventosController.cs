@@ -61,12 +61,6 @@ namespace intranet_angular.Server.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var evento = await _eventoService.GetByIdAsync(id);
-            if (evento == null)
-            {
-                return NotFound();
-            }
-
             await _eventoService.DeleteAsync(id);
             return NoContent();
         }

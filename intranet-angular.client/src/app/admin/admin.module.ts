@@ -20,6 +20,7 @@ import { CardapioComponent } from './pages/cardapio/cardapio.component';
 import { EventoComponent } from './pages/evento/evento.component';
 import { DiaSemanaPipe } from '../pipes/dia-semana.pipe';
 import { MenuManagerComponent } from './pages/menu-manager/menu-manager.component';
+import { FeedbackComponent } from './pages/feedback/feedback.component';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { MenuManagerComponent } from './pages/menu-manager/menu-manager.componen
     DiaSemanaPipe,
     EventoComponent,
     MenuManagerComponent,
+    FeedbackComponent,
   ],
   imports: [
     CommonModule,

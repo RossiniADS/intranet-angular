@@ -6462,20 +6462,20 @@ hr {
 
 /* line 133, ../../SAIFUL/Running_project/248. Magazine & News/assets/scss/_contact.scss */
 .contact-section {
-  padding: 130px 0 100px;
+  padding: 30px 0 100px;
 }
 
 @media (max-width: 991px) {
   /* line 133, ../../SAIFUL/Running_project/248. Magazine & News/assets/scss/_contact.scss */
   .contact-section {
-    padding: 70px 0 40px;
+    padding: 30px 0 40px;
   }
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
   /* line 133, ../../SAIFUL/Running_project/248. Magazine & News/assets/scss/_contact.scss */
   .contact-section {
-    padding: 80px 0 50px;
+    padding: 30px 0 50px;
   }
 }
 

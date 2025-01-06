@@ -1,0 +1,54 @@
+<section class="contact-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h2 class="contact-title">{{ contactTitle }}</h2>
+      </div>
+      <div class="col-lg-8">
+        <form [formGroup]="feedbackForm" (ngSubmit)="onSubmit()" novalidate class="form-contact contact_form">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <input class="form-control valid" formControlName="nome" type="text" placeholder="Seu nome">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <input class="form-control valid" formControlName="email" type="email" placeholder="Email">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <input class="form-control valid" formControlName="celular" type="tel" placeholder="Celular">
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <input class="form-control" formControlName="assunto" type="text" placeholder="Assunto">
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <textarea class="form-control w-100" formControlName="mensagem" cols="30" rows="9" placeholder="Mensagem"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="form-group mt-3">
+            <button type="submit" class="btn btn-primary" [disabled]="!feedbackForm.valid">Enviar</button>
+          </div>
+        </form>
+      </div>
+      <div class="col-lg-3 offset-lg-1">
+        <div class="media contact-info" *ngFor="let contact of contactInfos">
+          <span class="contact-info__icon">
+            <i [class]="contact.icon"></i>
+          </span>
+          <div class="media-body">
+            <h3>{{ contact.title }}</h3>
+            <p>{{ contact.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

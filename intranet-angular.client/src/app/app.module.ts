@@ -28,6 +28,7 @@ import { CardapioComponent } from './pages/cardapio/cardapio.component';
 import { DocumentsManagerComponent } from './pages/documents-manager/documents-manager.component';
 import { PdfViewerComponent } from './layout/pdf-viewer/pdf-viewer.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { FeedbackComponent } from './pages/feedback/feedback.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     EventosComponent,
     CardapioComponent,
     DocumentsManagerComponent,
-    PdfViewerComponent
+    PdfViewerComponent,
+    FeedbackComponent
   ],
   imports: [
     BrowserModule,

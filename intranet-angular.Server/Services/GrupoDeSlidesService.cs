@@ -171,9 +171,18 @@ namespace intranet_angular.Server.Services
                 grupoDeSlides.Posicao = grupoDeSlideRequest.Posicao;
 
                 // Atualizar slides existentes e remover os que não estão no request
-                var slidesIdsRequest = grupoDeSlideRequest.Slides.Select(s => s.Id).ToList();
-                var slidesExistentes = grupoDeSlides.Slides.Where(s => slidesIdsRequest.Contains(s.Id)).ToList();
-                var slidesParaRemover = grupoDeSlides.Slides.Except(slidesExistentes).ToList();
+                var slidesIdsRequest = grupoDeSlideRequest.Slides
+                    .Where(s => s.Id != null && s.Id > 0) // Somente slides existentes
+                    .Select(s => s.Id)
+                    .ToList();
+
+                var slidesExistentes = grupoDeSlides.Slides
+                    .Where(s => slidesIdsRequest.Contains(s.Id))
+                    .ToList();
+
+                var slidesParaRemover = grupoDeSlides.Slides
+                    .Where(s => !slidesIdsRequest.Contains(s.Id))
+                    .ToList();
 
                 _context.Slides.RemoveRange(slidesParaRemover);
 
@@ -188,7 +197,7 @@ namespace intranet_angular.Server.Services
 
                     if (slideRequest.File != null)
                     {
-                        if (File.Exists(slideExistente.URL))
+                        if (!string.IsNullOrEmpty(slideExistente.URL) && File.Exists(slideExistente.URL))
                             File.Delete(slideExistente.URL);
 
                         slideExistente.URL = await ProcessarSlidesAsync(slideRequest.File, grupoDeSlides.Id);
@@ -197,19 +206,20 @@ namespace intranet_angular.Server.Services
 
                 // Adicionar novos slides
                 var novosSlides = grupoDeSlideRequest.Slides
-                    .Where(s => s.Id == 0 || s.Id == null)
-                    .Select(slideRequest => new Slide
+                    .Where(s => s.Id == null)
+                    .Select(async slideRequest => new Slide
                     {
                         Descricao = slideRequest.Descricao,
                         Ordem = slideRequest.Ordem,
                         Tipo = slideRequest.Tipo,
                         Titulo = slideRequest.Titulo,
-                        URL = ProcessarSlidesAsync(slideRequest.File, grupoDeSlides.Id).Result,
+                        URL =  await ProcessarSlidesAsync(slideRequest.File, grupoDeSlides.Id),
                         GrupoDeSlidesId = grupoDeSlides.Id,
                         NoticiaId = slideRequest.NoticiaId,
-                    }).ToList();
+                    });
 
-                _context.Slides.AddRange(novosSlides);
+                var slidesAdicionados = await Task.WhenAll(novosSlides);
+                _context.Slides.AddRange(slidesAdicionados);
 
                 // Atualizar grupo de slides
                 _context.GrupoDeSlides.Update(grupoDeSlides);
@@ -225,6 +235,7 @@ namespace intranet_angular.Server.Services
                 throw;
             }
         }
+
 
         public async Task DeleteAsync(int id)
         {

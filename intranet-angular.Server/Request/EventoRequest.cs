@@ -7,6 +7,6 @@
         public DateTime DataInicio { get; set; }
         public DateTime? DataFim { get; set; }
         public string Localizacao { get; set; }
-        public IFormFile File { get; set; }
+        public IFormFile? File { get; set; }
     }
 }
