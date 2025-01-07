@@ -24,6 +24,9 @@ export class EmployeesComponent {
   isEditing = false;
   currentFuncionarioId: number | null = null;
   selectedFile: File | null = null;
+  page: number = 1;
+  pageSize: number = 10;
+  totalItems: number = 0;
 
   constructor(private funcionarioService: FuncionarioService, private fb: FormBuilder) {
     this.funcionarioForm = this.fb.group({
@@ -40,8 +43,8 @@ export class EmployeesComponent {
   }
 
   loadFuncionarios(): void {
-    this.funcionarioService.getFuncionarios().subscribe((data) => {
-      this.funcionarios = data.map(fun => ({
+    this.funcionarioService.getFuncionarioPaginadas(this.page, this.pageSize).subscribe((data) => {
+      this.funcionarios = data.data.map(fun => ({
         id: fun.id,
         cargo: fun.cargo,
         imagemUrl: fun.imagemUrl,
@@ -50,6 +53,7 @@ export class EmployeesComponent {
         departamento: fun.departamento,
         email: fun.email
       }));
+      this.totalItems = data.totalRecords;
     });
   }
 
@@ -122,5 +126,19 @@ export class EmployeesComponent {
     fileInputs.forEach((input: any) => {
       input.value = '';  // Limpa o campo de arquivo
     });
+  }
+
+  onFilterChange(): void {
+    this.page = 1;
+    this.loadFuncionarios();
+  }
+
+  onPageChange(newPage: number): void {
+    this.page = newPage;
+    this.loadFuncionarios();
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.totalItems / this.pageSize);
   }
 }

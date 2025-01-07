@@ -16,6 +16,9 @@ export class NewsComponent implements OnInit {
   noticiaForm: FormGroup;
   isEditing = false;
   selectedNoticiaId: number | null = null;
+  page: number = 1;
+  pageSize: number = 10;
+  totalItems: number = 0;
 
   // Armazena os arquivos selecionados
   selectedFiles: { [key: string]: File | null } = {
@@ -48,8 +51,9 @@ export class NewsComponent implements OnInit {
   }
 
   loadNoticias(): void {
-    this.noticiaService.getNoticias().subscribe(data => {
-      this.noticias = data;
+    this.noticiaService.getNoticiasPaginadas(this.page, this.pageSize).subscribe(data => {
+      this.noticias = data.data;
+      this.totalItems = data.totalRecords;
       this.processNoticias();
     });
   }
@@ -101,7 +105,6 @@ export class NewsComponent implements OnInit {
       });
     }
   }
-
 
   convertToHtml(content: string): string {
     const tempDiv = document.createElement('div');
@@ -199,5 +202,19 @@ export class NewsComponent implements OnInit {
     fileInputs.forEach((input: any) => {
       input.value = '';  // Limpa o campo de arquivo
     });
+  }
+
+  onFilterChange(): void {
+    this.page = 1;
+    this.loadNoticias();
+  }
+
+  onPageChange(newPage: number): void {
+    this.page = newPage;
+    this.loadNoticias();
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.totalItems / this.pageSize);
   }
 }

@@ -93,6 +93,27 @@ namespace intranet_angular.Server.Services
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task<BaseResponse<IEnumerable<FuncionarioResponse>>> GetAllPagination(int page = 1, int pageSize = 10)
+        {
+            var query = _context.Funcionarios.AsQueryable();
+
+            var totalRecords = await query.CountAsync();
+
+            var funcionarios = await query
+                .OrderBy(s => s.Nome)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Select(s => MapToResponse(s))
+                .ToListAsync();
+
+            return new BaseResponse<IEnumerable<FuncionarioResponse>>
+            {
+                TotalRecords = totalRecords,
+                Data = funcionarios
+            };
+        }
+
         private static async Task<string?> ProcessarMidiasAsync(IFormFile midia)
         {
             if (midia == null) return null;

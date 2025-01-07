@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { FuncionarioResponse } from '../../response/funcionaResponse';
 import { environment } from '../../environments/environment';
+import { BaseResponse } from '../../response/baseResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +31,9 @@ export class FuncionarioService {
 
   deleteFuncionario(id: number): Observable<FuncionarioResponse> {
     return this.http.delete<FuncionarioResponse>(`${this.apiUrl}/${id}`);
+  }
+
+  getFuncionarioPaginadas(page: number, pageSize: number): Observable<BaseResponse<FuncionarioResponse[]>> {
+    return this.http.get<BaseResponse<FuncionarioResponse[]>>(`${this.apiUrl}/funcionario-pagination?page=${page}&pageSize=${pageSize}`);
   }
 }

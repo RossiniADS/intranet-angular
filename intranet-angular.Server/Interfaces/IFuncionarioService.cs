@@ -10,5 +10,6 @@ namespace intranet_angular.Server.Interfaces
         Task<FuncionarioResponse> AddAsync(FuncionarioRequest funcionarioRequest);
         Task<FuncionarioResponse> UpdateAsync(int id, FuncionarioRequest funcionarioRequest);
         Task DeleteAsync(int id);
+        Task<BaseResponse<IEnumerable<FuncionarioResponse>>> GetAllPagination(int page = 1, int pageSize = 10);
     }
 }
