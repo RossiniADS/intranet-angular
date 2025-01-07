@@ -9,6 +9,7 @@ import { CategoriaResponse } from '../../../response/categoriaResponse';
 import { CategoriaService } from '../../service/categoria.service';
 import { environment } from '../../../environments/environment';
 import { MidiaTamanhoEnum } from '../../enum/midia-tamanho.enum';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-home',
@@ -186,7 +187,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
         category: noticia.categoria[0]?.nome || 'Sem Categoria',
         categoryClass: 'bgb',
         title: noticia.titulo,
-        description: `by Rossini Alves - ${noticia.dataPublicacao}`,
+        description: `by Rossini Alves - ${formatDate(noticia.dataPublicacao, 'dd/MM/yyyy', 'pt-BR') }`,
         link: `/noticia/${noticia.id}`,
       }));
   }
@@ -219,7 +220,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
     );
 
     this.mainNews = {
-      image: `${environment.serverUrl}${ultimaNoticia.midiaNoticia.filter(midia => midia.midiaTamanho == MidiaTamanhoEnum.Terciaria)[0].url}`,
+      image: `${environment.serverUrl}${ultimaNoticia.midiaNoticia.filter(midia => midia.midiaTamanho == MidiaTamanhoEnum.Principal)[0].url}`,
       title: ultimaNoticia.titulo,
       author: ultimaNoticia.autorId,
       date: ultimaNoticia.dataPublicacao,
@@ -230,7 +231,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
     this.rightNews = noticiasFiltradas
       .filter((not) => not !== ultimaNoticia)
       .map((not) => ({
-        image: `${environment.serverUrl}${not.midiaNoticia.filter(midia => midia.midiaTamanho == MidiaTamanhoEnum.Terciaria)[0].url}`,
+        image: `${environment.serverUrl}${not.midiaNoticia.filter(midia => midia.midiaTamanho == MidiaTamanhoEnum.Principal)[0].url}`,
         category: not.categoria[0]?.nome || 'Sem Categoria',
         title: not.titulo,
         date: not.dataPublicacao,
@@ -241,10 +242,10 @@ export class HomeComponent implements AfterViewInit, OnInit {
 
   private loadMostRecentNews(): void {
     this.mostRecentNews = this.noticiasResponse.map((noticia) => ({
-      image: `${environment.serverUrl}${noticia.midiaNoticia.filter(midia => midia.midiaTamanho == MidiaTamanhoEnum.Terciaria)[0].url}`,
+      image: `${environment.serverUrl}${noticia.midiaNoticia.filter(midia => midia.midiaTamanho == MidiaTamanhoEnum.Principal)[0].url}`,
       category: noticia.categoria[0]?.nome || 'Sem Categoria',
       title: noticia.titulo,
-      time: `${noticia.autorId} | ${noticia.dataPublicacao}`,
+      time: `${noticia.autorId} | ${formatDate(noticia.dataPublicacao, 'dd/MM/yyyy', 'pt-BR')}`,
       link: `/noticia/${noticia.id}`,
     }));
   }

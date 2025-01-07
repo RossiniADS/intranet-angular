@@ -21,6 +21,7 @@ export class SlidesComponent implements OnInit {
   gruposResponse: GroupDeSlideResponse[] = [];
   grupoIdEmEdicao: number = 0;
   noticiasResponse: NoticiaResponse[] = [];
+  paginaSelecionada: PaginaResponse | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -243,5 +244,21 @@ export class SlidesComponent implements OnInit {
     fileInputs.forEach((input: any) => {
       input.value = '';  // Limpa o campo de arquivo
     });
+  }
+
+  onPaginaChange(event: Event): void {
+    const paginaId = +this.grupoForm.get('paginaId')?.value;
+    this.paginaSelecionada = this.paginas.find((pagina) => pagina.id === paginaId) || null;
+    this.grupos.clear();
+  }
+
+  canAddGrupo(): boolean {
+    return this.paginaSelecionada ? this.grupos.length < this.paginaSelecionada.configuracoesDeGrupos.length : false;
+  }
+
+  canAddSlide(grupoIndex: number): boolean {
+    if (!this.paginaSelecionada) return false;
+    const configuracao = this.paginaSelecionada.configuracoesDeGrupos[grupoIndex];
+    return configuracao !== undefined;
   }
 }

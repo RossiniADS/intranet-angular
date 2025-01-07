@@ -3,6 +3,7 @@
     public enum TipoMidiaEnum
     {
         Imagem,
-        Video
+        Video,
+        Ambos
     }
 }

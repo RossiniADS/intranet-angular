@@ -12,6 +12,25 @@
       <textarea id="descricao" formControlName="descricao" placeholder="Digite a descrição"></textarea>
     </div>
 
+    <div class="form-group" formArrayName="configuracoesDeGrupos">
+      <h3>Configurações dos Grupos de Slides</h3>
+      <button class="btn btn-add" type="button" (click)="adicionarConfiguracao()">Adicionar Configuração</button>
+
+      <div *ngFor="let config of configuracoesDeGrupos.controls; let i = index" [formGroupName]="i" class="grupo-config">
+        <label>Posição:</label>
+        <input type="number" formControlName="posicao" min="1" />
+
+        <label>Tipo de Mídia:</label>
+        <select class="form-control" formControlName="tipoDeMidia">
+          <option [value]="0">Imagem</option>
+          <option [value]="1">Vídeo</option>
+          <option [value]="2">Ambos</option>
+        </select>
+
+        <button class="btn btn-remove" type="button" (click)="removerConfiguracao(i)">Remover</button>
+      </div>
+    </div>
+
     <div class="button-group">
       <button class="btn btn-primary" type="submit">{{ isEditing ? 'Atualizar' : 'Cadastrar' }}</button>
       <button class="btn btn-secondary" type="button" (click)="resetForm()" *ngIf="isEditing">Cancelar</button>

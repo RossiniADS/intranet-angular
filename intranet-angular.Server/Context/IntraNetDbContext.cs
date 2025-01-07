@@ -24,6 +24,8 @@ namespace intranet_angular.Server.Context
         public DbSet<Cardapio> Cardapios { get; set; }
         public DbSet<MenuItem> MenuItems { get; set; }
         public DbSet<Sugestao> Sugestaos { get; set; }
+        public DbSet<ConfiguracaoGrupoDeSlide> ConfiguracaoGrupoDeSlides { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configuração do relacionamento Many-to-Many

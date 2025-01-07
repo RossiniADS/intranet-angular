@@ -64,7 +64,7 @@ export class NoticiasComponent implements OnInit {
         .fill(0)
         .map((_, i) => i + 1); // Cria o array [1, 2, 3, ...]
       this.noticiasItems = data.data.map((noticia) => ({
-        imgSrc: `${environment.serverUrl}${noticia.midiaNoticia.filter(midia => midia.midiaTamanho == MidiaTamanhoEnum.Secundaria)[0].url}`,
+        imgSrc: `${environment.serverUrl}${noticia.midiaNoticia.filter(midia => midia.midiaTamanho == MidiaTamanhoEnum.Principal)[0].url}`,
         date: {
           day: this.datePipe.transform(noticia.dataPublicacao, 'd') || '',
           month: this.datePipe.transform(noticia.dataPublicacao, 'MMM') || '',
@@ -81,7 +81,7 @@ export class NoticiasComponent implements OnInit {
 
   private loadMostRecentNews(noticiasResponse: NoticiaResponse[]): void {
     this.recentPosts = noticiasResponse.map((noticia) => ({
-      imgSrc: `${environment.serverUrl}${noticia.midiaNoticia.filter(midia => midia.midiaTamanho == MidiaTamanhoEnum.Terciaria)[0].url}`,
+      imgSrc: `${environment.serverUrl}${noticia.midiaNoticia.filter(midia => midia.midiaTamanho == MidiaTamanhoEnum.Principal)[0].url}`,
       title: noticia.titulo,
       date: noticia.dataPublicacao.toString(),
       link: `/noticia/${noticia.id}`,

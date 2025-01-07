@@ -5,11 +5,21 @@
     <!-- Seleção de Página -->
     <div class="form-group">
       <label for="pagina">Selecione a Página:</label>
-      <select id="pagina" formControlName="paginaId" class="form-control">
+      <select id="pagina" formControlName="paginaId" class="form-control" (change)="onPaginaChange($event)">
         <option *ngFor="let pagina of paginas" [value]="pagina.id">
           {{ pagina.nome }}
         </option>
       </select>
+    </div>
+
+    <!-- Exibir Configurações da Página -->
+    <div *ngIf="paginaSelecionada">
+      <p><strong>Grupos Permitidos:</strong> {{ paginaSelecionada.configuracoesDeGrupos.length }}</p>
+      <ul>
+        <li *ngFor="let configuracao of paginaSelecionada.configuracoesDeGrupos">
+          <strong>Posição {{ configuracao.posicao }}:</strong> {{ configuracao.tipoDeMidia | tipoMidiaPipe }}
+        </li>
+      </ul>
     </div>
 
     <!-- Gerenciamento de Grupos -->
@@ -62,22 +72,14 @@
                      class="form-control"
                      (change)="onSlideFileSelected($event, i, j)" />
             </div>
-            <div class="form-group">
-              <label for="noticia">Selecione a Noticia:</label>
-              <select id="noticia" formControlName="noticiaId" class="form-control">
-                <option *ngFor="let noticia of noticiasResponse" [value]="noticia.id">
-                  {{ noticia.titulo }}
-                </option>
-              </select>
-            </div>
             <button type="button" class="btn btn-danger" (click)="removeSlide(i, j)">Remover Slide</button>
           </div>
         </div>
-        <button type="button" class="btn btn-primary" (click)="addSlide(i)">Adicionar Slide</button>
+        <button type="button" class="btn btn-primary" (click)="addSlide(i)" [disabled]="!canAddSlide(i)">Adicionar Slide</button>
         <button type="button" class="btn btn-danger" *ngIf="!isEditing" (click)="removeGrupo(i)">Remover Grupo</button>
       </div>
     </div>
-    <button type="button" class="btn btn-primary" *ngIf="!isEditing" (click)="addGrupo()">Adicionar Grupo</button>
+    <button type="button" class="btn btn-primary" (click)="addGrupo()" [disabled]="!canAddGrupo()">Adicionar Grupo</button>
 
     <!-- Botões de Ação -->
     <div class="button-group">
@@ -85,29 +87,4 @@
       <button class="btn btn-secondary" type="button" (click)="resetForm()" *ngIf="isEditing">Cancelar</button>
     </div>
   </form>
-
-  <!-- Tabela de Grupos -->
-  <table class="slide-table">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nome</th>
-        <th>Posição</th>
-        <th>PaginaId</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let grupo of gruposResponse; let i = index">
-        <td>{{ grupo.id }}</td>
-        <td>{{ grupo.nome }}</td>
-        <td>{{ grupo.posicao }}</td>
-        <td>{{ grupo.paginaId }}</td>
-        <td>
-          <button class="btn btn-edit" (click)="editGrupo(i)">Editar</button>
-          <button class="btn btn-delete" (click)="excluir(grupo.id)">Excluir</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
 </div>

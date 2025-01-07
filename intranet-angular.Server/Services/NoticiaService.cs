@@ -48,7 +48,7 @@ namespace intranet_angular.Server.Services
                 })
                 .ToListAsync();
         }
-        
+
         public async Task<BaseResponse<IEnumerable<NoticiaResponse>>> GetAllPagination(int page = 1, int pageSize = 10)
         {
             var query = _context.Noticias.AsQueryable();
@@ -135,7 +135,6 @@ namespace intranet_angular.Server.Services
                     Conteudo = noticiaRequest.Conteudo,
                     Descricao = noticiaRequest.Descricao,
                     IsTrendingTop = noticiaRequest.IsTrendingTop,
-                    DataPublicacao = noticiaRequest.DataPublicacao,
                     AutorId = noticiaRequest.AutorId,
                     NoticiasCategorias = noticiaRequest.CategoriaIds?.Select(id => new NoticiaCategoria { CategoriaId = id }).ToList()
                 };

@@ -34,7 +34,7 @@
 
     <!-- Upload 1 -->
     <div class="form-group">
-      <label for="midia">Mídia Principal (750x645):</label>
+      <label for="midia">Mídia Principal (largura deve ter entre 360 e 765 e altura entre 245 e 645):</label>
       <input type="file" id="midia" (change)="onFileSelected($event, 'main')" class="form-control" />
       <div *ngIf="imageErrors['mmain']" class="error-message">
         {{ imageErrors['main'] }}
@@ -42,22 +42,21 @@
     </div>
 
     <!-- Upload 2 -->
-    <div class="form-group">
+    <!--<div class="form-group">
       <label for="midiaSecundaria">Mídia Secundária (750x375):</label>
       <input type="file" id="midiaSecundaria" (change)="onFileSelected($event, 'secondary')" class="form-control" />
       <div *ngIf="imageErrors['msecondary']" class="error-message">
         {{ imageErrors['secondary'] }}
       </div>
-    </div>
-
+    </div>-->
     <!-- Upload 3 -->
-    <div class="form-group">
+    <!--<div class="form-group">
       <label for="midiaTerciaria">Mídia Terciária (360x245):</label>
       <input type="file" id="midiaTerciaria" (change)="onFileSelected($event, 'tertiary')" class="form-control" />
       <div *ngIf="imageErrors['tertiary']" class="error-message">
         {{ imageErrors['tertiary'] }}
       </div>
-    </div>
+    </div>-->
 
     <div class="form-check form-switch">
       <input class="form-check-input"

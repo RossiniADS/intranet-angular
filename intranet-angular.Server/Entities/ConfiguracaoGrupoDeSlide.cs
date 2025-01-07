@@ -1,17 +1,16 @@
-﻿namespace intranet_angular.Server.Entities
+﻿
+using intranet_angular.Server.Enuns;
+
+namespace intranet_angular.Server.Entities
 {
-    public class GrupoDeSlides
+    public class ConfiguracaoGrupoDeSlide
     {
         public int Id { get; set; }
         public int PaginaId { get; set; }
         public int Posicao { get; set; }
-
-        public string Nome { get; set; }
+        public TipoMidiaEnum TipoDeMidia { get; set; }
 
         // Relacionamento com Página
         public Pagina Pagina { get; set; }
-
-        // Relacionamento com Slides
-        public ICollection<Slide> Slides { get; set; }
     }
 }

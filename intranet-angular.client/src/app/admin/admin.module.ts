@@ -19,6 +19,7 @@ import { SlidesComponent } from './pages/slides/slides.component';
 import { CardapioComponent } from './pages/cardapio/cardapio.component';
 import { EventoComponent } from './pages/evento/evento.component';
 import { DiaSemanaPipe } from '../pipes/dia-semana.pipe';
+import { TipoMidiaPipe } from '../pipes/tipo-midia.pipe';
 import { MenuManagerComponent } from './pages/menu-manager/menu-manager.component';
 import { FeedbackComponent } from './pages/feedback/feedback.component';
 
@@ -42,6 +43,7 @@ import { FeedbackComponent } from './pages/feedback/feedback.component';
     EventoComponent,
     MenuManagerComponent,
     FeedbackComponent,
+    TipoMidiaPipe
   ],
   imports: [
     CommonModule,

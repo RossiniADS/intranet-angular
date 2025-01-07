@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -29,6 +29,10 @@ import { DocumentsManagerComponent } from './pages/documents-manager/documents-m
 import { PdfViewerComponent } from './layout/pdf-viewer/pdf-viewer.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { FeedbackComponent } from './pages/feedback/feedback.component';
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
+
+registerLocaleData(localePt);
 
 @NgModule({
   declarations: [
@@ -66,6 +70,7 @@ import { FeedbackComponent } from './pages/feedback/feedback.component';
   providers: [
     DatePipe,
     DatePipe,
+    { provide: LOCALE_ID, useValue: 'pt-BR' },
     provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]

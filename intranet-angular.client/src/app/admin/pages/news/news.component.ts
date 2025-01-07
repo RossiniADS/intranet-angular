@@ -23,15 +23,15 @@ export class NewsComponent implements OnInit {
   // Armazena os arquivos selecionados
   selectedFiles: { [key: string]: File | null } = {
     main: null,       // 750x645
-    secondary: null,  // 750x375
-    tertiary: null,   // 360x245
+//    secondary: null,  // 750x375
+//    tertiary: null,   // 360x245
   };
 
   // Armazena mensagens de erro por tipo de imagem
   imageErrors: { [key: string]: string | null } = {
     main: null,
-    secondary: null,
-    tertiary: null,
+//    secondary: null,
+//    tertiary: null,
   };
 
   constructor(private fb: FormBuilder, private noticiaService: NoticiaService, private categoriaService: CategoriaService) {
@@ -86,12 +86,12 @@ export class NewsComponent implements OnInit {
     if (this.selectedFiles['main']) {
       formData.append('midiaPrincipal', this.selectedFiles['main']);
     }
-    if (this.selectedFiles['secondary']) {
-      formData.append('midiaSecundaria', this.selectedFiles['secondary']);
-    }
-    if (this.selectedFiles['tertiary']) {
-      formData.append('midiaTerciaria', this.selectedFiles['tertiary']);
-    }
+    //if (this.selectedFiles['secondary']) {
+    //  formData.append('midiaSecundaria', this.selectedFiles['secondary']);
+    //}
+    //if (this.selectedFiles['tertiary']) {
+    //  formData.append('midiaTerciaria', this.selectedFiles['tertiary']);
+    //}
 
     if (this.isEditing && this.selectedNoticiaId !== null) {
       this.noticiaService.updateNoticia(this.selectedNoticiaId, formData).subscribe(() => {
@@ -127,15 +127,15 @@ export class NewsComponent implements OnInit {
           const height = image.height;
 
           // Validação das dimensões por tipo
-          if (type === 'main' && (width !== 750 || height !== 645)) {
+          if (type === 'main' && !((width >= 360 && width <= 750) || (height >= 245 && height <= 645))) {
             this.imageErrors['main'] = 'A imagem principal precisa ter exatamente 750x645 pixels.';
             this.selectedFiles['main'] = null;
-          } else if (type === 'secondary' && (width !== 750 || height !== 375)) {
-            this.imageErrors['secondary'] = 'A imagem secundária precisa ter exatamente 750x375 pixels.';
-            this.selectedFiles['secondary'] = null;
-          } else if (type === 'tertiary' && (width !== 360 || height !== 245)) {
-            this.imageErrors['tertiary'] = 'A imagem terciária precisa ter exatamente 360x245 pixels.';
-            this.selectedFiles['tertiary'] = null;
+          //} else if (type === 'secondary' && (width !== 750 || height !== 375)) {
+          //  this.imageErrors['secondary'] = 'A imagem secundária precisa ter exatamente 750x375 pixels.';
+          //  this.selectedFiles['secondary'] = null;
+          //} else if (type === 'tertiary' && (width !== 360 || height !== 245)) {
+          //  this.imageErrors['tertiary'] = 'A imagem terciária precisa ter exatamente 360x245 pixels.';
+          //  this.selectedFiles['tertiary'] = null;
           } else {
             // Se for válido, limpa o erro e armazena o arquivo
             this.imageErrors[type] = null;
@@ -149,7 +149,7 @@ export class NewsComponent implements OnInit {
   }
 
   hasImageErrors(): boolean {
-    return !!this.imageErrors['main'] || !!this.imageErrors['secondary'] || !!this.imageErrors['tertiary'];
+    return !!this.imageErrors['main']; //|| !!this.imageErrors['secondary'] || !!this.imageErrors['tertiary'];
   }
 
   editNoticia(noticia: NoticiaResponse): void {
