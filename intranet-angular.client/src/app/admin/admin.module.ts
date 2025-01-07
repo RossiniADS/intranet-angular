@@ -8,7 +8,7 @@ import { AdminSidebarComponent } from './components/admin-sidebar/admin-sidebar.
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { PostsComponent } from './pages/posts/posts.component';
 import { UserComponent } from './pages/user/user.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NewsComponent } from './pages/news/news.component';
 import { QuillModule } from 'ngx-quill';
 import { CategoryComponent } from './pages/category/category.component';
@@ -46,6 +46,7 @@ import { FeedbackComponent } from './pages/feedback/feedback.component';
   imports: [
     CommonModule,
     AdminRoutingModule,
+    FormsModule,
     ReactiveFormsModule,
     QuillModule,
     NgSelectModule

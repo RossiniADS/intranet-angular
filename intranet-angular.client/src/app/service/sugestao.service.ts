@@ -12,23 +12,28 @@ export class SugestaoService {
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<SugestaoResponse[]> {
-    return this.http.get<SugestaoResponse[]>(this.apiUrl);
-  }
-
   getById(id: number): Observable<SugestaoResponse> {
     return this.http.get<SugestaoResponse>(`${this.apiUrl}/${id}`);
   }
 
-  add(cardapio: any): Observable<SugestaoResponse> {
-    return this.http.post<SugestaoResponse>(this.apiUrl, cardapio);
+  add(sugestao: any): Observable<SugestaoResponse> {
+    return this.http.post<SugestaoResponse>(this.apiUrl, sugestao);
   }
 
-  update(id: number, cardapio: any): Observable<SugestaoResponse> {
-    return this.http.put<SugestaoResponse>(`${this.apiUrl}/${id}`, cardapio);
+  update(id: number, sugestao: any): Observable<SugestaoResponse> {
+    return this.http.put<SugestaoResponse>(`${this.apiUrl}/${id}`, sugestao);
+  }
+
+  setLida(id: number, lida: boolean): Observable<SugestaoResponse> {
+    return this.http.put<SugestaoResponse>(`${this.apiUrl}/setLida/${id}/${lida}`, {});
   }
 
   delete(id: number): Observable<SugestaoResponse> {
     return this.http.delete<SugestaoResponse>(`${this.apiUrl}/${id}`);
+  }
+
+  getAll(filtro: string | null): Observable<SugestaoResponse[]> {
+    const params = filtro ? `?filter=${encodeURIComponent(filtro)}` : '';
+    return this.http.get<SugestaoResponse[]>(`${this.apiUrl}${params}`);
   }
 }

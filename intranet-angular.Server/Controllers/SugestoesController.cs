@@ -16,10 +16,16 @@ namespace intranet_angular.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAllAsync([FromQuery] string? filter)
         {
-            var sugestoes = await _sugestaoService.GetAllAsync();
-            return Ok(sugestoes);
+            if (string.IsNullOrEmpty(filter))
+            {
+                var sugestoes = await _sugestaoService.GetAllAsync();
+                return Ok(sugestoes);
+            }
+
+            var sugestoesFiltradas = await _sugestaoService.FiltrarSugestoesAsync(filter);
+            return Ok(sugestoesFiltradas);
         }
 
         [HttpGet("{id}")]
@@ -54,6 +60,18 @@ namespace intranet_angular.Server.Controllers
             }
 
             var updatedSugestao = await _sugestaoService.UpdateAsync(id, sugestaoRequest);
+            return Ok(updatedSugestao);
+        }
+
+        [HttpPut("setLida/{id}/{lida}")]
+        public async Task<IActionResult> SetLida(int id, bool lida)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var updatedSugestao = await _sugestaoService.SetLidaAsync(id, lida);
             return Ok(updatedSugestao);
         }
 

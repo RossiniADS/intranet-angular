@@ -24,6 +24,19 @@ namespace intranet_angular.Server.Services
             return sugestoes.Select(MapToResponse);
         }
 
+        public async Task<IEnumerable<SugestaoResponse>> FiltrarSugestoesAsync(string filter)
+        {
+            var sugestoesFiltradas = await _context.Sugestaos
+                .Where(s =>
+                    (!string.IsNullOrEmpty(s.Nome) && s.Nome.Contains(filter)) ||
+                    (!string.IsNullOrEmpty(s.Email) && s.Email.Contains(filter)) ||
+                    (!string.IsNullOrEmpty(s.Assunto) && s.Assunto.Contains(filter))
+                )
+                .ToListAsync();
+
+            return sugestoesFiltradas.Select(MapToResponse);
+        }
+
         public async Task<SugestaoResponse?> GetByIdAsync(int id)
         {
             var sugestao = await _context.Sugestaos.FindAsync(id);
@@ -65,6 +78,23 @@ namespace intranet_angular.Server.Services
             sugestao.Mensagem = sugestaoRequest.Mensagem;
             sugestao.Nome = sugestaoRequest.Nome;
 
+
+            _context.Sugestaos.Update(sugestao);
+            await _context.SaveChangesAsync();
+
+            return MapToResponse(sugestao);
+        }
+
+        public async Task<SugestaoResponse> SetLidaAsync(int id, bool lida)
+        {
+            var sugestao = await _context.Sugestaos.FindAsync(id);
+            if (sugestao == null)
+            {
+                throw new KeyNotFoundException("Sugestao não encontrado.");
+            }
+
+            sugestao.Lida = lida;
+            sugestao.LidaEm = DateTime.Now;
 
             _context.Sugestaos.Update(sugestao);
             await _context.SaveChangesAsync();
