@@ -17,17 +17,23 @@
       <button class="btn btn-add" type="button" (click)="adicionarConfiguracao()">Adicionar Configuração</button>
 
       <div *ngFor="let config of configuracoesDeGrupos.controls; let i = index" [formGroupName]="i" class="grupo-config">
-        <label>Posição:</label>
-        <input type="number" formControlName="posicao" min="1" />
+        <div class="config-card">
+          <div class="config-header">
+            <h4>Configuração Grupo {{ i + 1 }}</h4>
+            <button class="btn btn-remove" type="button" (click)="removerConfiguracao(i)">Remover</button>
+          </div>
+          <div class="config-body">
+            <label>Posição:</label>
+            <input type="number" formControlName="posicao" min="1" />
 
-        <label>Tipo de Mídia:</label>
-        <select class="form-control" formControlName="tipoDeMidia">
-          <option [value]="0">Imagem</option>
-          <option [value]="1">Vídeo</option>
-          <option [value]="2">Ambos</option>
-        </select>
-
-        <button class="btn btn-remove" type="button" (click)="removerConfiguracao(i)">Remover</button>
+            <label>Tipo de Mídia:</label>
+            <select class="form-control" formControlName="tipoDeMidia">
+              <option [value]="0">Imagem</option>
+              <option [value]="1">Vídeo</option>
+              <option [value]="2">Ambos</option>
+            </select>
+          </div>
+        </div>
       </div>
     </div>
 
