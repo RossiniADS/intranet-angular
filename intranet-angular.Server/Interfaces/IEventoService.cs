@@ -11,5 +11,6 @@ namespace intranet_angular.Server.Interfaces
         Task<EventoResponse> AddAsync(EventoRequest eventoRequest);
         Task<EventoResponse> UpdateAsync(int id, EventoRequest eventoRequest);
         Task DeleteAsync(int id);
+        Task<BaseResponse<IEnumerable<EventoResponse>>> GetAllPagination(int page = 1, int pageSize = 10);
     }
 }

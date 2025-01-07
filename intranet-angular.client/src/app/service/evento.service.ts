@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { EventoResponse } from '../../response/eventoResponse';
 import { environment } from '../../environments/environment';
+import { BaseResponse } from '../../response/baseResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +31,9 @@ export class EventoService {
 
   delete(id: number): Observable<EventoResponse> {
     return this.http.delete<EventoResponse>(`${this.apiUrl}/${id}`);
+  }
+
+  getEventoPaginadas(page: number, pageSize: number): Observable<BaseResponse<EventoResponse[]>> {
+    return this.http.get<BaseResponse<EventoResponse[]>>(`${this.apiUrl}/evento-pagination?page=${page}&pageSize=${pageSize}`);
   }
 }

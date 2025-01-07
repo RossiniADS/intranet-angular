@@ -1,6 +1,7 @@
 ﻿using intranet_angular.Server.Entities;
 using intranet_angular.Server.Interfaces;
 using intranet_angular.Server.Request;
+using intranet_angular.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace intranet_angular.Server.Controllers
@@ -63,6 +64,13 @@ namespace intranet_angular.Server.Controllers
         {
             await _eventoService.DeleteAsync(id);
             return NoContent();
+        }
+
+        [HttpGet("evento-pagination")]
+        public async Task<IActionResult> GetAllPagination(int page = 1, int pageSize = 10)
+        {
+            var eventos = await _eventoService.GetAllPagination(page, pageSize);
+            return Ok(eventos);
         }
     }
 

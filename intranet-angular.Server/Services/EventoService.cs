@@ -94,6 +94,26 @@ namespace intranet_angular.Server.Services
             }
         }
 
+        public async Task<BaseResponse<IEnumerable<EventoResponse>>> GetAllPagination(int page = 1, int pageSize = 10)
+        {
+            var query = _context.Eventos.AsQueryable();
+
+            var totalRecords = await query.CountAsync();
+
+            var eventos = await query
+                .OrderByDescending(s => s.DataInicio)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Select(s => MapToResponse(s))
+                .ToListAsync();
+
+            return new BaseResponse<IEnumerable<EventoResponse>>
+            {
+                TotalRecords = totalRecords,
+                Data = eventos
+            };
+        }
+
         private static async Task<string?> ProcessarMidiasAsync(IFormFile midia)
         {
             if (midia == null) return null;

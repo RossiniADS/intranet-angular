@@ -10,7 +10,7 @@ namespace intranet_angular.Server.Interfaces
         Task<SugestaoResponse> AddAsync(SugestaoRequest cardapio);
         Task<SugestaoResponse> UpdateAsync(int id, SugestaoRequest cardapio);
         Task<SugestaoResponse> SetLidaAsync(int id, bool lida);
-        Task<BaseResponse<IEnumerable<SugestaoResponse>>> GetAllPagination(string? filter, int page = 1, int pageSize = 10);
         Task DeleteAsync(int id);
+        Task<BaseResponse<IEnumerable<SugestaoResponse>>> GetAllPagination(string? filter, int page = 1, int pageSize = 10);
     }
 }

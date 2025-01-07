@@ -24,6 +24,9 @@ export class EventoComponent {
   isEditing = false;
   currentEventoId: number | null = null;
   selectedFile: File | null = null;
+  page: number = 1;
+  pageSize: number = 10;
+  totalItems: number = 0;
 
   constructor(private fb: FormBuilder, private eventoService: EventoService) {
     this.eventoForm = this.fb.group({
@@ -40,8 +43,8 @@ export class EventoComponent {
   }
 
   loadEventos() {
-    this.eventoService.getAll().subscribe(data => {
-      this.eventos = data.map(eve => ({
+    this.eventoService.getEventoPaginadas(this.page, this.pageSize).subscribe(data => {
+      this.eventos = data.data.map(eve => ({
         id: eve.id,
         dataFim: eve.dataFim,
         dataInicio: eve.dataInicio,
@@ -50,6 +53,7 @@ export class EventoComponent {
         localizacao: eve.localizacao,
         nome: eve.nome
       }));
+      this.totalItems = data.totalRecords;
     });
   }
 
@@ -115,5 +119,19 @@ export class EventoComponent {
     fileInputs.forEach((input: any) => {
       input.value = '';  // Limpa o campo de arquivo
     });
+  }
+
+  onFilterChange(): void {
+    this.page = 1;
+    this.loadEventos();
+  }
+
+  onPageChange(newPage: number): void {
+    this.page = newPage;
+    this.loadEventos();
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.totalItems / this.pageSize);
   }
 }
