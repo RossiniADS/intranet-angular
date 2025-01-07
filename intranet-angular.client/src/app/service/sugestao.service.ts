@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { SugestaoResponse } from '../../response/sugestaoResponse';
+import { BaseResponse } from '../../response/baseResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -35,5 +36,14 @@ export class SugestaoService {
   getAll(filtro: string | null): Observable<SugestaoResponse[]> {
     const params = filtro ? `?filter=${encodeURIComponent(filtro)}` : '';
     return this.http.get<SugestaoResponse[]>(`${this.apiUrl}${params}`);
+  }
+
+  getSugestaoPaginadas(filter: string | null, page: number, pageSize: number): Observable<BaseResponse<SugestaoResponse[]>> {
+    let params = '';
+    if (filter) {
+      params += `filter=${encodeURIComponent(filter)}&`;
+    }
+    params += `page=${page}&pageSize=${pageSize}`;
+    return this.http.get<BaseResponse<SugestaoResponse[]>>(`${this.apiUrl}/sugestao-pagination?${params}`);
   }
 }

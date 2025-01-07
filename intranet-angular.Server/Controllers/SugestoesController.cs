@@ -1,5 +1,6 @@
 ﻿using intranet_angular.Server.Interfaces;
 using intranet_angular.Server.Request;
+using intranet_angular.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace intranet_angular.Server.Controllers
@@ -16,16 +17,10 @@ namespace intranet_angular.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllAsync([FromQuery] string? filter)
+        public async Task<IActionResult> GetAllAsync()
         {
-            if (string.IsNullOrEmpty(filter))
-            {
-                var sugestoes = await _sugestaoService.GetAllAsync();
-                return Ok(sugestoes);
-            }
-
-            var sugestoesFiltradas = await _sugestaoService.FiltrarSugestoesAsync(filter);
-            return Ok(sugestoesFiltradas);
+            var sugestoes = await _sugestaoService.GetAllAsync();
+            return Ok(sugestoes);
         }
 
         [HttpGet("{id}")]
@@ -73,6 +68,13 @@ namespace intranet_angular.Server.Controllers
 
             var updatedSugestao = await _sugestaoService.SetLidaAsync(id, lida);
             return Ok(updatedSugestao);
+        }
+
+        [HttpGet("sugestao-pagination")]
+        public async Task<IActionResult> GetAllPagination(string? filter, int page = 1, int pageSize = 10)
+        {
+            var sugestoes = await _sugestaoService.GetAllPagination(filter, page, pageSize);
+            return Ok(sugestoes);
         }
 
         [HttpDelete("{id}")]

@@ -48,6 +48,7 @@ namespace intranet_angular.Server.Services
                 })
                 .ToListAsync();
         }
+        
         public async Task<BaseResponse<IEnumerable<NoticiaResponse>>> GetAllPagination(int page = 1, int pageSize = 10)
         {
             var query = _context.Noticias.AsQueryable();
