@@ -42,7 +42,7 @@ h1 {
     .form-group input:focus {
       border-color: #24b4f4;
       outline: none;
-      box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+      box-shadow: 0 0 5px rgba(22, 150, 231, 0.5);
     }
 
 .button-group {
@@ -65,7 +65,7 @@ h1 {
 }
 
   .btn-primary:hover {
-    background: #45a049;
+    background: #1696e7;
   }
 
 .btn-secondary {
@@ -137,5 +137,5 @@ textarea {
   textarea:focus {
     border-color: #24b4f4;
     outline: none;
-    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+    box-shadow: 0 0 5px rgba(22, 150, 231, 0.5);
   }
