@@ -265,10 +265,19 @@ namespace intranet_angular.Server.Services
         {
             if (midia == null) return;
 
-            var filePath = Path.Combine("Uploads", Guid.NewGuid() + Path.GetExtension(midia.FileName));
+            // Define o caminho para a pasta "Noticias"
+            var baseDirectory = Path.Combine("Uploads", "Noticias");
 
-            Directory.CreateDirectory(Path.GetDirectoryName(filePath) ?? "Uploads");
+            // Verifica se a pasta "Noticias" existe, e a cria caso não exista
+            if (!Directory.Exists(baseDirectory))
+            {
+                Directory.CreateDirectory(baseDirectory);
+            }
 
+            // Gera o caminho completo para o arquivo dentro da pasta "Noticias"
+            var filePath = Path.Combine(baseDirectory, Guid.NewGuid() + Path.GetExtension(midia.FileName));
+
+            // Salva o arquivo no caminho especificado
             await using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await midia.CopyToAsync(stream);
@@ -281,7 +290,6 @@ namespace intranet_angular.Server.Services
                 MidiaTamanho = midiaTamanho,
                 Tipo = TipoMidiaEnum.Imagem
             });
-
 
             await _context.SaveChangesAsync();
         }

@@ -96,14 +96,19 @@ namespace intranet_angular.Server.Services
         {
             if (midia == null) return null;
 
-            var filePath = Path.Combine("Uploads", Guid.NewGuid() + Path.GetExtension(midia.FileName));
-            var directoryPath = Path.GetDirectoryName(filePath);
+            // Define o caminho para a pasta "Cardapio"
+            var baseDirectory = Path.Combine("Uploads", "Cardapios");
 
-            if (directoryPath != null && !Directory.Exists(directoryPath))
+            // Verifica se a pasta "Cardapio" existe, e a cria caso não exista
+            if (!Directory.Exists(baseDirectory))
             {
-                Directory.CreateDirectory(directoryPath);
+                Directory.CreateDirectory(baseDirectory);
             }
 
+            // Gera o caminho completo para o arquivo dentro da pasta "Cardapio"
+            var filePath = Path.Combine(baseDirectory, Guid.NewGuid() + Path.GetExtension(midia.FileName));
+
+            // Salva o arquivo no caminho especificado
             await using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await midia.CopyToAsync(stream);

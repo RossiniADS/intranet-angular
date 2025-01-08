@@ -15,7 +15,7 @@
 
     <div class="form-group">
       <label for="parentId">Item Pai:</label>
-      <select id="parentId" formControlName="parentId">
+      <select class="form-control" id="parentId" formControlName="parentId">
         <option [value]="null">Nenhum</option>
         <option *ngFor="let item of menuItems" [value]="item.id">{{ item.label }}</option>
       </select>

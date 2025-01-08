@@ -131,7 +131,7 @@ namespace intranet_angular.Server.Services
                         Ordem = slideRequest.Ordem,
                         Tipo = slideRequest.Tipo,
                         Titulo = slideRequest.Titulo,
-                        URL = ProcessarSlidesAsync(slideRequest.File, grupoDeSlides.Id).Result,
+                        URL = ProcessarSlidesAsync(slideRequest.File).Result,
                         GrupoDeSlidesId = grupoDeSlides.Id,
                         NoticiaId = slideRequest.NoticiaId
                     }).ToList();
@@ -200,7 +200,7 @@ namespace intranet_angular.Server.Services
                         if (!string.IsNullOrEmpty(slideExistente.URL) && File.Exists(slideExistente.URL))
                             File.Delete(slideExistente.URL);
 
-                        slideExistente.URL = await ProcessarSlidesAsync(slideRequest.File, grupoDeSlides.Id);
+                        slideExistente.URL = await ProcessarSlidesAsync(slideRequest.File);
                     }
                 }
 
@@ -213,7 +213,7 @@ namespace intranet_angular.Server.Services
                         Ordem = slideRequest.Ordem,
                         Tipo = slideRequest.Tipo,
                         Titulo = slideRequest.Titulo,
-                        URL =  await ProcessarSlidesAsync(slideRequest.File, grupoDeSlides.Id),
+                        URL = await ProcessarSlidesAsync(slideRequest.File),
                         GrupoDeSlidesId = grupoDeSlides.Id,
                         NoticiaId = slideRequest.NoticiaId,
                     });
@@ -275,17 +275,26 @@ namespace intranet_angular.Server.Services
             }).ToList(),
         };
 
-        private static async Task<string> ProcessarSlidesAsync(IFormFile? slide, int grupoSlideId)
+        private static async Task<string> ProcessarSlidesAsync(IFormFile? midia)
         {
-            if (slide == null) return string.Empty;
+            if (midia == null) return string.Empty;
 
-            var filePath = Path.Combine("Uploads", Guid.NewGuid() + Path.GetExtension(slide.FileName));
+            // Define o caminho para a pasta "Slides"
+            var baseDirectory = Path.Combine("Uploads", "Slides");
 
-            Directory.CreateDirectory(Path.GetDirectoryName(filePath) ?? "Uploads");
+            // Verifica se a pasta "Slides" existe, e a cria caso não exista
+            if (!Directory.Exists(baseDirectory))
+            {
+                Directory.CreateDirectory(baseDirectory);
+            }
 
+            // Gera o caminho completo para o arquivo dentro da pasta "Slides"
+            var filePath = Path.Combine(baseDirectory, Guid.NewGuid() + Path.GetExtension(midia.FileName));
+
+            // Salva o arquivo no caminho especificado
             await using (var stream = new FileStream(filePath, FileMode.Create))
             {
-                await slide.CopyToAsync(stream);
+                await midia.CopyToAsync(stream);
             }
 
             return filePath;
