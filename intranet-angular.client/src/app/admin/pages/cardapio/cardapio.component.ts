@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CardapioService } from '../../../service/cardapio.service';
 import { CardapioResponse } from '../../../../response/cardapioResponse';
+import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-cardapio',
@@ -21,8 +23,7 @@ export class CardapioComponent {
   isEditing = false;
   currentCardapioId: number | null = null;
   selectedFile: File | null = null;
-
-  constructor(private fb: FormBuilder, private cardapioService: CardapioService) {
+  constructor(private fb: FormBuilder, private toastrService: ToastrService, private cardapioService: CardapioService) {
     this.cardapioForm = this.fb.group({
       diaDaSemana: [0, [Validators.required]],
       titulo: ['', [Validators.required, Validators.minLength(3)]],
@@ -59,14 +60,26 @@ export class CardapioComponent {
     }
 
     if (this.isEditing && this.currentCardapioId !== null) {
-      this.cardapioService.update(this.currentCardapioId, formData).subscribe(() => {
-        this.loadCardapios();
-        this.resetForm();
+      this.cardapioService.update(this.currentCardapioId, formData).subscribe({
+        next: () => {
+          this.toastrService.success('Cardápio atualizado com sucesso!');
+          this.loadCardapios();
+          this.resetForm();
+        },
+        error: (error) => {
+          this.toastrService.error('Erro ao adicionar o cardápio!');
+        }
       });
     } else {
-      this.cardapioService.add(formData).subscribe(() => {
-        this.loadCardapios();
-        this.resetForm();
+      this.cardapioService.add(formData).subscribe({
+        next: () => {
+          this.toastrService.success('Cardápio atualizado com sucesso!');
+          this.loadCardapios();
+          this.resetForm();
+        },
+        error: () => {
+          this.toastrService.error('Erro ao adicionar o cardápio!');
+        }
       });
     }
   }
@@ -78,11 +91,29 @@ export class CardapioComponent {
   }
 
   deleteCardapio(id: number) {
-    if (confirm('Tem certeza que deseja excluir este cardápio?')) {
-      this.cardapioService.delete(id).subscribe(() => {
-        this.loadCardapios();
-      });
-    }
+    Swal.fire({
+      title: 'Você tem certeza?',
+      text: 'Esta ação não poderá ser desfeita!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, excluir!',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.cardapioService.delete(id).subscribe({
+          next: () => {
+
+            Swal.fire('Excluído!', 'O cardápio foi excluído com sucesso.', 'success');
+            this.loadCardapios();
+          },
+          error: () => {
+            Swal.fire('Erro!', 'Ocorreu um problema ao excluir o cardápio.', 'error');
+          }
+        });
+      }
+    });
   }
 
   resetForm() {

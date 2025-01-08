@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FuncionarioService } from '../../../service/funcionario.service';
 import { formatDate } from '@angular/common';
 import { FuncionarioResponse } from '../../../../response/funcionaResponse';
+import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-employees',
@@ -28,7 +30,7 @@ export class EmployeesComponent {
   pageSize: number = 10;
   totalItems: number = 0;
 
-  constructor(private funcionarioService: FuncionarioService, private fb: FormBuilder) {
+  constructor(private funcionarioService: FuncionarioService, private toastrService: ToastrService, private fb: FormBuilder) {
     this.funcionarioForm = this.fb.group({
       nome: ['', Validators.required],
       dataNascimento: ['', Validators.required],
@@ -72,14 +74,26 @@ export class EmployeesComponent {
     }
 
     if (this.isEditing && this.currentFuncionarioId !== null) {
-      this.funcionarioService.updateFuncionario(this.currentFuncionarioId, formData).subscribe(() => {
-        this.loadFuncionarios();
-        this.resetForm();
+      this.funcionarioService.updateFuncionario(this.currentFuncionarioId, formData).subscribe({
+        next: () => {
+          this.toastrService.success('Funcionário atualizado com sucesso!');
+          this.loadFuncionarios();
+          this.resetForm();
+        },
+        error: () => {
+          this.toastrService.error('Erro ao atualizar o funcionário!');
+        }
       });
     } else {
-      this.funcionarioService.createFuncionario(formData).subscribe(() => {
-        this.loadFuncionarios();
-        this.resetForm();
+      this.funcionarioService.createFuncionario(formData).subscribe({
+        next: () => {
+          this.toastrService.success('Funcionário adicionado com sucesso!');
+          this.loadFuncionarios();
+          this.resetForm();
+        },
+        error: () => {
+          this.toastrService.error('Erro ao adicionar o funcionário!');
+        }
       });
     }
   }
@@ -100,8 +114,27 @@ export class EmployeesComponent {
   }
 
   deleteFuncionario(id: number): void {
-    this.funcionarioService.deleteFuncionario(id).subscribe(() => {
-      this.loadFuncionarios();
+    Swal.fire({
+      title: 'Você tem certeza?',
+      text: 'Esta ação não poderá ser desfeita!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, excluir!',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.funcionarioService.deleteFuncionario(id).subscribe({
+          next: () => {
+            Swal.fire('Excluído!', 'O funcionário foi excluído com sucesso.', 'success');
+            this.loadFuncionarios();
+          },
+          error: () => {
+            Swal.fire('Erro!', 'Ocorreu um problema ao excluir o funcionário.', 'error');
+          }
+        });
+      }
     });
   }
 

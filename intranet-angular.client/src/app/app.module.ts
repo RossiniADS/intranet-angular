@@ -31,6 +31,7 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { FeedbackComponent } from './pages/feedback/feedback.component';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
+import { ToastrModule } from 'ngx-toastr';
 
 registerLocaleData(localePt);
 
@@ -65,7 +66,8 @@ registerLocaleData(localePt);
     FontAwesomeModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxExtendedPdfViewerModule
+    NgxExtendedPdfViewerModule,
+    ToastrModule.forRoot({ positionClass: 'toast-bottom-right', timeOut: 3000 })
   ],
   providers: [
     DatePipe,

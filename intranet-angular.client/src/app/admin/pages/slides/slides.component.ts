@@ -6,6 +6,8 @@ import { GroupDeSlideResponse } from '../../../../response/groupDeSlideResponse'
 import { NoticiaResponse } from '../../../../response/noticiaResponse';
 import { NoticiaService } from '../../../service/noticia.service';
 import { PaginaResponse } from '../../../../response/paginaResponse';
+import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-slides',
@@ -27,7 +29,8 @@ export class SlidesComponent implements OnInit {
     private fb: FormBuilder,
     private paginaService: PaginaService,
     private grupoDeSlidesService: GrupoDeSlidesService,
-    private noticiaService: NoticiaService
+    private noticiaService: NoticiaService,
+    private toastrService: ToastrService
   ) {
     this.grupoForm = this.fb.group({
       paginaId: ['', Validators.required],
@@ -53,17 +56,14 @@ export class SlidesComponent implements OnInit {
     })
   }
 
-  // Getter para os grupos
   get grupos(): FormArray {
     return this.grupoForm.get('grupos') as FormArray;
   }
 
-  // Obter slides de um grupo específico
   getSlides(grupoIndex: number): FormArray {
     return this.grupos.at(grupoIndex).get('slides') as FormArray;
   }
 
-  // Adicionar um novo grupo
   addGrupo(): void {
     this.grupos.push(
       this.fb.group({
@@ -74,12 +74,10 @@ export class SlidesComponent implements OnInit {
     );
   }
 
-  // Remover um grupo
   removeGrupo(index: number): void {
     this.grupos.removeAt(index);
   }
 
-  // Adicionar um slide a um grupo
   addSlide(grupoIndex: number): void {
     this.getSlides(grupoIndex).push(
       this.fb.group({
@@ -91,12 +89,10 @@ export class SlidesComponent implements OnInit {
     );
   }
 
-  // Remover um slide de um grupo
   removeSlide(grupoIndex: number, slideIndex: number): void {
     this.getSlides(grupoIndex).removeAt(slideIndex);
   }
 
-  // Capturar arquivo selecionado
   onSlideFileSelected(event: Event, grupoIndex: number, slideIndex: number): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
@@ -107,7 +103,6 @@ export class SlidesComponent implements OnInit {
     }
   }
 
-  // Submeter o formulário
   submitForm(): void {
     if (this.grupoForm.invalid) {
       console.log('Formulário inválido:', this.grupoForm.value);
@@ -130,7 +125,7 @@ export class SlidesComponent implements OnInit {
             formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].File`, slide.file);
             formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].Tipo`, fileType);
           } else {
-            console.warn(`Arquivo ignorado: tipo não suportado (${slide.file.type})`);
+            this.toastrService.warning(`Arquivo ignorado: tipo não suportado (${slide.file.type})`);
           }
         }
 
@@ -149,33 +144,35 @@ export class SlidesComponent implements OnInit {
     if (this.isEditing && this.grupoIdEmEdicao != 0) {
       this.grupoDeSlidesService.updateSlide(this.grupoIdEmEdicao, formData).subscribe({
         next: () => {
-          alert('Grupos e slides atualizados com sucesso!');
+          this.toastrService.success('Grupos e slides atualizados com sucesso!');
           this.resetForm();
           this.loadGrupo();
         },
-        error: (err) => alert('Erro ao atualizar os grupos e slides: ' + err.message),
+        error: (err) => {
+          this.toastrService.error('Erro ao atualizar os grupos e slides!');
+        }
       });
 
     } else {
       this.grupoDeSlidesService.createSlides(formData).subscribe({
         next: () => {
-          alert('Grupos e slides cadastrados com sucesso!');
+          this.toastrService.success('Grupos e slides adicionados com sucesso!');
           this.resetForm();
           this.loadGrupo();
         },
-        error: (err) => alert('Erro ao salvar os grupos e slides: ' + err.message),
+        error: (err) => {
+          this.toastrService.error('Erro ao adicionar os grupos e slides!');
+        }
       });
     }
   }
 
-  // Recarregar páginas
   loadPaginas(): void {
     this.paginaService.getPaginas().subscribe((data) => {
       this.paginas = data.sort((a, b) => a.nome.localeCompare(b.nome));
     });
   }
 
-  // Resetar formulário
   resetForm(): void {
     this.grupoForm.reset();
     this.grupos.clear();
@@ -184,7 +181,6 @@ export class SlidesComponent implements OnInit {
   }
 
   editGrupo(index: number): void {
-    // Verifica se o índice é válido
     if (index < 0 || index >= this.gruposResponse.length) {
       return;
     }
@@ -197,22 +193,18 @@ export class SlidesComponent implements OnInit {
       return;
     }
 
-    // Atualiza o formulário com os valores do grupo
     this.grupoForm.patchValue({
       paginaId: grupo.paginaId,
     });
 
-    // Limpa os grupos existentes no formulário
     this.grupos.clear();
 
-    // Adiciona o grupo ao formulário
     const grupoFormGroup = this.fb.group({
       nome: [grupo.nome, Validators.required],
       posicao: [grupo.posicao, Validators.required],
       slides: this.fb.array([]),
     });
 
-    // Popula os slides do grupo
     grupo.slides.forEach((slide) => {
       const slideFormGroup = this.fb.group({
         id: [slide.id],
@@ -230,19 +222,35 @@ export class SlidesComponent implements OnInit {
   }
 
   excluir(id: number): void {
-    if (confirm('Deseja realmente excluir este grupo?')) {
-      this.grupoDeSlidesService.deleteGrupoDeSlide(id).subscribe({
-        next: () => this.loadGrupo(),
-        error: (err) => alert('Erro ao excluir o grupo: ' + err.message),
-      });
-    }
+    Swal.fire({
+      title: 'Você tem certeza?',
+      text: 'Esta ação não poderá ser desfeita!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, excluir!',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.grupoDeSlidesService.deleteGrupoDeSlide(id).subscribe({
+          next: () => {
+
+            Swal.fire('Excluído!', 'O grupo foi excluído com sucesso.', 'success');
+            this.loadGrupo();
+          },
+          error: () => {
+            Swal.fire('Erro!', 'Ocorreu um problema ao excluir o grupo.', 'error');
+          }
+        });
+      }
+    });
   }
 
   resetFileInputs(): void {
-    // Limpar os inputs de arquivos na tela
     const fileInputs = document.querySelectorAll('input[type="file"]');
     fileInputs.forEach((input: any) => {
-      input.value = '';  // Limpa o campo de arquivo
+      input.value = '';
     });
   }
 

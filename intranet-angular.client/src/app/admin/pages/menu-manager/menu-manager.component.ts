@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MenuService } from '../../../service/menu.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MenuItemResponse } from '../../../../response/menuItemResponse';
+import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-menu-manager',
@@ -17,7 +19,7 @@ export class MenuManagerComponent implements OnInit {
   currentMenuItemId: number | null = null;
   selectedFile: File | null = null;
 
-  constructor(private fb: FormBuilder, private menuService: MenuService) {
+  constructor(private fb: FormBuilder, private toastrService: ToastrService, private menuService: MenuService) {
     this.menuForm = this.fb.group({
       label: ['', [Validators.required, Validators.minLength(3)]],
       parentId: [null],
@@ -46,14 +48,26 @@ export class MenuManagerComponent implements OnInit {
     }
 
     if (this.isEditing && this.currentMenuItemId !== null) {
-      this.menuService.update(this.currentMenuItemId, formData).subscribe(() => {
-        this.loadMenuItems();
-        this.resetForm();
+      this.menuService.update(this.currentMenuItemId, formData).subscribe({
+        next: () => {
+          this.toastrService.success('Menu atualizado com sucesso!');
+          this.loadMenuItems();
+          this.resetForm();
+        },
+        error: () => {
+          this.toastrService.error('Erro ao atualizar o menu!');
+        }
       });
     } else {
-      this.menuService.add(formData).subscribe(() => {
-        this.loadMenuItems();
-        this.resetForm();
+      this.menuService.add(formData).subscribe({
+        next: () => {
+          this.toastrService.success('Menu adicionado com sucesso!');
+          this.loadMenuItems();
+          this.resetForm();
+        },
+        error: () => {
+          this.toastrService.error('Erro ao adicionar o menu!');
+        }
       });
     }
   }
@@ -65,11 +79,29 @@ export class MenuManagerComponent implements OnInit {
   }
 
   deleteMenuItem(id: number) {
-    if (confirm('Tem certeza que deseja excluir este item?')) {
-      this.menuService.delete(id).subscribe(() => {
-        this.loadMenuItems();
-      });
-    }
+    Swal.fire({
+      title: 'Você tem certeza?',
+      text: 'Esta ação não poderá ser desfeita!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, excluir!',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.menuService.delete(id).subscribe({
+          next: () => {
+
+            Swal.fire('Excluído!', 'O menu foi excluído com sucesso.', 'success');
+            this.loadMenuItems();
+          },
+          error: () => {
+            Swal.fire('Erro!', 'Ocorreu um problema ao excluir o menu.', 'error');
+          }
+        });
+      }
+    });
   }
 
   resetForm() {

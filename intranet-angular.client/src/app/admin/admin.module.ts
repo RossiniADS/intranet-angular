@@ -6,7 +6,6 @@ import { AdminHeaderComponent } from './components/admin-header/admin-header.com
 import { AdminFooterComponent } from './components/admin-footer/admin-footer.component';
 import { AdminSidebarComponent } from './components/admin-sidebar/admin-sidebar.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { PostsComponent } from './pages/posts/posts.component';
 import { UserComponent } from './pages/user/user.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NewsComponent } from './pages/news/news.component';
@@ -31,7 +30,6 @@ import { FeedbackComponent } from './pages/feedback/feedback.component';
     AdminFooterComponent,
     AdminSidebarComponent,
     DashboardComponent,
-    PostsComponent,
     UserComponent,
     NewsComponent,
     CategoryComponent,

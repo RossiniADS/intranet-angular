@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { PaginaService } from '../../../service/pagina.service';
 import { PaginaResponse } from '../../../../response/paginaResponse';
+import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-page',
@@ -15,7 +17,7 @@ export class PageComponent implements OnInit {
   isEditing = false;
   currentPaginaId: number | null = null;
 
-  constructor(private paginaService: PaginaService, private fb: FormBuilder) {
+  constructor(private paginaService: PaginaService, private toastrService: ToastrService, private fb: FormBuilder) {
     this.paginaForm = this.fb.group({
       nome: ['', Validators.required],
       descricao: ['', Validators.required],
@@ -58,14 +60,26 @@ export class PageComponent implements OnInit {
     }));
 
     if (this.isEditing && this.currentPaginaId !== null) {
-      this.paginaService.updatePagina(this.currentPaginaId, pagina).subscribe(() => {
-        this.loadPaginas();
-        this.resetForm();
+      this.paginaService.updatePagina(this.currentPaginaId, pagina).subscribe({
+        next: () => {
+          this.toastrService.success('Pagina atualizada com sucesso!');
+          this.loadPaginas();
+          this.resetForm();
+        },
+        error: () => {
+          this.toastrService.error('Erro ao atualizar a pagina!');
+        }
       });
     } else {
-      this.paginaService.createPagina(pagina).subscribe(() => {
-        this.loadPaginas();
-        this.resetForm();
+      this.paginaService.createPagina(pagina).subscribe({
+        next: () => {
+          this.toastrService.success('Pagina adicionada com sucesso!');
+          this.loadPaginas();
+          this.resetForm();
+        },
+        error: () => {
+          this.toastrService.error('Erro ao adicionar a pagina!');
+        }
       });
     }
   }
@@ -97,8 +111,28 @@ export class PageComponent implements OnInit {
 
 
   deletePagina(id: number): void {
-    this.paginaService.deletePagina(id).subscribe(() => {
-      this.loadPaginas();
+    Swal.fire({
+      title: 'Você tem certeza?',
+      text: 'Esta ação não poderá ser desfeita!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, excluir!',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.paginaService.deletePagina(id).subscribe({
+          next: () => {
+
+            Swal.fire('Excluído!', 'A pagina foi excluída com sucesso.', 'success');
+            this.loadPaginas();
+          },
+          error: () => {
+            Swal.fire('Erro!', 'Ocorreu um problema ao excluir a pagina.', 'error');
+          }
+        });
+      }
     });
   }
 

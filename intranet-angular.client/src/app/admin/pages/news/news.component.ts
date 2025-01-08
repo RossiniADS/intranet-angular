@@ -3,6 +3,8 @@ import { NoticiaService } from '../../../service/noticia.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoriaService } from '../../../service/categoria.service';
 import { NoticiaResponse } from '../../../../response/noticiaResponse';
+import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-news',
@@ -23,18 +25,18 @@ export class NewsComponent implements OnInit {
   // Armazena os arquivos selecionados
   selectedFiles: { [key: string]: File | null } = {
     main: null,       // 750x645
-//    secondary: null,  // 750x375
-//    tertiary: null,   // 360x245
+    //secondary: null,  // 750x375
+    //tertiary: null,   // 360x245
   };
 
   // Armazena mensagens de erro por tipo de imagem
   imageErrors: { [key: string]: string | null } = {
     main: null,
-//    secondary: null,
-//    tertiary: null,
+    //secondary: null,
+    //tertiary: null,
   };
 
-  constructor(private fb: FormBuilder, private noticiaService: NoticiaService, private categoriaService: CategoriaService) {
+  constructor(private fb: FormBuilder, private noticiaService: NoticiaService, private toastrService: ToastrService, private categoriaService: CategoriaService) {
     this.noticiaForm = this.fb.group({
       titulo: ['', Validators.required],
       conteudo: ['', Validators.required],
@@ -94,14 +96,26 @@ export class NewsComponent implements OnInit {
     //}
 
     if (this.isEditing && this.selectedNoticiaId !== null) {
-      this.noticiaService.updateNoticia(this.selectedNoticiaId, formData).subscribe(() => {
-        this.loadNoticias();
-        this.resetForm();
+      this.noticiaService.updateNoticia(this.selectedNoticiaId, formData).subscribe({
+        next: () => {
+          this.toastrService.success('Notícia atualizada com sucesso!');
+          this.loadNoticias();
+          this.resetForm();
+        },
+        error: () => {
+          this.toastrService.error('Erro ao atualizar a notícia!');
+        }
       });
     } else {
-      this.noticiaService.createNoticia(formData).subscribe(() => {
-        this.loadNoticias();
-        this.resetForm();
+      this.noticiaService.createNoticia(formData).subscribe({
+        next: () => {
+          this.toastrService.success('Notícia adicionada com sucesso!');
+          this.loadNoticias();
+          this.resetForm();
+        },
+        error: () => {
+          this.toastrService.error('Erro ao adicionar a notícia!');
+        }
       });
     }
   }
@@ -130,12 +144,12 @@ export class NewsComponent implements OnInit {
           if (type === 'main' && !((width >= 360 && width <= 750) || (height >= 245 && height <= 645))) {
             this.imageErrors['main'] = 'A imagem principal precisa ter exatamente 750x645 pixels.';
             this.selectedFiles['main'] = null;
-          //} else if (type === 'secondary' && (width !== 750 || height !== 375)) {
-          //  this.imageErrors['secondary'] = 'A imagem secundária precisa ter exatamente 750x375 pixels.';
-          //  this.selectedFiles['secondary'] = null;
-          //} else if (type === 'tertiary' && (width !== 360 || height !== 245)) {
-          //  this.imageErrors['tertiary'] = 'A imagem terciária precisa ter exatamente 360x245 pixels.';
-          //  this.selectedFiles['tertiary'] = null;
+            //} else if (type === 'secondary' && (width !== 750 || height !== 375)) {
+            //  this.imageErrors['secondary'] = 'A imagem secundária precisa ter exatamente 750x375 pixels.';
+            //  this.selectedFiles['secondary'] = null;
+            //} else if (type === 'tertiary' && (width !== 360 || height !== 245)) {
+            //  this.imageErrors['tertiary'] = 'A imagem terciária precisa ter exatamente 360x245 pixels.';
+            //  this.selectedFiles['tertiary'] = null;
           } else {
             // Se for válido, limpa o erro e armazena o arquivo
             this.imageErrors[type] = null;
@@ -164,8 +178,28 @@ export class NewsComponent implements OnInit {
   }
 
   deleteNoticia(id: number): void {
-    this.noticiaService.deleteNoticia(id).subscribe(() => {
-      this.loadNoticias();
+    Swal.fire({
+      title: 'Você tem certeza?',
+      text: 'Esta ação não poderá ser desfeita!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, excluir!',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.noticiaService.deleteNoticia(id).subscribe({
+          next: () => {
+
+            Swal.fire('Excluído!', 'A noticía foi excluída com sucesso.', 'success');
+            this.loadNoticias();
+          },
+          error: () => {
+            Swal.fire('Erro!', 'Ocorreu um problema ao excluir a noticía.', 'error');
+          }
+        });
+      }
     });
   }
 

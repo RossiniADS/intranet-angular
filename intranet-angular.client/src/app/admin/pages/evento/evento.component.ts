@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EventoService } from '../../../service/evento.service'; // Importe o serviço que irá gerenciar os eventos
 import { EventoResponse } from '../../../../response/eventoResponse';
+import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-evento',
@@ -10,7 +12,7 @@ import { EventoResponse } from '../../../../response/eventoResponse';
   templateUrl: './evento.component.html',
   styleUrl: './evento.component.css'
 })
-export class EventoComponent {
+export class EventoComponent implements OnInit {
   eventoForm: FormGroup;
   eventos: EventoResponse[] = [{
     id: 0,
@@ -28,7 +30,7 @@ export class EventoComponent {
   pageSize: number = 10;
   totalItems: number = 0;
 
-  constructor(private fb: FormBuilder, private eventoService: EventoService) {
+  constructor(private fb: FormBuilder, private toastrService: ToastrService, private eventoService: EventoService) {
     this.eventoForm = this.fb.group({
       nome: ['', [Validators.required, Validators.minLength(3)]],
       descricao: ['', [Validators.required]],
@@ -72,14 +74,26 @@ export class EventoComponent {
     }
 
     if (this.isEditing && this.currentEventoId !== null) {
-      this.eventoService.update(this.currentEventoId, formData).subscribe(() => {
-        this.loadEventos();
-        this.resetForm();
+      this.eventoService.update(this.currentEventoId, formData).subscribe({
+        next: () => {
+          this.toastrService.success('Evento atualizado com sucesso!');
+          this.loadEventos();
+          this.resetForm();
+        },
+        error: () => {
+          this.toastrService.error('Erro ao atualizar o evento!');
+        }
       });
     } else {
-      this.eventoService.add(formData).subscribe(() => {
-        this.loadEventos();
-        this.resetForm();
+      this.eventoService.add(formData).subscribe({
+        next: () => {
+          this.toastrService.success('Evento adicionado com sucesso!');
+          this.loadEventos();
+          this.resetForm();
+        },
+        error: () => {
+          this.toastrService.error('Erro ao adicionar o evento!');
+        }
       });
     }
   }
@@ -91,11 +105,29 @@ export class EventoComponent {
   }
 
   deleteEvento(id: number) {
-    if (confirm('Tem certeza que deseja excluir este evento?')) {
-      this.eventoService.delete(id).subscribe(() => {
-        this.loadEventos();
-      });
-    }
+    Swal.fire({
+      title: 'Você tem certeza?',
+      text: 'Esta ação não poderá ser desfeita!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, excluir!',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.eventoService.delete(id).subscribe({
+          next: () => {
+
+            Swal.fire('Excluído!', 'O cardápio foi excluído com sucesso.', 'success');
+            this.loadEventos();
+          },
+          error: () => {
+            Swal.fire('Erro!', 'Ocorreu um problema ao excluir o cardápio.', 'error');
+          }
+        });
+      }
+    });
   }
 
   resetForm() {
