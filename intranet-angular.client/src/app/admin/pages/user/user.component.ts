@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
+import { UsuarioResponse } from '../../../../response/usuarioResponse';
 
 @Component({
   selector: 'app-user',
@@ -12,7 +13,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
-  usuarios: any[] = [];
+  usuarios: UsuarioResponse[] = [];
   usuarioForm: FormGroup;
   isEditing = false;
   currentUserId: number | null = null;
@@ -22,7 +23,7 @@ export class UserComponent implements OnInit {
       nome: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       login: ['', Validators.required],
-      senha: ['', Validators.required],
+      senha: [''],
       aniversario: ['', Validators.required]
     });
   }

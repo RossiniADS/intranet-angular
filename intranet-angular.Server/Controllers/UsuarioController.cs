@@ -44,18 +44,7 @@ namespace intranet_angular.Server.Controllers
                 return BadRequest(ModelState);
             }
 
-            var usuario = new Usuario()
-            {
-                Aniversario = usuarioRequest.Aniversario,
-                Login = usuarioRequest.Login,
-                CriadoEm = new DateTime(),
-                UltimaAtualizacao = new DateTime(),
-                Nome = usuarioRequest.Nome,
-                Senha = usuarioRequest.Senha,
-                Email = usuarioRequest.Email
-            };
-
-            var createdUsuario = await _usuarioService.CreateAsync(usuario);
+            var createdUsuario = await _usuarioService.CreateAsync(usuarioRequest);
             return CreatedAtAction(nameof(GetById), new { id = createdUsuario.Id }, createdUsuario);
         }
 
@@ -67,40 +56,26 @@ namespace intranet_angular.Server.Controllers
                 return BadRequest(ModelState);
             }
 
-            var usuario = new Usuario()
-            {
-                Id = id,
-                Aniversario = usuarioRequest.Aniversario,
-                Login = usuarioRequest.Login,
-                CriadoEm = new DateTime(),
-                UltimaAtualizacao = new DateTime(),
-                Nome = usuarioRequest.Nome,
-                Senha = usuarioRequest.Senha,
-                Email = usuarioRequest.Email
-            };
-
-            try
-            {
-                var updatedUsuario = await _usuarioService.UpdateAsync(id, usuario);
-                return Ok(updatedUsuario);
-            }
-            catch (KeyNotFoundException)
-            {
-                return NotFound();
-            }
+            var updatedUsuario = await _usuarioService.UpdateAsync(id, usuarioRequest);
+            return Ok(updatedUsuario);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var success = await _usuarioService.DeleteAsync(id);
-
-            if (!success)
-            {
-                return NotFound();
-            }
-
+            await _usuarioService.DeleteAsync(id);
             return NoContent();
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
+        {
+            var token = await _usuarioService.Authenticate(request.Login, request.Senha);
+
+            if (token == null)
+                return Unauthorized(new { message = "Credenciais inválidas" });
+
+            return Ok(new { token });
         }
     }
 

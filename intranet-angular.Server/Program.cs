@@ -20,6 +20,8 @@ builder.Services.AddAuthentication(options =>
 })
 .AddJwtBearer(options =>
 {
+    options.RequireHttpsMetadata = false;
+    options.SaveToken = true;
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
@@ -43,18 +45,22 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddTransient<ICategoriaService, CategoriaService>();
-builder.Services.AddTransient<IEventoService, EventoService>();
-builder.Services.AddTransient<IFuncionarioService, FuncionarioService>();
+builder.Services.AddScoped<ICategoriaService, CategoriaService>();
+builder.Services.AddScoped<IEventoService, EventoService>();
+builder.Services.AddScoped<IFuncionarioService, FuncionarioService>();
 builder.Services.AddScoped<IMidiaNoticiaService, MidiaNoticiaService>();
-builder.Services.AddTransient<INoticiaService, NoticiaService>();
+builder.Services.AddScoped<INoticiaService, NoticiaService>();
 builder.Services.AddScoped<IPaginaService, PaginaService>();
 builder.Services.AddScoped<ISlideService, SlideService>();
-builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<IGrupoDeSlidesService, GrupoDeSlidesService>();
 builder.Services.AddScoped<ICardapioService, CardapioService>();
 builder.Services.AddScoped<IMenuItemService, MenuItemService>();
 builder.Services.AddScoped<ISugestaoService, SugestaoService>();
+builder.Services.AddScoped<IUsuarioService>(provider =>
+{
+    var context = provider.GetRequiredService<IntraNetDbContext>();
+    return new UsuarioService(context, builder.Configuration["Jwt:Key"]);
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

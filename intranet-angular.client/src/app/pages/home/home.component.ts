@@ -331,19 +331,17 @@ export class HomeComponent implements AfterViewInit, OnInit {
   }
 
   selectVideo(video: { src: string; title: string }): void {
-    // Atualiza o vídeo principal
     this.selectedVideo = video;
     const videoElement = this.videoPlayer.nativeElement;
 
-    videoElement.pause(); // Pausa o vídeo atual
-    videoElement.src = video.src; // Atualiza a URL do vídeo
-    videoElement.load(); // Recarrega o vídeo
-    videoElement.play(); // Opcional: inicia o vídeo automaticamente
+    videoElement.pause(); 
+    videoElement.src = video.src; 
+    videoElement.load();
+    videoElement.play();
 
-    // Pausa todos os vídeos do carrossel
     this.carouselVideos.forEach((carouselVideo) => {
       const videoEl = carouselVideo.nativeElement;
-      videoEl.pause(); // Pausa qualquer reprodução no carrossel
+      videoEl.pause();
     });
   }
   onTabClick(tab: any): void {

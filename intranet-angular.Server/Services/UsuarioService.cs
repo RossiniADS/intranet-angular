@@ -1,75 +1,169 @@
 ﻿using intranet_angular.Server.Context;
 using intranet_angular.Server.Entities;
 using intranet_angular.Server.Interfaces;
+using intranet_angular.Server.Request;
+using intranet_angular.Server.Response;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace intranet_angular.Server.Services
 {
     public class UsuarioService : IUsuarioService
     {
         private readonly IntraNetDbContext _context;
+        private readonly string _key;
 
-        public UsuarioService(IntraNetDbContext context)
+        public UsuarioService(IntraNetDbContext context, string key)
         {
             _context = context;
+            _key = key;
         }
 
-        public async Task<IEnumerable<Usuario>> GetAllAsync()
+        public async Task<IEnumerable<UsuarioResponse>> GetAllAsync()
         {
-            return await _context.Usuarios.ToListAsync();
+            var usuarios = await _context.Usuarios.ToListAsync();
+            return usuarios.Select(MapToResponse);
         }
 
-        public async Task<Usuario> GetByIdAsync(int id)
+        public async Task<UsuarioResponse?> GetByIdAsync(int id)
         {
-            return await _context.Usuarios.FindAsync(id);
+            var usuario = await _context.Usuarios.FindAsync(id);
+            return usuario == null ? null : MapToResponse(usuario);
         }
 
-        public async Task<Usuario> CreateAsync(Usuario usuario)
+        public async Task<UsuarioResponse> CreateAsync(UsuarioRequest usuarioRequest)
         {
-            usuario.CriadoEm = DateTime.UtcNow;
-            usuario.UltimaAtualizacao = DateTime.UtcNow;
+            var usuario = new Usuario
+            {
+                Nome = usuarioRequest.Nome,
+                Aniversario = usuarioRequest.Aniversario,
+                CriadoEm = DateTime.UtcNow,
+                UltimaAtualizacao = DateTime.UtcNow,
+                Email = usuarioRequest.Email,
+                Login = usuarioRequest.Login,
+                Senha = HashPassword(usuarioRequest.Senha)
+            };
 
             _context.Usuarios.Add(usuario);
             await _context.SaveChangesAsync();
 
-            return usuario;
+            return MapToResponse(usuario);
         }
 
-        public async Task<Usuario> UpdateAsync(int id, Usuario usuario)
+        public async Task<UsuarioResponse> UpdateAsync(int id, UsuarioRequest usuarioRequest)
         {
-            var existingUsuario = await _context.Usuarios.FindAsync(id);
-
-            if (existingUsuario == null)
+            var usuario = await _context.Usuarios.FindAsync(id);
+            if (usuario == null)
             {
                 throw new KeyNotFoundException("Usuário não encontrado.");
             }
 
-            existingUsuario.Nome = usuario.Nome;
-            existingUsuario.Email = usuario.Email;
-            existingUsuario.Login = usuario.Login;
-            existingUsuario.Senha = usuario.Senha;
-            existingUsuario.Aniversario = usuario.Aniversario;
-            existingUsuario.UltimaAtualizacao = DateTime.UtcNow;
+            usuario.Nome = usuarioRequest.Nome;
+            usuario.Email = usuarioRequest.Email;
+            usuario.Login = usuarioRequest.Login;
 
-            _context.Usuarios.Update(existingUsuario);
+            // Atualizar a senha somente se ela foi alterada
+            if (!string.IsNullOrWhiteSpace(usuarioRequest.Senha))
+            {
+                usuario.Senha = HashPassword(usuarioRequest.Senha);
+            }
+            usuario.Aniversario = usuarioRequest.Aniversario;
+            usuario.UltimaAtualizacao = DateTime.UtcNow;
+
+
+            _context.Usuarios.Update(usuario);
             await _context.SaveChangesAsync();
 
-            return existingUsuario;
+            return MapToResponse(usuario);
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
             var usuario = await _context.Usuarios.FindAsync(id);
-
             if (usuario == null)
+                return;
+
+            _context.Usuarios.Remove(usuario);
+            await _context.SaveChangesAsync();
+        }
+
+        private static UsuarioResponse MapToResponse(Usuario usuario) => new UsuarioResponse
+        {
+            Id = usuario.Id,
+            Login = usuario.Login,
+            Email = usuario.Email,
+            Aniversario = usuario.Aniversario,
+            Nome = usuario.Nome
+        };
+
+        public async Task<string?> Authenticate(string login, string senha)
+        {
+            var user = await _context.Usuarios.FirstOrDefaultAsync(x => x.Login == login);
+            if (user == null || !VerifyPasswordHash(senha, user.Senha))
+            {
+                return null;
+            }
+
+            // Criar token JWT
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_key);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new[]
+                {
+                new Claim(ClaimTypes.Name, user.Login),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+            }),
+                Expires = DateTime.UtcNow.AddHours(1),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
+        }
+
+        private string HashPassword(string password)
+        {
+            byte[] salt = new byte[16];
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(salt);
+            }
+
+            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                password: password,
+                salt: salt,
+                prf: KeyDerivationPrf.HMACSHA256,
+                iterationCount: 10000,
+                numBytesRequested: 32));
+
+            return $"{Convert.ToBase64String(salt)}:{hashed}";
+        }
+
+        private bool VerifyPasswordHash(string password, string storedHash)
+        {
+            var parts = storedHash.Split(':');
+            if (parts.Length != 2)
             {
                 return false;
             }
 
-            _context.Usuarios.Remove(usuario);
-            await _context.SaveChangesAsync();
+            var salt = Convert.FromBase64String(parts[0]);
+            var storedPasswordHash = parts[1];
 
-            return true;
+            var hash = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                password: password,
+                salt: salt,
+                prf: KeyDerivationPrf.HMACSHA256,
+                iterationCount: 10000,
+                numBytesRequested: 32));
+
+            return hash == storedPasswordHash;
         }
     }
 

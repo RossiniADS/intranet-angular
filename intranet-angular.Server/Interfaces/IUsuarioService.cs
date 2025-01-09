@@ -1,13 +1,17 @@
 ﻿using intranet_angular.Server.Entities;
+using intranet_angular.Server.Request;
+using intranet_angular.Server.Response;
 
 namespace intranet_angular.Server.Interfaces
 {
     public interface IUsuarioService
     {
-        Task<IEnumerable<Usuario>> GetAllAsync();
-        Task<Usuario> GetByIdAsync(int id);
-        Task<Usuario> CreateAsync(Usuario usuario);
-        Task<Usuario> UpdateAsync(int id, Usuario usuario);
-        Task<bool> DeleteAsync(int id);
+        Task<IEnumerable<UsuarioResponse>> GetAllAsync();
+        Task<UsuarioResponse?> GetByIdAsync(int id);
+        Task<UsuarioResponse> CreateAsync(UsuarioRequest usuario);
+        Task<UsuarioResponse> UpdateAsync(int id, UsuarioRequest usuario);
+        Task DeleteAsync(int id);
+        Task<string?> Authenticate(string login, string senha);
+
     }
 }

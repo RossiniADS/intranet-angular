@@ -21,6 +21,7 @@ import { DiaSemanaPipe } from '../pipes/dia-semana.pipe';
 import { TipoMidiaPipe } from '../pipes/tipo-midia.pipe';
 import { MenuManagerComponent } from './pages/menu-manager/menu-manager.component';
 import { FeedbackComponent } from './pages/feedback/feedback.component';
+import { LoginComponent } from './pages/login/login.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { FeedbackComponent } from './pages/feedback/feedback.component';
     EventoComponent,
     MenuManagerComponent,
     FeedbackComponent,
-    TipoMidiaPipe
+    TipoMidiaPipe,
+    LoginComponent
   ],
   imports: [
     CommonModule,
