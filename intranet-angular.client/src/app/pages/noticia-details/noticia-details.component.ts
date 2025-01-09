@@ -57,7 +57,7 @@ export class NoticiaDetailsComponent implements OnInit {
               { icon: 'assets/img/news/icon-yo.png', count: '8,045', label: 'Fans' }
             ],
             newsPoster: 'assets/img/news/news_card.jpg',
-            mainImage: `${environment.serverUrl}${data.midiaNoticia.filter(midia => midia.midiaTamanho == MidiaTamanhoEnum.Secundaria)[0].url}`,
+            mainImage: `${environment.serverUrl}${data.midiaNoticia.filter(midia => midia.midiaTamanho == MidiaTamanhoEnum.Principal)[0].url}`,
           }
         })
       }

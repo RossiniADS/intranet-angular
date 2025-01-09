@@ -72,6 +72,14 @@
                      class="form-control"
                      (change)="onSlideFileSelected($event, i, j)" />
             </div>
+            <div class="form-group">
+              <label for="noticia">Selecione a Noticia:</label>
+              <select id="noticia" formControlName="noticiaId" class="form-control">
+                <option *ngFor="let noticia of noticiasResponse" [value]="noticia.id">
+                  {{ noticia.titulo }}
+                </option>
+              </select>
+            </div>
             <button type="button" class="btn btn-danger" (click)="removeSlide(i, j)">Remover Slide</button>
           </div>
         </div>

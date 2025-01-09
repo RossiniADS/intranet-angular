@@ -12,66 +12,9 @@
           <div class="about-prea">
             <p [innerHTML]="aboutContent.body" class="noticia-content mb-25"></p>
           </div>
-          <!--<div class="section-tittle mb-30 pt-30">
-            <h3>{{ aboutContent.unorderedListHeading }}</h3>
-          </div>-->
-          <!--<div class="about-prea" *ngFor="let paragraph of aboutContent.paragraphs">
-            <p class="about-pera1 mb-25">{{ paragraph }}</p>
-          </div>-->
-          <!--<div class="social-share pt-30">
-            <div class="section-tittle">
-              <h3 class="mr-20">Share:</h3>
-              <ul>
-                <li *ngFor="let link of aboutContent.socialLinks">
-                  <a [href]="link.link"><img [src]="link.icon" [alt]="link.alt"></a>
-                </li>
-              </ul>
-            </div>
-          </div>-->
         </div>
-        <!--<div class="row">
-          <div class="col-lg-8">
-            <form class="form-contact contact_form mb-80" novalidate>
-              <div class="row">
-                <div class="col-12">
-                  <div class="form-group">
-                    <textarea class="form-control w-100" cols="30" rows="9"
-                              [placeholder]="aboutContent.formPlaceholders.message"></textarea>
-                  </div>
-                </div>
-                <div class="col-sm-6" *ngFor="let input of aboutContent.inputFields">
-                  <div class="form-group">
-                    <input class="form-control" [placeholder]="aboutContent.formPlaceholders[input]">
-                  </div>
-                </div>
-                <div class="col-12">
-                  <div class="form-group">
-                    <input class="form-control" [placeholder]="aboutContent.formPlaceholders.subject">
-                  </div>
-                </div>
-              </div>
-              <div class="form-group mt-3">
-                <button type="submit" class="btn btn-primary">Send</button>
-              </div>
-            </form>
-          </div>
-        </div>-->
       </div>
       <div class="col-lg-4">
-        <!--<div class="single-follow mb-45">
-          <div class="single-box">
-            <div *ngFor="let follower of aboutContent.followers"
-                 class="follow-us d-flex align-items-center">
-              <div class="follow-social">
-                <a href="#"><img [src]="follower.icon" alt=""></a>
-              </div>
-              <div class="follow-count">
-                <span>{{ follower.count }}</span>
-                <p>{{ follower.label }}</p>
-              </div>
-            </div>
-          </div>
-        </div>-->
         <div class="news-poster d-none d-lg-block">
           <img [src]="aboutContent.newsPoster" alt="">
         </div>

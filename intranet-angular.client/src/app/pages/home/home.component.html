@@ -65,7 +65,7 @@
             <div class="swiper-wrapper">
               <div class="swiper-slide" *ngFor="let slide of trendingSlides">
                 <div class="trending-top mb-30">
-                  <div class="trend-top-img">
+                  <div class="trend-top-img1 trend-top-img">
                     <img [src]="slide.imageUrl" [alt]="slide.altText"  />
                     <div class="trend-top-cap">
                       <span class="bgr">{{ slide.category }}</span>
@@ -369,8 +369,8 @@
             </video>
 
             <!--<div class="video-intro">
-              <h4>{{ selectedVideo.title }}</h4>
-            </div>-->
+            <h4>{{ selectedVideo.title }}</h4>
+          </div>-->
           </div>
         </div>
       </div>
@@ -384,7 +384,8 @@
               <div *ngFor="let video of videos"
                    class="swiper-slide single-video"
                    (click)="selectVideo(video)">
-                <video controls>
+                <!-- Removido o atributo controls -->
+                <video #carouselVideo>
                   <source [src]="video.src" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
@@ -397,7 +398,7 @@
             <!--<div class="swiper-pagination"></div>-->
             <!-- Botões de Navegação -->
             <!--<div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>-->
+          <div class="swiper-button-prev"></div>-->
           </div>
         </div>
       </div>

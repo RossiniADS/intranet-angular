@@ -255,3 +255,17 @@
   width: 85px; /* Ajuste para as miniaturas */
   height: 79px; /* Proporcional às miniaturas */
 }
+
+.trend-top-img1 {
+  width: 100%;
+  height: 522px;  /*Ajuste a altura conforme necessário */
+  overflow: hidden;
+  position: relative;
+}
+
+  .trend-top-img1 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  /*Faz com que a imagem preencha o container proporcionalmente */
+    display: block;
+  }

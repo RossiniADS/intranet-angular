@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import Swiper from 'swiper';
 import { register } from 'swiper/element/bundle';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
@@ -113,6 +113,43 @@ export class HomeComponent implements AfterViewInit, OnInit {
   ];
   pageIdHome = 2;
   currentIndex = 0;
+  videos: any[] = [
+    {
+      src: '',
+      title: ''
+    },
+  ];
+  selectedVideo = this.videos[0];
+  socialMedia = [
+    {
+      icon: 'assets/img/news/icon-fb.png',
+      fans: 8045,
+      platform: 'Fans',
+      link: '#',
+    },
+    {
+      icon: 'assets/img/news/icon-tw.png',
+      fans: 8045,
+      platform: 'Fans',
+      link: '#',
+    },
+    {
+      icon: 'assets/img/news/icon-ins.png',
+      fans: 8045,
+      platform: 'Fans',
+      link: '#',
+    },
+    {
+      icon: 'assets/img/news/icon-yo.png',
+      fans: 8045,
+      platform: 'Fans',
+      link: '#',
+    },
+  ];
+  bannerImage2 = 'assets/img/gallery/body_card1.png';
+  bannerImage: string = 'assets/img/gallery/body_card2.png';
+  @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
+  @ViewChildren('carouselVideo') carouselVideos!: QueryList<ElementRef<HTMLVideoElement>>;
 
   constructor(
     private noticiaService: NoticiaService,
@@ -154,6 +191,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
       next: (grupos) => {
         const primeiroSlide = grupos.find(gr => gr.posicao === 1)?.slides || [];
         const segundoSlide = grupos.find(gr => gr.posicao === 2)?.slides || [];
+        const terceiroSlide = grupos.find(gr => gr.posicao === 3)?.slides || [];
 
         this.slides = primeiroSlide.map((slide) => ({
           type: slide.tipo,
@@ -170,6 +208,11 @@ export class HomeComponent implements AfterViewInit, OnInit {
           description: slide.descricao,
           link: `/noticia/${slide.noticiaId}`,
         }));
+
+        this.videos = terceiroSlide.map((video) => ({
+          src: `${environment.serverUrl}${video.url}`,
+          title: video.titulo
+        }))
       },
       error: (err) => console.error('Erro ao carregar slides:', err),
     });
@@ -187,7 +230,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
         category: noticia.categoria[0]?.nome || 'Sem Categoria',
         categoryClass: 'bgb',
         title: noticia.titulo,
-        description: `by Rossini Alves - ${formatDate(noticia.dataPublicacao, 'dd/MM/yyyy', 'pt-BR') }`,
+        description: `by Rossini Alves - ${formatDate(noticia.dataPublicacao, 'dd/MM/yyyy', 'pt-BR')}`,
         link: `/noticia/${noticia.id}`,
       }));
   }
@@ -203,7 +246,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
     }));
   }
 
-  loadMainAndRightNews(categoriaId: number): void {
+  private loadMainAndRightNews(categoriaId: number): void {
     const noticiasFiltradas = this.noticiasResponse.filter((not) =>
       not.categoria.some((cat) => cat.id === categoriaId)
     );
@@ -287,30 +330,22 @@ export class HomeComponent implements AfterViewInit, OnInit {
     this.currentIndex = (this.currentIndex + 1) % this.slides.length;
   }
 
-  @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
-
-  videos = [
-    { src: 'assets/video/news1.mp4', title: 'Video institucional' },
-    { src: 'assets/video/news2.mp4', title: 'Old Spondon News - 2020' },
-    { src: 'assets/video/news3.mp4', title: 'Latest Video - 2020' },
-    { src: 'assets/video/news4.mp4', title: 'Spondon News - 2019' },
-    { src: 'assets/video/news1.mp4', title: 'Old Spondon News - 2020' },
-    { src: 'assets/video/news2.mp4', title: 'Latest Video - 2020' },
-  ];
-
-  selectedVideo = this.videos[0];
-
   selectVideo(video: { src: string; title: string }): void {
+    // Atualiza o vídeo principal
     this.selectedVideo = video;
     const videoElement = this.videoPlayer.nativeElement;
 
-    // Atualiza a fonte do vídeo
     videoElement.pause(); // Pausa o vídeo atual
     videoElement.src = video.src; // Atualiza a URL do vídeo
     videoElement.load(); // Recarrega o vídeo
     videoElement.play(); // Opcional: inicia o vídeo automaticamente
-  }
 
+    // Pausa todos os vídeos do carrossel
+    this.carouselVideos.forEach((carouselVideo) => {
+      const videoEl = carouselVideo.nativeElement;
+      videoEl.pause(); // Pausa qualquer reprodução no carrossel
+    });
+  }
   onTabClick(tab: any): void {
     // Atualizar o estado ativo das abas
     this.tabs.forEach(t => t.active = false);
@@ -320,35 +355,4 @@ export class HomeComponent implements AfterViewInit, OnInit {
       this.loadMainAndRightNews(Number(tab.id));
     }
   }
-
-  socialMedia = [
-    {
-      icon: 'assets/img/news/icon-fb.png',
-      fans: 8045,
-      platform: 'Fans',
-      link: '#',
-    },
-    {
-      icon: 'assets/img/news/icon-tw.png',
-      fans: 8045,
-      platform: 'Fans',
-      link: '#',
-    },
-    {
-      icon: 'assets/img/news/icon-ins.png',
-      fans: 8045,
-      platform: 'Fans',
-      link: '#',
-    },
-    {
-      icon: 'assets/img/news/icon-yo.png',
-      fans: 8045,
-      platform: 'Fans',
-      link: '#',
-    },
-  ];
-
-  bannerImage2 = 'assets/img/gallery/body_card1.png';
-
-  bannerImage: string = 'assets/img/gallery/body_card2.png';
 }

@@ -1,0 +1,63 @@
+/* Estilos principais */
+.single-team {
+  max-width: 360px; /* Largura máxima do contêiner */
+  margin: 0 auto 20px; /* Centraliza o card */
+  text-align: center; /* Centraliza o texto */
+  border-radius: 8px; /* Adiciona bordas arredondadas */
+  overflow: hidden; /* Garante que nada ultrapasse os limites */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adiciona leve sombra */
+}
+
+.team-img {
+  width: 100%; /* Largura total do contêiner */
+  aspect-ratio: 360 / 451; /* Mantém a proporção da imagem */
+  overflow: hidden; /* Garante que o conteúdo não ultrapasse os limites */
+}
+
+  .team-img img {
+    width: 100%; /* Ocupa toda a largura disponível */
+    height: 100%; /* Ocupa toda a altura disponível */
+    object-fit: cover; /* Ajusta a imagem sem distorção */
+    display: block; /* Remove espaços extras */
+  }
+
+.team-caption {
+  width: 100%; /* Faz o texto ocupar a mesma largura da imagem */
+  background: #f9f9f9; /* Fundo claro */
+  padding: 15px; /* Espaçamento interno */
+  text-align: center; /* Centraliza o conteúdo */
+}
+
+  .team-caption h3 {
+    font-size: 16px; /* Ajusta o tamanho da fonte */
+    font-weight: bold;
+    color: #333;
+    margin: 5px 0;
+  }
+
+  .team-caption span {
+    font-size: 14px; /* Ajusta o tamanho da fonte do cargo */
+    color: #777;
+    display: block;
+  }
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .single-team {
+    max-width: 90%; /* Ajusta o card para telas menores */
+  }
+}
+
+@media (max-width: 576px) {
+  .single-team {
+    max-width: 100%; /* Preenche todo o espaço disponível */
+  }
+
+  .team-caption h3 {
+    font-size: 14px; /* Texto menor em telas pequenas */
+  }
+
+  .team-caption span {
+    font-size: 12px; /* Texto menor em telas pequenas */
+  }
+}

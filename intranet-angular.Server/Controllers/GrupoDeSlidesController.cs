@@ -46,6 +46,7 @@ namespace intranet_angular.Server.Controllers
         }
 
         [HttpPost]
+        [DisableRequestSizeLimit]
         public async Task<IActionResult> Add([FromForm] GrupoSlideRequest grupoDeSlidesRequest)
         {
             if (grupoDeSlidesRequest == null)
@@ -63,6 +64,7 @@ namespace intranet_angular.Server.Controllers
         }
 
         [HttpPut("{id}")]
+        [DisableRequestSizeLimit]
         public async Task<IActionResult> Update(int id, [FromForm] GrupoSlideRequest grupoDeSlidesRequest)
         {
             if (grupoDeSlidesRequest == null)

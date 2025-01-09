@@ -14,10 +14,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AboutComponent } from './pages/about/about.component';
 import { CategoryComponent } from './pages/category/category.component';
 import { NoticiaDetailsComponent } from './pages/noticia-details/noticia-details.component';
-import { ContactComponent } from './pages/contact/contact.component';
 import { NoticiasComponent } from './pages/noticias/noticias.component';
-import { BlogDetailsComponent } from './pages/blog-details/blog-details.component';
-import { ElementComponent } from './pages/element/element.component';
 import { FormsModule } from '@angular/forms';
 import { BackToTopComponent } from './layout/back-to-top/back-to-top.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -45,10 +42,7 @@ registerLocaleData(localePt);
     AboutComponent,
     CategoryComponent,
     NoticiaDetailsComponent,
-    ContactComponent,
     NoticiasComponent,
-    BlogDetailsComponent,
-    ElementComponent,
     BackToTopComponent,
     AniversariantesComponent,
     EventosComponent,
