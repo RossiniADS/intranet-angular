@@ -1,0 +1,14 @@
+.footer-main {
+  background-color: #f8f9fa;
+  padding: 20px 0;
+}
+
+.footer-logo img {
+  max-width: 150px;
+}
+
+.footer-copy-right {
+  font-size: 14px;
+  color: #6c757d;
+  margin-top: 10px;
+}

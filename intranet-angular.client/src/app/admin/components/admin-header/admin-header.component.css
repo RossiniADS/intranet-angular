@@ -1,0 +1,24 @@
+.navbar-nav .dropdown-menu {
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-nav .dropdown-item {
+  font-size: 0.9rem;
+  padding: 10px 15px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+  .navbar-nav .dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #333;
+  }
+
+.navbar-nav img {
+  border: 2px solid #ddd;
+}
+
+.navbar-nav span {
+  font-size: 1rem;
+  margin-left: 5px;
+}

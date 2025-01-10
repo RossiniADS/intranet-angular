@@ -49,7 +49,7 @@
                 <h2>{{ slide.title }}</h2>
                 <p>{{ slide.description }}</p>
                 <button *ngIf="slide.noticiaId !== 0 && slide.noticiaId; else placeholder" class="cta-button">
-                  Leia mais = {{ slide.noticiaId }}
+                  Leia mais!
                 </button>
                 <ng-template #placeholder>
                   <button class="cta-button hidden"></button>
@@ -76,7 +76,7 @@
                   <div class="trend-top-img1 trend-top-img">
                     <img [src]="slide.imageUrl" [alt]="slide.altText" />
                     <div class="trend-top-cap">
-                      <span class="bgr">{{ slide.category }}</span>
+                      <span *ngFor="let category of slide.categories" class="bgr">{{ category }}</span>
                       <h2>
                         <a [routerLink]="slide.link">{{ slide.title }}</a>
                       </h2>
@@ -101,7 +101,8 @@
                 <div class="trend-top-img">
                   <img [src]="card.imageUrl" [alt]="card.altText" />
                   <div class="trend-top-cap trend-top-cap2">
-                    <span [ngClass]="card.categoryClass">{{ card.category }}</span>
+                    <span *ngFor="let category of card.categories" [ngClass]="card.categoryClass">{{ category }}</span>
+
                     <h2>
                       <a [routerLink]="card.link">{{ card.title }}</a>
                     </h2>

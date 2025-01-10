@@ -8,6 +8,5 @@ export interface SlideResponse {
   titulo: string;
   descricao: string;
   url: string;
-
-  principalCategoriaNome: string;
+  categoriaNomes: string[];
 }

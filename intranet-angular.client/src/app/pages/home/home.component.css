@@ -163,7 +163,7 @@
 }
 
 .cta-button {
-  background: linear-gradient(to right, #3498db, #1abc9c);
+  background: linear-gradient(to right, #24b4f4, #1696e7);
   color: white;
   border: none;
   padding: 12px 25px;
@@ -184,7 +184,7 @@
   }
 
   .cta-button:hover {
-    background: linear-gradient(to right, #2980b9, #16a085);
+    background: linear-gradient(to right, #1696e7, #24b4f4);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
     transform: translateY(-2px); /* Efeito de elevação */
   }
@@ -276,7 +276,7 @@
 
 .trend-top-img1 {
   width: 100%;
-  height: 522px;  /*Ajuste a altura conforme necessário */
+  height: 700px;  /*Ajuste a altura conforme necessário */
   overflow: hidden;
   position: relative;
 }

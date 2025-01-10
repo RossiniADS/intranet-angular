@@ -23,7 +23,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
     {
       imageUrl: '',
       altText: '',
-      category: '',
+      categories: [],
       title: '',
       description: '',
       link: '',
@@ -33,7 +33,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
     {
       imageUrl: '',
       altText: '',
-      category: '',
+      categories: [],
       categoryClass: '',
       title: '',
       description: '',
@@ -206,7 +206,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
         this.slideDataPublicacao = grupos.find(gr => gr.posicao === 1)?.dataPublicacao || new Date();
         this.slideCategorias = grupos
           .find(gr => gr.posicao === 1)?.slides
-          .map(slide => slide.principalCategoriaNome)
+          .flatMap(slide => slide.categoriaNomes)
           .filter(categoria => !!categoria)
           .join(' | ') || '';
 
@@ -223,7 +223,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
         this.trendingSlides = segundoSlide.map((slide) => ({
           imageUrl: `${environment.serverUrl}${slide.url}`,
           altText: 'Slide',
-          category: slide.principalCategoriaNome,
+          categories: slide.categoriaNomes,
           title: slide.titulo,
           description: slide.descricao,
           link: `/noticia/${slide.noticiaId}`,
@@ -247,7 +247,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
       .map((noticia) => ({
         imageUrl: `${environment.serverUrl}${noticia.midiaNoticia.filter(midia => midia.midiaTamanho == MidiaTamanhoEnum.Principal)[0]?.url || ''}`,
         altText: 'Trending Card',
-        category: noticia.categoria[0]?.nome || 'Sem Categoria',
+        categories: noticia.categoria?.map(categoria => categoria.nome) || [],
         categoryClass: 'bgb',
         title: noticia.titulo,
         description: 'por' + ` ${noticia.autor} - ${formatDate(noticia.dataPublicacao, 'dd/MM/yyyy', 'pt-BR')}`,

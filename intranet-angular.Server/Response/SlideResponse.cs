@@ -13,6 +13,6 @@ namespace intranet_angular.Server.Response
         public string URL { get; set; }
         public int Ordem { get; set; }
 
-        public string PrincipalCategoriaNome { get; set; }
+        public List<string> CategoriaNomes { get; set; }
     }
 }

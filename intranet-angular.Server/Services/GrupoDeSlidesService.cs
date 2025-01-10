@@ -227,7 +227,9 @@ namespace intranet_angular.Server.Services
                 GrupoDeSlidesId = grupoDeSlides.Id,
                 Ordem = slide.Ordem,
                 Tipo = slide.Tipo,
-                Titulo = slide.Titulo
+                Titulo = slide.Titulo,
+                NoticiaId = slide.NoticiaId,
+                CategoriaNomes = slide.Noticia?.NoticiasCategorias?.Select(nc => nc.Categoria?.Nome).ToList()
             }).ToList(),
         };
 
