@@ -4,4 +4,5 @@ export interface UsuarioResponse {
   email: string;
   login: string;
   aniversario: Date;
+  imagemUrl: string;
 }

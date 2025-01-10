@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NoticiaService } from '../../service/noticia.service';
 import { CategoriaService } from '../../service/categoria.service';
-import { DatePipe } from '@angular/common';
+import { DatePipe, formatDate } from '@angular/common';
 import { NoticiaResponse } from '../../../response/noticiaResponse';
 import { environment } from '../../../environments/environment';
 import { MidiaTamanhoEnum } from '../../enum/midia-tamanho.enum';
@@ -39,6 +39,7 @@ export class NoticiasComponent implements OnInit {
   pageSize = 5;
   totalRecords = 0;
   pages: number[] = [];
+  filter: string | null = null;
 
   constructor(private noticiaService: NoticiaService, private categoriaService: CategoriaService, private datePipe: DatePipe) {
 
@@ -56,7 +57,7 @@ export class NoticiasComponent implements OnInit {
   }
 
   fetchNoticias(): void {
-    this.noticiaService.getNoticiasPaginadas(this.currentPage, this.pageSize).subscribe((data) => {
+    this.noticiaService.getNoticiasPaginadas(this.filter, this.currentPage, this.pageSize).subscribe((data) => {
       this.loadMostRecentNews(data.data);
 
       this.totalRecords = data.totalRecords;
@@ -72,7 +73,7 @@ export class NoticiasComponent implements OnInit {
         title: noticia.titulo,
         description: noticia.descricao,
         infoLinks: [
-          { icon: 'fa fa-user', text: noticia.autorId + ', ' + noticia.categoria[0].nome },
+          { icon: 'fa fa-user', text: noticia.autor + ', ' + noticia.categoria[0].nome },
         ],
         link: '/noticia/' + noticia.id
       }));
@@ -83,14 +84,13 @@ export class NoticiasComponent implements OnInit {
     this.recentPosts = noticiasResponse.map((noticia) => ({
       imgSrc: `${environment.serverUrl}${noticia.midiaNoticia.filter(midia => midia.midiaTamanho == MidiaTamanhoEnum.Principal)[0].url}`,
       title: noticia.titulo,
-      date: noticia.dataPublicacao.toString(),
+      date: formatDate(noticia.dataPublicacao, 'dd/MM/yyyy', 'pt-BR'),
       link: `/noticia/${noticia.id}`,
     }));
   }
 
   currentPage = 1;
   totalPages = Array(2).fill(0).map((_, i) => i + 1); // Array de páginas [1, 2]
-  searchKeyword = ''; // Palavra-chave para pesquisa
   subscribeEmail = ''; // Email para inscrição
 
   pagination = {
@@ -134,8 +134,8 @@ export class NoticiasComponent implements OnInit {
   };
 
   // Funções de interação
-  onSearch(string: string): void {
-    console.log('Searching for:', this.searchKeyword);
+  onSearch(): void {
+    this.fetchNoticias();
   }
 
   onSubscribe(email: string): void {

@@ -2,12 +2,13 @@ import { GrupoDeSlidesService } from '../../../service/grupo.de.slides.service';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { PaginaService } from '../../../service/pagina.service';
-import { GroupDeSlideResponse } from '../../../../response/groupDeSlideResponse'
+import { GrupoDeSlideResponse } from '../../../../response/grupoDeSlideResponse'
 import { NoticiaResponse } from '../../../../response/noticiaResponse';
 import { NoticiaService } from '../../../service/noticia.service';
 import { PaginaResponse } from '../../../../response/paginaResponse';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
+import { UsuarioService } from '../../../service/usuario.service';
 
 @Component({
   selector: 'app-slides',
@@ -20,7 +21,7 @@ export class SlidesComponent implements OnInit {
   paginas: PaginaResponse[] = [];
   grupoForm: FormGroup;
   isEditing = false;
-  gruposResponse: GroupDeSlideResponse[] = [];
+  gruposResponse: GrupoDeSlideResponse[] = [];
   grupoIdEmEdicao: number = 0;
   noticiasResponse: NoticiaResponse[] = [];
   paginaSelecionada: PaginaResponse | null = null;
@@ -30,10 +31,12 @@ export class SlidesComponent implements OnInit {
     private paginaService: PaginaService,
     private grupoDeSlidesService: GrupoDeSlidesService,
     private noticiaService: NoticiaService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private usuarioService: UsuarioService
   ) {
     this.grupoForm = this.fb.group({
       paginaId: ['', Validators.required],
+      autorId: [this.usuarioService.getUserId(), Validators.required],
       grupos: this.fb.array([]),
     });
   }
@@ -83,7 +86,7 @@ export class SlidesComponent implements OnInit {
       this.fb.group({
         titulo: ['', Validators.required],
         descricao: [''],
-        noticiaId: [''],
+        noticiaId: [0],
         file: [null],
       })
     );
@@ -111,10 +114,11 @@ export class SlidesComponent implements OnInit {
 
     const formData = new FormData();
     const grupos = this.grupoForm.value.grupos;
-
+    console.log(grupos)
     grupos.forEach((grupo: any, grupoIndex: number) => {
       formData.append(`Grupos[${grupoIndex}].Nome`, grupo.nome);
       formData.append(`Grupos[${grupoIndex}].PaginaId`, this.grupoForm.value.paginaId);
+      formData.append(`Grupos[${grupoIndex}].AutorId`, this.grupoForm.value.autorId);
       formData.append(`Grupos[${grupoIndex}].Posicao`, grupo.posicao);
 
       grupo.slides.forEach((slide: any, slideIndex: number) => {
@@ -128,8 +132,8 @@ export class SlidesComponent implements OnInit {
             this.toastrService.warning(`Arquivo ignorado: tipo não suportado (${slide.file.type})`);
           }
         }
-
-        formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].NoticiaId`, slide.noticiaId);
+        console.log(slide.noticiaId);
+        formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].NoticiaId`, slide.noticiaId || '');
         formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].Titulo`, slide.titulo);
         formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].Descricao`, slide.descricao);
         formData.append(`Grupos[${grupoIndex}].Slides[${slideIndex}].Ordem`, slideIndex.toString());
@@ -140,7 +144,7 @@ export class SlidesComponent implements OnInit {
 
       });
     });
-
+    console.log(formData);
     if (this.isEditing && this.grupoIdEmEdicao != 0) {
       this.grupoDeSlidesService.updateSlide(this.grupoIdEmEdicao, formData).subscribe({
         next: () => {
@@ -261,7 +265,17 @@ export class SlidesComponent implements OnInit {
   }
 
   canAddGrupo(): boolean {
-    return this.paginaSelecionada ? this.grupos.length < this.paginaSelecionada.configuracoesDeGrupos.length : false;
+    if (!this.paginaSelecionada) {
+      return false;
+    }
+
+    const gruposExistentesNaPagina = this.gruposResponse.filter(
+      (grupo) => grupo.paginaId === this.paginaSelecionada?.id
+    ).length;
+
+    const maxGruposPermitidos = this.paginaSelecionada.configuracoesDeGrupos.length;
+
+    return gruposExistentesNaPagina + this.grupos.length < maxGruposPermitidos;
   }
 
   canAddSlide(grupoIndex: number): boolean {

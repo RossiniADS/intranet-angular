@@ -71,11 +71,12 @@
 /* Corpo do carrossel */
 .carousel-slide {
   display: flex;
-  align-items: center;
+  /*align-items: center;  Alinha os elementos no centro verticalmente */
+  justify-content: center;
   width: 100%;
-  height: calc(100% - 80px); /* Subtraindo a altura do cabeçalho */
+  height: calc(100% - 120px); /* Subtraindo a altura do cabeçalho */
   position: absolute;
-  top: 80px;
+  top: 120px;
   opacity: 0;
   display: none;
   transition: opacity 0.5s ease-in-out;
@@ -109,6 +110,10 @@
 .text-section {
   text-align: left;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distribui o conteúdo verticalmente */
+  height: 100%; /* Garante que o conteúdo ocupe toda a altura da seção */
 }
 
 .user-profile {
@@ -145,9 +150,9 @@
 }
 
 .text-section h2 {
+  margin-top: 0;
   font-size: 1.8rem;
   color: #2c3e50;
-  margin-bottom: 10px;
 }
 
 .text-section p {
@@ -158,22 +163,30 @@
 }
 
 .cta-button {
-  background: #3498db;
+  background: linear-gradient(to right, #3498db, #1abc9c);
   color: white;
   border: none;
   padding: 12px 25px;
   font-size: 1rem;
   font-weight: bold;
-  border-radius: 50px;
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  align-self: flex-start; /* Deixa o botão alinhado à esquerda */
+  margin-top: auto; /* Empurra o botão para o final da seção */
 }
 
+  .cta-button.hidden {
+    visibility: hidden; /* Torna o botão invisível, mas preserva o espaço */
+    opacity: 0; /* Remove visibilidade visual */
+    pointer-events: none; /* Evita interações */
+  }
+
   .cta-button:hover {
-    background: #2980b9;
-    box-shadow: 0 6px 12px rgba(41, 128, 185, 0.5);
-    transform: translateY(-2px);
+    background: linear-gradient(to right, #2980b9, #16a085);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px); /* Efeito de elevação */
   }
 
 /* Controles do carrossel */
@@ -223,6 +236,7 @@
 
   .carousel-slide {
     flex-direction: column;
+    align-items: center;
   }
 
   .text-section {
@@ -237,6 +251,10 @@
   .cta-button {
     font-size: 0.9rem;
     padding: 10px 20px;
+  }
+
+  .carousel-half {
+    display: block;
   }
 }
 

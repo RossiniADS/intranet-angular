@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { GroupDeSlideResponse } from '../../response/groupDeSlideResponse'
+import { GrupoDeSlideResponse } from '../../response/grupoDeSlideResponse'
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -12,23 +12,23 @@ export class GrupoDeSlidesService {
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<GroupDeSlideResponse[]> {
-    return this.http.get<GroupDeSlideResponse[]>(this.apiUrl);
+  getAll(): Observable<GrupoDeSlideResponse[]> {
+    return this.http.get<GrupoDeSlideResponse[]>(this.apiUrl);
   }
 
-  getByPageId(pageId: number): Observable<GroupDeSlideResponse[]> {
-    return this.http.get<GroupDeSlideResponse[]>(`${this.apiUrl}/page/${pageId}`);
+  getByPageId(pageId: number): Observable<GrupoDeSlideResponse[]> {
+    return this.http.get<GrupoDeSlideResponse[]>(`${this.apiUrl}/page/${pageId}`);
   }
 
-  createSlides(grupoDeSlides: FormData): Observable<GroupDeSlideResponse> {
-    return this.http.post<GroupDeSlideResponse>(this.apiUrl, grupoDeSlides);
+  createSlides(grupoDeSlides: FormData): Observable<GrupoDeSlideResponse> {
+    return this.http.post<GrupoDeSlideResponse>(this.apiUrl, grupoDeSlides);
   }
 
-  updateSlide(id: number, grupoDeSlides: FormData): Observable<GroupDeSlideResponse> {
-    return this.http.put<GroupDeSlideResponse>(`${this.apiUrl}/${id}`, grupoDeSlides);
+  updateSlide(id: number, grupoDeSlides: FormData): Observable<GrupoDeSlideResponse> {
+    return this.http.put<GrupoDeSlideResponse>(`${this.apiUrl}/${id}`, grupoDeSlides);
   }
 
-  deleteGrupoDeSlide(id: number): Observable<GroupDeSlideResponse> {
-    return this.http.delete<GroupDeSlideResponse>(`${this.apiUrl}/${id}`);
+  deleteGrupoDeSlide(id: number): Observable<GrupoDeSlideResponse> {
+    return this.http.delete<GrupoDeSlideResponse>(`${this.apiUrl}/${id}`);
   }
 }

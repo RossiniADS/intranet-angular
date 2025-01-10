@@ -9,6 +9,7 @@ export interface NoticiaResponse {
   isTrendingTop: boolean;
   midiaNoticia: MidiaNoticiaResponse[];
   autorId?: number;
+  autor: string;
   categoria: CategoriaResponse[];
   dataPublicacao: Date;
   categoriaNomes?: string;

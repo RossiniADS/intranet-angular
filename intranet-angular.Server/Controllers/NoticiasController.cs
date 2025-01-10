@@ -24,9 +24,9 @@ namespace intranet_angular.Server.Controllers
         }
 
         [HttpGet("noticias-pagination")]
-        public async Task<IActionResult> GetAllPagination(int page = 1, int pageSize = 10)
+        public async Task<IActionResult> GetAllPagination(string? filter, int page = 1, int pageSize = 10)
         {
-            var noticias = await _noticiaService.GetAllPagination(page, pageSize);
+            var noticias = await _noticiaService.GetAllPagination(filter, page, pageSize);
             return Ok(noticias);
         }
 

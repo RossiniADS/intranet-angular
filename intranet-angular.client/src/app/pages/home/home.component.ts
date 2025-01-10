@@ -84,6 +84,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
       descricao: '',
       conteudo: '',
       autorId: 0,
+      autor: '',
       midiaNoticia: [{
         id: 0,
         midiaTamanho: 0,
@@ -109,6 +110,8 @@ export class HomeComponent implements AfterViewInit, OnInit {
       src: '',
       title: '',
       description: '',
+      link: '',
+      noticiaId: 0
     }
   ];
   pageIdHome = 2;
@@ -148,6 +151,11 @@ export class HomeComponent implements AfterViewInit, OnInit {
   ];
   bannerImage2 = 'assets/img/gallery/body_card1.png';
   bannerImage: string = 'assets/img/gallery/body_card2.png';
+  slideAutor: string = '';
+  slideAutorUrl: string = '';
+  slideDataPublicacao: Date = new Date();
+  slideCategorias: string = '';
+
   @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
   @ViewChildren('carouselVideo') carouselVideos!: QueryList<ElementRef<HTMLVideoElement>>;
 
@@ -193,11 +201,23 @@ export class HomeComponent implements AfterViewInit, OnInit {
         const segundoSlide = grupos.find(gr => gr.posicao === 2)?.slides || [];
         const terceiroSlide = grupos.find(gr => gr.posicao === 3)?.slides || [];
 
+        this.slideAutor = grupos.find(gr => gr.posicao === 1)?.autor || '';
+        this.slideAutorUrl = `${environment.serverUrl}${grupos.find(gr => gr.posicao === 1)?.autorUrl || ''}`;
+        this.slideDataPublicacao = grupos.find(gr => gr.posicao === 1)?.dataPublicacao || new Date();
+        this.slideCategorias = grupos
+          .find(gr => gr.posicao === 1)?.slides
+          .map(slide => slide.principalCategoriaNome)
+          .filter(categoria => !!categoria)
+          .join(' | ') || '';
+
+
         this.slides = primeiroSlide.map((slide) => ({
           type: slide.tipo,
           src: `${environment.serverUrl}${slide.url}`,
           title: slide.titulo,
           description: slide.descricao,
+          noticiaId: slide.noticiaId,
+          link: `/noticia/${slide.noticiaId}`
         }))
 
         this.trendingSlides = segundoSlide.map((slide) => ({
@@ -230,7 +250,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
         category: noticia.categoria[0]?.nome || 'Sem Categoria',
         categoryClass: 'bgb',
         title: noticia.titulo,
-        description: `by Rossini Alves - ${formatDate(noticia.dataPublicacao, 'dd/MM/yyyy', 'pt-BR')}`,
+        description: 'por' + ` ${noticia.autor} - ${formatDate(noticia.dataPublicacao, 'dd/MM/yyyy', 'pt-BR')}`,
         link: `/noticia/${noticia.id}`,
       }));
   }
@@ -265,7 +285,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
     this.mainNews = {
       image: `${environment.serverUrl}${ultimaNoticia.midiaNoticia.filter(midia => midia.midiaTamanho == MidiaTamanhoEnum.Principal)[0].url}`,
       title: ultimaNoticia.titulo,
-      author: ultimaNoticia.autorId,
+      author: ultimaNoticia.autor,
       date: ultimaNoticia.dataPublicacao,
       description: ultimaNoticia.descricao,
       link: `/noticia/${ultimaNoticia.id}`,
@@ -288,7 +308,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
       image: `${environment.serverUrl}${noticia.midiaNoticia.filter(midia => midia.midiaTamanho == MidiaTamanhoEnum.Principal)[0].url}`,
       category: noticia.categoria[0]?.nome || 'Sem Categoria',
       title: noticia.titulo,
-      time: `${noticia.autorId} | ${formatDate(noticia.dataPublicacao, 'dd/MM/yyyy', 'pt-BR')}`,
+      time: `${noticia.autor} | ${formatDate(noticia.dataPublicacao, 'dd/MM/yyyy', 'pt-BR')}`,
       link: `/noticia/${noticia.id}`,
     }));
   }
@@ -334,8 +354,8 @@ export class HomeComponent implements AfterViewInit, OnInit {
     this.selectedVideo = video;
     const videoElement = this.videoPlayer.nativeElement;
 
-    videoElement.pause(); 
-    videoElement.src = video.src; 
+    videoElement.pause();
+    videoElement.src = video.src;
     videoElement.load();
     videoElement.play();
 

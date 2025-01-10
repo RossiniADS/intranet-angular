@@ -19,29 +19,12 @@ namespace intranet_angular.Server.Services
         public async Task<IEnumerable<GrupoDeSlideResponse>> GetAllAsync()
         {
             return await _context.GrupoDeSlides
+                .Include(g => g.Autor)
                 .Include(g => g.Slides)
                 .ThenInclude(g => g.Noticia)
                 .ThenInclude(g => g.NoticiasCategorias)
                 .ThenInclude(g => g.Categoria)
-                .Select(g => new GrupoDeSlideResponse
-                {
-                    Id = g.Id,
-                    Nome = g.Nome,
-                    PaginaId = g.PaginaId,
-                    Posicao = g.Posicao,
-                    Slides = g.Slides.Select(slides => new SlideResponse()
-                    {
-                        Id = slides.Id,
-                        Descricao = slides.Descricao,
-                        GrupoDeSlidesId = slides.GrupoDeSlidesId,
-                        Ordem = slides.Ordem,
-                        Tipo = slides.Tipo,
-                        Titulo = slides.Titulo,
-                        URL = slides.URL,
-                        NoticiaId = slides.NoticiaId,
-                        PrincipalCategoriaNome = slides.Noticia.NoticiasCategorias.First().Categoria.Nome
-                    }).ToList()
-                })
+                .Select(g => ToNoticiaResponse(g, g.Slides.ToList()))
                 .ToListAsync();
         }
 
@@ -49,29 +32,12 @@ namespace intranet_angular.Server.Services
         {
             return await _context.GrupoDeSlides
                 .Where(p => p.Id == id)
+                .Include(g => g.Autor)
                 .Include(g => g.Slides)
                 .ThenInclude(g => g.Noticia)
                 .ThenInclude(g => g.NoticiasCategorias)
                 .ThenInclude(g => g.Categoria)
-                .Select(g => new GrupoDeSlideResponse
-                {
-                    Id = g.Id,
-                    Nome = g.Nome,
-                    PaginaId = g.PaginaId,
-                    Posicao = g.Posicao,
-                    Slides = g.Slides.Select(slides => new SlideResponse()
-                    {
-                        Id = slides.Id,
-                        Descricao = slides.Descricao,
-                        GrupoDeSlidesId = slides.GrupoDeSlidesId,
-                        Ordem = slides.Ordem,
-                        Tipo = slides.Tipo,
-                        Titulo = slides.Titulo,
-                        URL = slides.URL,
-                        NoticiaId = slides.NoticiaId,
-                        PrincipalCategoriaNome = slides.Noticia.NoticiasCategorias.First().Categoria.Nome
-                    }).ToList()
-                })
+                .Select(g => ToNoticiaResponse(g, g.Slides.ToList()))
                 .FirstOrDefaultAsync();
         }
 
@@ -79,29 +45,12 @@ namespace intranet_angular.Server.Services
         {
             return await _context.GrupoDeSlides
                 .Where(p => p.PaginaId == pageId)
+                .Include(g => g.Autor)
                 .Include(g => g.Slides)
                 .ThenInclude(g => g.Noticia)
                 .ThenInclude(g => g.NoticiasCategorias)
                 .ThenInclude(g => g.Categoria)
-                .Select(g => new GrupoDeSlideResponse
-                {
-                    Id = g.Id,
-                    Nome = g.Nome,
-                    PaginaId = g.PaginaId,
-                    Posicao = g.Posicao,
-                    Slides = g.Slides.Select(slides => new SlideResponse()
-                    {
-                        Id = slides.Id,
-                        Descricao = slides.Descricao,
-                        GrupoDeSlidesId = slides.GrupoDeSlidesId,
-                        Ordem = slides.Ordem,
-                        Tipo = slides.Tipo,
-                        Titulo = slides.Titulo,
-                        URL = slides.URL,
-                        NoticiaId = slides.NoticiaId,
-                        PrincipalCategoriaNome = slides.Noticia.NoticiasCategorias.First().Categoria.Nome
-                    }).ToList()
-                })
+                .Select(g => ToNoticiaResponse(g, g.Slides.ToList()))
                 .ToListAsync();
         }
 
@@ -117,7 +66,8 @@ namespace intranet_angular.Server.Services
                     {
                         Nome = grupoDeSlideRequest.Nome,
                         PaginaId = grupoDeSlideRequest.PaginaId,
-                        Posicao = grupoDeSlideRequest.Posicao
+                        Posicao = grupoDeSlideRequest.Posicao,
+                        AutorId = grupoDeSlideRequest.AutorId
                     };
 
                     var slidesRequest = grupoDeSlideRequest.Slides.ToList();
@@ -160,6 +110,7 @@ namespace intranet_angular.Server.Services
             {
                 var grupoDeSlides = await _context.GrupoDeSlides
                     .Include(gs => gs.Slides)
+                    .Include(gs => gs.Autor)
                     .FirstOrDefaultAsync(gs => gs.Id == id);
 
                 if (grupoDeSlides == null)
@@ -169,6 +120,7 @@ namespace intranet_angular.Server.Services
                 grupoDeSlides.Nome = grupoDeSlideRequest.Nome;
                 grupoDeSlides.PaginaId = grupoDeSlideRequest.PaginaId;
                 grupoDeSlides.Posicao = grupoDeSlideRequest.Posicao;
+                grupoDeSlides.AutorId = grupoDeSlideRequest.AutorId;
 
                 // Atualizar slides existentes e remover os que não estão no request
                 var slidesIdsRequest = grupoDeSlideRequest.Slides
@@ -263,6 +215,10 @@ namespace intranet_angular.Server.Services
             Nome = grupoDeSlides.Nome,
             PaginaId = grupoDeSlides.PaginaId,
             Posicao = grupoDeSlides.Posicao,
+            AutorId = grupoDeSlides.AutorId,
+            DataPublicacao = grupoDeSlides.DataPublicacao,
+            Autor = grupoDeSlides?.Autor?.Nome,
+            AutorUrl = grupoDeSlides?.Autor?.ImagemUrl,
             Slides = slide.Select(slide => new SlideResponse()
             {
                 Id = slide.Id,

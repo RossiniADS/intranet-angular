@@ -21,8 +21,13 @@ export class NoticiaService {
     return this.http.get<NoticiaResponse>(`${this.apiUrl}/${id}`);
   }
 
-  getNoticiasPaginadas(page: number, pageSize: number): Observable<BaseResponse<NoticiaResponse[]>> {
-    return this.http.get<BaseResponse<NoticiaResponse[]>>(`${this.apiUrl}/noticias-pagination?page=${page}&pageSize=${pageSize}`);
+  getNoticiasPaginadas(filter: string | null, page: number, pageSize: number): Observable<BaseResponse<NoticiaResponse[]>> {
+    let params = '';
+    if (filter) {
+      params += `filter=${encodeURIComponent(filter)}&`;
+    }
+    params += `page=${page}&pageSize=${pageSize}`;
+    return this.http.get<BaseResponse<NoticiaResponse[]>>(`${this.apiUrl}/noticias-pagination?${params}`);
   }
 
   createNoticia(formData: FormData): Observable<NoticiaResponse> {

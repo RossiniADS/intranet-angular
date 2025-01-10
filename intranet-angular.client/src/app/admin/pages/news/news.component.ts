@@ -5,6 +5,7 @@ import { CategoriaService } from '../../../service/categoria.service';
 import { NoticiaResponse } from '../../../../response/noticiaResponse';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
+import { UsuarioService } from '../../../service/usuario.service';
 
 @Component({
   selector: 'app-news',
@@ -36,12 +37,12 @@ export class NewsComponent implements OnInit {
     //tertiary: null,
   };
 
-  constructor(private fb: FormBuilder, private noticiaService: NoticiaService, private toastrService: ToastrService, private categoriaService: CategoriaService) {
+  constructor(private fb: FormBuilder, private noticiaService: NoticiaService, private usuarioService: UsuarioService, private toastrService: ToastrService, private categoriaService: CategoriaService) {
     this.noticiaForm = this.fb.group({
       titulo: ['', Validators.required],
       conteudo: ['', Validators.required],
       descricao: ['', Validators.required],
-      autorId: [null],
+      autorId: [this.usuarioService.getUserId()],
       categoriaIds: [[], Validators.required],
       isTrendingTop: [false]
     });
@@ -53,7 +54,7 @@ export class NewsComponent implements OnInit {
   }
 
   loadNoticias(): void {
-    this.noticiaService.getNoticiasPaginadas(this.page, this.pageSize).subscribe(data => {
+    this.noticiaService.getNoticiasPaginadas(null, this.page, this.pageSize).subscribe(data => {
       this.noticias = data.data;
       this.totalItems = data.totalRecords;
       this.processNoticias();

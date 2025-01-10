@@ -17,6 +17,7 @@ export class UserComponent implements OnInit {
   usuarioForm: FormGroup;
   isEditing = false;
   currentUserId: number | null = null;
+  selectedFile: File | null = null;
 
   constructor(private usuarioService: UsuarioService, private toastrService: ToastrService, private fb: FormBuilder) {
     this.usuarioForm = this.fb.group({
@@ -41,10 +42,19 @@ export class UserComponent implements OnInit {
   submitForm(): void {
     if (this.usuarioForm.invalid) return;
 
-    const usuario = this.usuarioForm.value;
+    const formData = new FormData();
+    formData.append('nome', this.usuarioForm.get('nome')?.value);
+    formData.append('email', this.usuarioForm.get('email')?.value);
+    formData.append('login', this.usuarioForm.get('login')?.value);
+    formData.append('senha', this.usuarioForm.get('senha')?.value);
+    formData.append('aniversario', this.usuarioForm.get('aniversario')?.value);
+
+    if (this.selectedFile) {
+      formData.append('file', this.selectedFile, this.selectedFile.name);
+    }
 
     if (this.isEditing && this.currentUserId !== null) {
-      this.usuarioService.updateUsuario(this.currentUserId, usuario).subscribe({
+      this.usuarioService.updateUsuario(this.currentUserId, formData).subscribe({
         next: () => {
           this.toastrService.success('Usuário atualizado com sucesso!');
           this.loadUsuarios();
@@ -55,7 +65,7 @@ export class UserComponent implements OnInit {
         }
       });
     } else {
-      this.usuarioService.createUsuario(usuario).subscribe({
+      this.usuarioService.createUsuario(formData).subscribe({
         next: () => {
           this.toastrService.success('Usuário atualizado com sucesso!');
           this.loadUsuarios();
@@ -111,5 +121,23 @@ export class UserComponent implements OnInit {
     this.usuarioForm.reset();
     this.isEditing = false;
     this.currentUserId = null;
+    this.selectedFile = null;
+    this.resetFileInputs();
+  }
+
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+    }
+  }
+
+  resetFileInputs(): void {
+    // Limpar os inputs de arquivos na tela
+    const fileInputs = document.querySelectorAll('input[type="file"]');
+    fileInputs.forEach((input: any) => {
+      input.value = '';  // Limpa o campo de arquivo
+    });
   }
 }

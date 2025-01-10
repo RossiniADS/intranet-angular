@@ -37,7 +37,7 @@ namespace intranet_angular.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] UsuarioRequest usuarioRequest)
+        public async Task<IActionResult> Create([FromForm] UsuarioRequest usuarioRequest)
         {
             if (!ModelState.IsValid)
             {
@@ -49,7 +49,7 @@ namespace intranet_angular.Server.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] UsuarioRequest usuarioRequest)
+        public async Task<IActionResult> Update(int id, [FromForm] UsuarioRequest usuarioRequest)
         {
             if (!ModelState.IsValid)
             {

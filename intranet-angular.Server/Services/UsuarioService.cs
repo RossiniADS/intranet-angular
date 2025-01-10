@@ -47,7 +47,8 @@ namespace intranet_angular.Server.Services
                 UltimaAtualizacao = DateTime.UtcNow,
                 Email = usuarioRequest.Email,
                 Login = usuarioRequest.Login,
-                Senha = HashPassword(usuarioRequest.Senha)
+                Senha = HashPassword(usuarioRequest.Senha),
+                ImagemUrl = await ProcessarMidiasAsync(usuarioRequest.File),
             };
 
             _context.Usuarios.Add(usuario);
@@ -76,6 +77,18 @@ namespace intranet_angular.Server.Services
             usuario.Aniversario = usuarioRequest.Aniversario;
             usuario.UltimaAtualizacao = DateTime.UtcNow;
 
+            if (!string.IsNullOrEmpty(usuario.ImagemUrl) && usuarioRequest.File != null)
+            {
+                if (File.Exists(usuario.ImagemUrl))
+                {
+                    File.Delete(usuario.ImagemUrl);
+                }
+            }
+
+            if (usuarioRequest.File != null)
+            {
+                usuario.ImagemUrl = await ProcessarMidiasAsync(usuarioRequest.File);
+            }
 
             _context.Usuarios.Update(usuario);
             await _context.SaveChangesAsync();
@@ -99,7 +112,8 @@ namespace intranet_angular.Server.Services
             Login = usuario.Login,
             Email = usuario.Email,
             Aniversario = usuario.Aniversario,
-            Nome = usuario.Nome
+            Nome = usuario.Nome,
+            ImagemUrl = usuario.ImagemUrl,
         };
 
         public async Task<string?> Authenticate(string login, string senha)
@@ -118,7 +132,8 @@ namespace intranet_angular.Server.Services
                 Subject = new ClaimsIdentity(new[]
                 {
                 new Claim(ClaimTypes.Name, user.Login),
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim("Nome", user.Nome)
             }),
                 Expires = DateTime.UtcNow.AddHours(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -127,7 +142,7 @@ namespace intranet_angular.Server.Services
             return tokenHandler.WriteToken(token);
         }
 
-        private string HashPassword(string password)
+        private static string HashPassword(string password)
         {
             byte[] salt = new byte[16];
             using (var rng = RandomNumberGenerator.Create())
@@ -145,7 +160,7 @@ namespace intranet_angular.Server.Services
             return $"{Convert.ToBase64String(salt)}:{hashed}";
         }
 
-        private bool VerifyPasswordHash(string password, string storedHash)
+        private static bool VerifyPasswordHash(string password, string storedHash)
         {
             var parts = storedHash.Split(':');
             if (parts.Length != 2)
@@ -164,6 +179,31 @@ namespace intranet_angular.Server.Services
                 numBytesRequested: 32));
 
             return hash == storedPasswordHash;
+        }
+
+        private static async Task<string?> ProcessarMidiasAsync(IFormFile midia)
+        {
+            if (midia == null) return null;
+
+            // Define o caminho para a pasta "Cardapio"
+            var baseDirectory = Path.Combine("Uploads", "Usuarios");
+
+            // Verifica se a pasta "Cardapio" existe, e a cria caso não exista
+            if (!Directory.Exists(baseDirectory))
+            {
+                Directory.CreateDirectory(baseDirectory);
+            }
+
+            // Gera o caminho completo para o arquivo dentro da pasta "Cardapio"
+            var filePath = Path.Combine(baseDirectory, Guid.NewGuid() + Path.GetExtension(midia.FileName));
+
+            // Salva o arquivo no caminho especificado
+            await using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await midia.CopyToAsync(stream);
+            }
+
+            return filePath;
         }
     }
 

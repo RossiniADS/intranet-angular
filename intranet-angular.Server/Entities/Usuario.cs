@@ -15,6 +15,7 @@ namespace intranet_angular.Server.Entities
         public string Login { get; set; }
         [Required]
         public string Senha { get; set; }
+        public string ImagemUrl { get; set; }
         [Required]
         public DateTime Aniversario { get; set; }
         public DateTime CriadoEm { get; set; }

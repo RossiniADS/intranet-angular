@@ -7,5 +7,6 @@
         public string Email { get; set; }
         public string Login { get; set; }
         public DateTime Aniversario { get; set; }
+        public string ImagemUrl { get; set; }
     }
 }
