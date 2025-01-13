@@ -114,7 +114,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
       noticiaId: 0
     }
   ];
-  pageIdHome = 2;
+  pageIdHome = 1;
   currentIndex = 0;
   videos: any[] = [
     {
