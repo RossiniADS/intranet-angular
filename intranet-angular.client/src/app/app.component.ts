@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  isLoading: boolean = true;
+  isLoading: boolean = false;
   isAdminRoute = false;
 
   constructor(private router: Router) {
