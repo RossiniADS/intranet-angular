@@ -48,7 +48,7 @@
                 </div>-->
                 <h2>{{ slide.title }}</h2>
                 <p>{{ slide.description }}</p>
-                <button *ngIf="slide.noticiaId !== 0 && slide.noticiaId; else placeholder" class="cta-button">
+                <button *ngIf="slide.noticiaId !== 0 && slide.noticiaId; else placeholder" class="cta-button" [routerLink]="slide.link">
                   Leia mais!
                 </button>
                 <ng-template #placeholder>

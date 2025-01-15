@@ -232,7 +232,12 @@ export class HomeComponent implements AfterViewInit, OnInit {
         this.videos = terceiroSlide.map((video) => ({
           src: `${environment.serverUrl}${video.url}`,
           title: video.titulo
-        }))
+        }));
+
+        setTimeout(() => {
+          this.initializeSwiper('.mySwiper', 1);
+          this.initializeSwiper('.mySwiper4', 3);
+        }, 3);
       },
       error: (err) => console.error('Erro ao carregar slides:', err),
     });
@@ -314,11 +319,8 @@ export class HomeComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.initializeSwiper('.mySwiper', 1);
-    this.initializeSwiper('.mySwiper2', 3);
-    this.initializeSwiper('.mySwiper3', 3);
-    this.initializeSwiper('.mySwiper4', 3);
-    this.initializeSwiper('.mySwiper5', 4);
+  //  this.initializeSwiper('.mySwiper', 1);
+  //  this.initializeSwiper('.mySwiper4', 3);
   }
 
   private initializeSwiper(selector: string, slidesPerView: number): void {
