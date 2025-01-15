@@ -55,7 +55,7 @@ export class HeaderComponent {
   trendingDescription = 'Class property employ ancho red multi level mansion';
   contactNumber = '+880166 253 232';
 
-  logoLink = 'index.html';
+  logoLink = '';
   logoSrc = 'assets/img/logo/logo.png';
   logoAlt = 'Company Logo';
 
