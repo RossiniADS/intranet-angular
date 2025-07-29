@@ -1,4 +1,8 @@
 <div class="pdf-container">
-  <ngx-extended-pdf-viewer *ngIf="pdfUrl" [src]="pdfUrl" useBrowserLocale="true"></ngx-extended-pdf-viewer>
-  <p *ngIf="!pdfUrl">Selecione um documento para visualizá-lo.</p>
+  @if (pdfUrl) {
+    <ngx-extended-pdf-viewer [src]="pdfUrl" useBrowserLocale="true"></ngx-extended-pdf-viewer>
+  }
+  @if (!pdfUrl) {
+    <p>Selecione um documento para visualizá-lo.</p>
+  }
 </div>

@@ -1,11 +1,11 @@
 <app-preloader [isLoading]="isLoading"></app-preloader>
-<ng-container *ngIf="!isAdminRoute">
+@if (!isAdminRoute) {
   <app-header></app-header>
-</ng-container>
+}
 <main>
   <router-outlet></router-outlet>
   <app-back-to-top></app-back-to-top>
 </main>
-<ng-container *ngIf="!isAdminRoute">
+@if (!isAdminRoute) {
   <app-footer></app-footer>
-</ng-container>
+}

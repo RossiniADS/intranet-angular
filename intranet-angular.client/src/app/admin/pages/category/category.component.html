@@ -9,7 +9,9 @@
 
     <div class="button-group">
       <button class="btn btn-primary" type="submit">{{ isEditing ? 'Atualizar' : 'Cadastrar' }}</button>
-      <button class="btn btn-secondary" type="button" (click)="resetForm()" *ngIf="isEditing">Cancelar</button>
+      @if (isEditing) {
+        <button class="btn btn-secondary" type="button" (click)="resetForm()">Cancelar</button>
+      }
     </div>
   </form>
 
@@ -22,14 +24,16 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let categoria of categorias">
-        <td>{{ categoria.id }}</td>
-        <td>{{ categoria.nome }}</td>
-        <td>
-          <button class="btn btn-edit" (click)="editCategoria(categoria)">Editar</button>
-          <button class="btn btn-delete" (click)="deleteCategoria(categoria.id)">Excluir</button>
-        </td>
-      </tr>
+      @for (categoria of categorias; track categoria) {
+        <tr>
+          <td>{{ categoria.id }}</td>
+          <td>{{ categoria.nome }}</td>
+          <td>
+            <button class="btn btn-edit" (click)="editCategoria(categoria)">Editar</button>
+            <button class="btn btn-delete" (click)="deleteCategoria(categoria.id)">Excluir</button>
+          </td>
+        </tr>
+      }
     </tbody>
   </table>
 </div>

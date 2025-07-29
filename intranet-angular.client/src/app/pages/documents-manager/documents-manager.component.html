@@ -7,41 +7,49 @@
       </button>
     </div>
     <ul>
-      <ng-container *ngFor="let item of menuItems">
+      @for (item of menuItems; track item) {
         <li>
           <!-- Item principal -->
           <div class="menu-item" (click)="item.children.length > 0 ? toggleExpand(item.label) : null">
             <span>{{ item.label }}</span>
-            <button *ngIf="item.children.length > 0" class="expand-btn">
-              {{ isExpanded(item.label) ? '-' : '+' }}
-            </button>
+            @if (item.children.length > 0) {
+              <button class="expand-btn">
+                {{ isExpanded(item.label) ? '-' : '+' }}
+              </button>
+            }
           </div>
           <!-- Submenu -->
-          <ul *ngIf="item.children && isExpanded(item.label)" class="submenu" [style.margin-left.px]="20">
-            <ng-container *ngFor="let child of item.children">
-              <li>
-                <!-- Item filho -->
-                <div class="menu-item" (click)="child.children.length > 0 ? toggleExpand(child.label) : child.pdfUrl ? selectDocument(child.pdfUrl) : null">
-                  <span>{{ child.label }}</span>
-                  <button *ngIf="child.children.length > 0" class="expand-btn">
-                    {{ isExpanded(child.label) ? '-' : '+' }}
-                  </button>
-                </div>
-                <!-- Submenu do filho -->
-                <ul *ngIf="child.children.length > 0 && isExpanded(child.label)" class="submenu" [style.margin-left.px]="20">
-                  <ng-container *ngFor="let subChild of child.children">
-                    <li>
-                      <div class="menu-item" (click)="subChild.pdfUrl ? selectDocument(subChild.pdfUrl) : null">
-                        <span>{{ subChild.label }}</span>
-                      </div>
-                    </li>
-                  </ng-container>
-                </ul>
-              </li>
-            </ng-container>
-          </ul>
+          @if (item.children && isExpanded(item.label)) {
+            <ul class="submenu" [style.margin-left.px]="20">
+              @for (child of item.children; track child) {
+                <li>
+                  <!-- Item filho -->
+                  <div class="menu-item" (click)="child.children.length > 0 ? toggleExpand(child.label) : child.pdfUrl ? selectDocument(child.pdfUrl) : null">
+                    <span>{{ child.label }}</span>
+                    @if (child.children.length > 0) {
+                      <button class="expand-btn">
+                        {{ isExpanded(child.label) ? '-' : '+' }}
+                      </button>
+                    }
+                  </div>
+                  <!-- Submenu do filho -->
+                  @if (child.children.length > 0 && isExpanded(child.label)) {
+                    <ul class="submenu" [style.margin-left.px]="20">
+                      @for (subChild of child.children; track subChild) {
+                        <li>
+                          <div class="menu-item" (click)="subChild.pdfUrl ? selectDocument(subChild.pdfUrl) : null">
+                            <span>{{ subChild.label }}</span>
+                          </div>
+                        </li>
+                      }
+                    </ul>
+                  }
+                </li>
+              }
+            </ul>
+          }
         </li>
-      </ng-container>
+      }
     </ul>
   </nav>
   <app-pdf-viewer id="content" [pdfUrl]="selectedPdf"></app-pdf-viewer>

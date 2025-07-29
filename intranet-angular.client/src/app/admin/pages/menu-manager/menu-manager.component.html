@@ -17,13 +17,17 @@
       <label for="parentId">Item Pai:</label>
       <select class="form-control" id="parentId" formControlName="parentId">
         <option [value]="null">Nenhum</option>
-        <option *ngFor="let item of menuItems" [value]="item.id">{{ item.label }}</option>
+        @for (item of menuItems; track item) {
+          <option [value]="item.id">{{ item.label }}</option>
+        }
       </select>
     </div>
 
     <div class="button-group">
       <button class="btn btn-primary" type="submit">{{ isEditing ? 'Atualizar' : 'Cadastrar' }}</button>
-      <button class="btn btn-secondary" type="button" (click)="resetForm()" *ngIf="isEditing">Cancelar</button>
+      @if (isEditing) {
+        <button class="btn btn-secondary" type="button" (click)="resetForm()">Cancelar</button>
+      }
     </div>
   </form>
 
@@ -38,16 +42,18 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of menuItems">
-        <td>{{ item.id }}</td>
-        <td>{{ item.label }}</td>
-        <td>{{ item.pdfUrl || '-' }}</td>
-        <td>{{ getParentLabel(item.parentId) }}</td>
-        <td>
-          <button class="btn btn-edit" (click)="editMenuItem(item)">Editar</button>
-          <button class="btn btn-delete" (click)="deleteMenuItem(item.id)">Excluir</button>
-        </td>
-      </tr>
+      @for (item of menuItems; track item) {
+        <tr>
+          <td>{{ item.id }}</td>
+          <td>{{ item.label }}</td>
+          <td>{{ item.pdfUrl || '-' }}</td>
+          <td>{{ getParentLabel(item.parentId) }}</td>
+          <td>
+            <button class="btn btn-edit" (click)="editMenuItem(item)">Editar</button>
+            <button class="btn btn-delete" (click)="deleteMenuItem(item.id)">Excluir</button>
+          </td>
+        </tr>
+      }
     </tbody>
   </table>
 </div>

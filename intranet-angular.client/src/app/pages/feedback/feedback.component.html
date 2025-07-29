@@ -39,15 +39,17 @@
         </form>
       </div>
       <div class="col-lg-3 offset-lg-1">
-        <div class="media contact-info" *ngFor="let contact of contactInfos">
-          <span class="contact-info__icon">
-            <i [class]="contact.icon"></i>
-          </span>
-          <div class="media-body">
-            <h3>{{ contact.title }}</h3>
-            <p>{{ contact.description }}</p>
+        @for (contact of contactInfos; track contact) {
+          <div class="media contact-info">
+            <span class="contact-info__icon">
+              <i [class]="contact.icon"></i>
+            </span>
+            <div class="media-body">
+              <h3>{{ contact.title }}</h3>
+              <p>{{ contact.description }}</p>
+            </div>
           </div>
-        </div>
+        }
       </div>
     </div>
   </div>

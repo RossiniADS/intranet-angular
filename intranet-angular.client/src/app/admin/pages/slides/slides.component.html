@@ -6,118 +6,134 @@
     <div class="form-group">
       <label for="pagina">Selecione a Página:</label>
       <select id="pagina" formControlName="paginaId" class="form-control" (change)="onPaginaChange($event)">
-        <option *ngFor="let pagina of paginas" [value]="pagina.id">
-          {{ pagina.nome }}
-        </option>
+        @for (pagina of paginas; track pagina) {
+          <option [value]="pagina.id">
+            {{ pagina.nome }}
+          </option>
+        }
       </select>
     </div>
 
     <!-- Exibir Configurações da Página -->
-    <div *ngIf="paginaSelecionada">
-      <p><strong>Grupos Permitidos:</strong> {{ paginaSelecionada.configuracoesDeGrupos.length }}</p>
-      <ul>
-        <li *ngFor="let configuracao of paginaSelecionada.configuracoesDeGrupos">
-          <strong>Posição {{ configuracao.posicao }}:</strong> {{ configuracao.tipoDeMidia | tipoMidiaPipe }}
-        </li>
-      </ul>
-    </div>
+    @if (paginaSelecionada) {
+      <div>
+        <p><strong>Grupos Permitidos:</strong> {{ paginaSelecionada.configuracoesDeGrupos.length }}</p>
+        <ul>
+          @for (configuracao of paginaSelecionada.configuracoesDeGrupos; track configuracao) {
+            <li>
+              <strong>Posição {{ configuracao.posicao }}:</strong> {{ configuracao.tipoDeMidia | tipoMidiaPipe }}
+            </li>
+          }
+        </ul>
+      </div>
+    }
 
     <!-- Gerenciamento de Grupos -->
     <div formArrayName="grupos">
-      <div *ngFor="let grupo of grupos.controls; let i = index" [formGroupName]="i" class="grupo-container">
-        <h3>Grupo {{ i + 1 }}</h3>
-        <div class="form-group">
-          <label for="grupoNome-{{ i }}">Nome do Grupo:</label>
-          <input id="grupoNome-{{ i }}"
-                 formControlName="nome"
-                 type="text"
-                 class="form-control"
-                 placeholder="Digite o nome do grupo" />
-        </div>
-
-        <div class="form-group">
-          <label for="grupoPosicao-{{ i }}">Posição:</label>
-          <input id="grupoPosicao-{{ i }}"
-                 formControlName="posicao"
-                 type="number"
-                 class="form-control"
-                 placeholder="Digite a posição do grupo" />
-        </div>
-
-        <!-- Gerenciamento de Slides -->
-        <div formArrayName="slides">
-          <div *ngFor="let slide of getSlides(i).controls; let j = index"
-               [formGroupName]="j"
-               class="slide-container">
-            <h4>Slide {{ j + 1 }}</h4>
-            <div class="form-group">
-              <label for="slideTitulo-{{ i }}-{{ j }}">Título:</label>
-              <input id="slideTitulo-{{ i }}-{{ j }}"
-                     formControlName="titulo"
-                     type="text"
-                     class="form-control"
-                     placeholder="Digite o título do slide" />
+      @for (grupo of grupos.controls; track grupo; let i = $index) {
+        <div [formGroupName]="i" class="grupo-container">
+          <h3>Grupo {{ i + 1 }}</h3>
+          <div class="form-group">
+            <label for="grupoNome-{{ i }}">Nome do Grupo:</label>
+            <input id="grupoNome-{{ i }}"
+              formControlName="nome"
+              type="text"
+              class="form-control"
+              placeholder="Digite o nome do grupo" />
             </div>
             <div class="form-group">
-              <label for="slideDescricao-{{ i }}-{{ j }}">Descrição:</label>
-              <textarea id="slideDescricao-{{ i }}-{{ j }}"
-                        formControlName="descricao"
+              <label for="grupoPosicao-{{ i }}">Posição:</label>
+              <input id="grupoPosicao-{{ i }}"
+                formControlName="posicao"
+                type="number"
+                class="form-control"
+                placeholder="Digite a posição do grupo" />
+              </div>
+              <!-- Gerenciamento de Slides -->
+              <div formArrayName="slides">
+                @for (slide of getSlides(i).controls; track slide; let j = $index) {
+                  <div
+                    [formGroupName]="j"
+                    class="slide-container">
+                    <h4>Slide {{ j + 1 }}</h4>
+                    <div class="form-group">
+                      <label for="slideTitulo-{{ i }}-{{ j }}">Título:</label>
+                      <input id="slideTitulo-{{ i }}-{{ j }}"
+                        formControlName="titulo"
+                        type="text"
                         class="form-control"
+                        placeholder="Digite o título do slide" />
+                      </div>
+                      <div class="form-group">
+                        <label for="slideDescricao-{{ i }}-{{ j }}">Descrição:</label>
+                        <textarea id="slideDescricao-{{ i }}-{{ j }}"
+                          formControlName="descricao"
+                          class="form-control"
                         placeholder="Digite a descrição"></textarea>
+                      </div>
+                      <div class="form-group">
+                        <label for="slideArquivo-{{ i }}-{{ j }}">Arquivo:</label>
+                        <input id="slideArquivo-{{ i }}-{{ j }}"
+                          type="file"
+                          class="form-control"
+                          (change)="onSlideFileSelected($event, i, j)" />
+                        </div>
+                        <div class="form-group">
+                          <label for="noticia">Selecione a Noticia:</label>
+                          <select id="noticia" formControlName="noticiaId" class="form-control">
+                            @for (noticia of noticiasResponse; track noticia) {
+                              <option [value]="noticia.id">
+                                {{ noticia.titulo }}
+                              </option>
+                            }
+                          </select>
+                        </div>
+                        <button type="button" class="btn btn-danger" (click)="removeSlide(i, j)">Remover Slide</button>
+                      </div>
+                    }
+                  </div>
+                  <button type="button" class="btn btn-primary" (click)="addSlide(i)" [disabled]="!canAddSlide(i)">Adicionar Slide</button>
+                  @if (!isEditing) {
+                    <button type="button" class="btn btn-danger" (click)="removeGrupo(i)">Remover Grupo</button>
+                  }
+                </div>
+              }
             </div>
-            <div class="form-group">
-              <label for="slideArquivo-{{ i }}-{{ j }}">Arquivo:</label>
-              <input id="slideArquivo-{{ i }}-{{ j }}"
-                     type="file"
-                     class="form-control"
-                     (change)="onSlideFileSelected($event, i, j)" />
+            <button type="button" class="btn btn-primary" (click)="addGrupo()" [disabled]="!canAddGrupo()">Adicionar Grupo</button>
+
+            <!-- Botões de Ação -->
+            <div class="button-group">
+              <button class="btn btn-primary" type="submit">{{ isEditing ? 'Atualizar' : 'Cadastrar' }}</button>
+              @if (isEditing) {
+                <button class="btn btn-secondary" type="button" (click)="resetForm()">Cancelar</button>
+              }
             </div>
-            <div class="form-group">
-              <label for="noticia">Selecione a Noticia:</label>
-              <select id="noticia" formControlName="noticiaId" class="form-control">
-                <option *ngFor="let noticia of noticiasResponse" [value]="noticia.id">
-                  {{ noticia.titulo }}
-                </option>
-              </select>
-            </div>
-            <button type="button" class="btn btn-danger" (click)="removeSlide(i, j)">Remover Slide</button>
-          </div>
+          </form>
+
+          <!-- Tabela de Grupos -->
+          <table class="slide-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Posição</th>
+                <th>PaginaId</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (grupo of gruposResponse; track grupo; let i = $index) {
+                <tr>
+                  <td>{{ grupo.id }}</td>
+                  <td>{{ grupo.nome }}</td>
+                  <td>{{ grupo.posicao }}</td>
+                  <td>{{ grupo.paginaId }}</td>
+                  <td>
+                    <button class="btn btn-edit" (click)="editGrupo(i)">Editar</button>
+                    <button class="btn btn-delete" (click)="excluir(grupo.id)">Excluir</button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
         </div>
-        <button type="button" class="btn btn-primary" (click)="addSlide(i)" [disabled]="!canAddSlide(i)">Adicionar Slide</button>
-        <button type="button" class="btn btn-danger" *ngIf="!isEditing" (click)="removeGrupo(i)">Remover Grupo</button>
-      </div>
-    </div>
-    <button type="button" class="btn btn-primary" (click)="addGrupo()" [disabled]="!canAddGrupo()">Adicionar Grupo</button>
-
-    <!-- Botões de Ação -->
-    <div class="button-group">
-      <button class="btn btn-primary" type="submit">{{ isEditing ? 'Atualizar' : 'Cadastrar' }}</button>
-      <button class="btn btn-secondary" type="button" (click)="resetForm()" *ngIf="isEditing">Cancelar</button>
-    </div>
-  </form>
-
-  <!-- Tabela de Grupos -->
-  <table class="slide-table">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nome</th>
-        <th>Posição</th>
-        <th>PaginaId</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let grupo of gruposResponse; let i = index">
-        <td>{{ grupo.id }}</td>
-        <td>{{ grupo.nome }}</td>
-        <td>{{ grupo.posicao }}</td>
-        <td>{{ grupo.paginaId }}</td>
-        <td>
-          <button class="btn btn-edit" (click)="editGrupo(i)">Editar</button>
-          <button class="btn btn-delete" (click)="excluir(grupo.id)">Excluir</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>

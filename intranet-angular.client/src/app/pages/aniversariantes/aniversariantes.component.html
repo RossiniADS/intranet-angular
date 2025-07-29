@@ -9,18 +9,20 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-xl-4 col-lg-4 col-md-6 col-sm-"
-           *ngFor="let funcionario of funcionarios">
-        <div class="single-team mb-30">
-          <div class="team-img">
-            <img [src]="funcionario.imagemUrl" alt="" />
-          </div>
-          <div class="team-caption">
-            <h3><a href="#">{{ funcionario.nome }}</a></h3>
-            <span>{{ funcionario.cargo }}</span>
+      @for (funcionario of funcionarios; track funcionario) {
+        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-"
+          >
+          <div class="single-team mb-30">
+            <div class="team-img">
+              <img [src]="funcionario.imagemUrl" alt="" />
+            </div>
+            <div class="team-caption">
+              <h3><a href="#">{{ funcionario.nome }}</a></h3>
+              <span>{{ funcionario.cargo }}</span>
+            </div>
           </div>
         </div>
-      </div>
+      }
     </div>
   </div>
 </div>

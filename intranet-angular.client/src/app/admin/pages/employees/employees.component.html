@@ -34,7 +34,9 @@
 
     <div class="button-group">
       <button class="btn btn-primary" type="submit">{{ isEditing ? 'Atualizar' : 'Cadastrar' }}</button>
-      <button class="btn btn-secondary" type="button" (click)="resetForm()" *ngIf="isEditing">Cancelar</button>
+      @if (isEditing) {
+        <button class="btn btn-secondary" type="button" (click)="resetForm()">Cancelar</button>
+      }
     </div>
   </form>
 
@@ -51,33 +53,35 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let funcionario of funcionarios">
-        <td>{{ funcionario.id }}</td>
-        <td>{{ funcionario.nome }}</td>
-        <td>{{ funcionario.email }}</td>
-        <td>{{ funcionario.cargo }}</td>
-        <td>{{ funcionario.departamento }}</td>
-        <td>{{ funcionario.dataNascimento | date: 'dd/MM/yyyy' }}</td>
-        <td>
-          <button class="btn btn-edit" (click)="editFuncionario(funcionario)">Editar</button>
-          <button class="btn btn-delete" (click)="deleteFuncionario(funcionario.id)">Excluir</button>
-        </td>
-      </tr>
+      @for (funcionario of funcionarios; track funcionario) {
+        <tr>
+          <td>{{ funcionario.id }}</td>
+          <td>{{ funcionario.nome }}</td>
+          <td>{{ funcionario.email }}</td>
+          <td>{{ funcionario.cargo }}</td>
+          <td>{{ funcionario.departamento }}</td>
+          <td>{{ funcionario.dataNascimento | date: 'dd/MM/yyyy' }}</td>
+          <td>
+            <button class="btn btn-edit" (click)="editFuncionario(funcionario)">Editar</button>
+            <button class="btn btn-delete" (click)="deleteFuncionario(funcionario.id)">Excluir</button>
+          </td>
+        </tr>
+      }
     </tbody>
   </table>
 
   <div class="pagination-container">
     <button class="pagination-button"
-            [disabled]="page === 1"
-            (click)="onPageChange(page - 1)">
+      [disabled]="page === 1"
+      (click)="onPageChange(page - 1)">
       Anterior
     </button>
     <span class="pagination-info">
       Página {{ page }} de {{ totalPages }}
     </span>
     <button class="pagination-button"
-            [disabled]="page >= totalPages"
-            (click)="onPageChange(page + 1)">
+      [disabled]="page >= totalPages"
+      (click)="onPageChange(page + 1)">
       Próximo
     </button>
   </div>

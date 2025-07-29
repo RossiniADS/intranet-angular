@@ -3,107 +3,123 @@
   <div class="header-area">
     <div class="main-header">
       <!--<div class="header-top black-bg d-none d-sm-block">
-        <div class="container">
-          <div class="row align-items-center justify-content-between">
-            <div class="header-info-left col-auto">
-              <ul class="list-inline mb-0">
-                <li class="title list-inline-item">
-                  <span class="fa-solid fa-bolt-lightning"></span> {{ trendingTitle }}
-                </li>
-                <li class="list-inline-item">
-                  {{ trendingDescription }}
-                </li>
-              </ul>
-            </div>
-            <div class="header-info-right col-auto">
-              <ul class="header-date list-inline mb-0">
-                <li class="list-inline-item">
-                  <span class="fa-regular fa-calendar-days"></span> {{ contactNumber }}
-                </li>
-              </ul>
-            </div>
+      <div class="container">
+        <div class="row align-items-center justify-content-between">
+          <div class="header-info-left col-auto">
+            <ul class="list-inline mb-0">
+              <li class="title list-inline-item">
+                <span class="fa-solid fa-bolt-lightning"></span> {{ trendingTitle }}
+              </li>
+              <li class="list-inline-item">
+                {{ trendingDescription }}
+              </li>
+            </ul>
           </div>
-        </div>
-      </div>-->
-      <div class="header-mid gray-bg">
-        <div class="container">
-          <div class="row d-flex align-items-center">
-            <!-- Logo -->
-            <div class="col-xl-3 col-lg-3 col-md-3 d-none d-md-block">
-              <div class="logo">
-                <a [routerLink]="logoLink"><img [src]="logoSrc" [alt]="logoAlt"></a>
-              </div>
-            </div>
-            <div class="col-xl-9 col-lg-9 col-md-9">
-              <div class="header-banner f-right">
-                <img [src]="headerBannerSrc" [alt]="headerBannerAlt">
-              </div>
-            </div>
+          <div class="header-info-right col-auto">
+            <ul class="header-date list-inline mb-0">
+              <li class="list-inline-item">
+                <span class="fa-regular fa-calendar-days"></span> {{ contactNumber }}
+              </li>
+            </ul>
           </div>
         </div>
       </div>
-      <div class="header-bottom header-sticky" (scroll)="onscroll()" [ngClass]="navbarfixed ? 'fixed' : 'nofixed'">
-        <div class="container">
-          <!-- Flexbox Container -->
-          <div class="header-flex">
-            <!-- Logo -->
-            <div class="sticky-logo">
-              <a [href]="logoLink">
-                <img [src]="logoSrc" [alt]="logoAlt">
-              </a>
-            </div>
-            <!-- Main Menu - Desktop -->
-            <div class="main-menu d-none d-md-block">
-              <nav>
-                <ul id="navigation">
-                  <li *ngFor="let menuItem of menuItems">
-                    <a [routerLink]="menuItem.link">{{ menuItem.label }}</a>
-                    <ul class="submenu" *ngIf="menuItem.submenu">
-                      <li *ngFor="let subItem of menuItem.submenu">
-                        <a [routerLink]="subItem.link">{{ subItem.label }}</a>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </nav>
-            </div>
-            <div class="header-right f-right d-none d-lg-block">
-              <!-- Heder social -->
-              <ul class="header-social">
-                <li *ngFor="let social of socialLinks">
-                  <a [href]="social.link"><i [class]="social.icon"></i></a>
-                </li>
-              </ul>
-              <!-- Search Nav -->
-              <div class="nav-search search-switch">
-                <i class="fa fa-search"></i>
-              </div>
-            </div>
-            <!-- Botão Mobile -->
-            <div class="d-block d-md-none">
-              <button class="hamburger" (click)="toggleMobileMenu()">☰</button>
+    </div>-->
+    <div class="header-mid gray-bg">
+      <div class="container">
+        <div class="row d-flex align-items-center">
+          <!-- Logo -->
+          <div class="col-xl-3 col-lg-3 col-md-3 d-none d-md-block">
+            <div class="logo">
+              <a [routerLink]="logoLink"><img [src]="logoSrc" [alt]="logoAlt"></a>
             </div>
           </div>
-        </div>
-        <!-- Menu Mobile -->
-        <div class="mobile-menu-content" *ngIf="isMobileMenuOpen">
-          <ul>
-            <li *ngFor="let menuItem of menuItems">
-              <a (click)="onMobileMenuItemClick(menuItem)"
-                 [class.has-submenu]="menuItem.submenu"
-                 [class.open]="menuItem.isOpen">
-                {{ menuItem.label }}
-              </a>
-              <ul class="submenu submenu-mobile" [class.open]="menuItem.isOpen" *ngIf="menuItem.submenu">
-                <li *ngFor="let subItem of menuItem.submenu">
-                  <a [routerLink]="subItem.link" (click)="closeMobileMenu()">{{ subItem.label }}</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
+          <div class="col-xl-9 col-lg-9 col-md-9">
+            <div class="header-banner f-right">
+              <img [src]="headerBannerSrc" [alt]="headerBannerAlt">
+            </div>
+          </div>
         </div>
       </div>
     </div>
+    <div class="header-bottom header-sticky" (scroll)="onscroll()" [ngClass]="navbarfixed ? 'fixed' : 'nofixed'">
+      <div class="container">
+        <!-- Flexbox Container -->
+        <div class="header-flex">
+          <!-- Logo -->
+          <div class="sticky-logo">
+            <a [href]="logoLink">
+              <img [src]="logoSrc" [alt]="logoAlt">
+            </a>
+          </div>
+          <!-- Main Menu - Desktop -->
+          <div class="main-menu d-none d-md-block">
+            <nav>
+              <ul id="navigation">
+                @for (menuItem of menuItems; track menuItem) {
+                  <li>
+                    <a [routerLink]="menuItem.link">{{ menuItem.label }}</a>
+                    @if (menuItem.submenu) {
+                      <ul class="submenu">
+                        @for (subItem of menuItem.submenu; track subItem) {
+                          <li>
+                            <a [routerLink]="subItem.link">{{ subItem.label }}</a>
+                          </li>
+                        }
+                      </ul>
+                    }
+                  </li>
+                }
+              </ul>
+            </nav>
+          </div>
+          <div class="header-right f-right d-none d-lg-block">
+            <!-- Heder social -->
+            <ul class="header-social">
+              @for (social of socialLinks; track social) {
+                <li>
+                  <a [href]="social.link"><i [class]="social.icon"></i></a>
+                </li>
+              }
+            </ul>
+            <!-- Search Nav -->
+            <div class="nav-search search-switch">
+              <i class="fa fa-search"></i>
+            </div>
+          </div>
+          <!-- Botão Mobile -->
+          <div class="d-block d-md-none">
+            <button class="hamburger" (click)="toggleMobileMenu()">☰</button>
+          </div>
+        </div>
+      </div>
+      <!-- Menu Mobile -->
+      @if (isMobileMenuOpen) {
+        <div class="mobile-menu-content">
+          <ul>
+            @for (menuItem of menuItems; track menuItem) {
+              <li>
+                <a (click)="onMobileMenuItemClick(menuItem)"
+                  [class.has-submenu]="menuItem.submenu"
+                  [class.open]="menuItem.isOpen">
+                  {{ menuItem.label }}
+                </a>
+                @if (menuItem.submenu) {
+                  <ul class="submenu submenu-mobile" [class.open]="menuItem.isOpen">
+                    @for (subItem of menuItem.submenu; track subItem) {
+                      <li>
+                        <a [routerLink]="subItem.link" (click)="closeMobileMenu()">{{ subItem.label }}</a>
+                      </li>
+                    }
+                  </ul>
+                }
+              </li>
+            }
+          </ul>
+        </div>
+      }
+    </div>
   </div>
-  <!-- Header End -->
+</div>
+<!-- Header End -->
 </header>

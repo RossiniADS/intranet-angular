@@ -4,75 +4,81 @@
   <!-- Campo de filtro -->
   <div class="filter-container">
     <input type="text"
-           [(ngModel)]="filtro"
-           class="filter-input"
-           placeholder="Filtrar por nome, email ou assunto" />
-    <button (click)="filtrarSugestoes()" class="btn-primary">Filtrar</button>
-  </div>
+      [(ngModel)]="filtro"
+      class="filter-input"
+      placeholder="Filtrar por nome, email ou assunto" />
+      <button (click)="filtrarSugestoes()" class="btn-primary">Filtrar</button>
+    </div>
 
-  <!-- Lista de sugestões -->
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Nome</th>
-        <th>Email</th>
-        <th>Celular</th>
-        <th>Assunto</th>
-        <th>Lida</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let sugestao of sugestoes">
-        <td>{{ sugestao.nome }}</td>
-        <td>{{ sugestao.email }}</td>
-        <td>{{ sugestao.celular }}</td>
-        <td>{{ sugestao.assunto }}</td>
-        <td>{{ sugestao.lida ? 'Sim' : 'Não' }}</td>
-        <td>
-          <button (click)="visualizarSugestao(sugestao)" class="btn-secondary">
-            Visualizar
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+    <!-- Lista de sugestões -->
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Email</th>
+          <th>Celular</th>
+          <th>Assunto</th>
+          <th>Lida</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (sugestao of sugestoes; track sugestao) {
+          <tr>
+            <td>{{ sugestao.nome }}</td>
+            <td>{{ sugestao.email }}</td>
+            <td>{{ sugestao.celular }}</td>
+            <td>{{ sugestao.assunto }}</td>
+            <td>{{ sugestao.lida ? 'Sim' : 'Não' }}</td>
+            <td>
+              <button (click)="visualizarSugestao(sugestao)" class="btn-secondary">
+                Visualizar
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
 
-  <!-- Detalhes da sugestão (modal) -->
-  <div *ngIf="sugestaoSelecionada" class="modal">
-    <div class="modal-content">
-      <h2>Detalhes da Sugestão</h2>
-      <p><strong>Nome:</strong> {{ sugestaoSelecionada.nome }}</p>
-      <p><strong>Email:</strong> {{ sugestaoSelecionada.email }}</p>
-      <p><strong>Celular:</strong> {{ sugestaoSelecionada.celular }}</p>
-      <p><strong>Assunto:</strong> {{ sugestaoSelecionada.assunto }}</p>
-      <p><strong>Mensagem:</strong> {{ sugestaoSelecionada.mensagem }}</p>
-      <p><strong>Lida:</strong> {{ sugestaoSelecionada.lida ? 'Sim' : 'Não' }}</p>
-      <p>
-        <strong>Criada em:</strong>
-        {{ sugestaoSelecionada.criadaEm | date: 'dd/MM/yyyy HH:MM' }}
-      </p>
-      <p *ngIf="sugestaoSelecionada.lidaEm">
-        <strong>Lida em:</strong>
-        {{ sugestaoSelecionada.lidaEm | date: 'dd/MM/yyyy HH:MM' }}
-      </p>
-      <button (click)="fecharDetalhes()" class="close-button">Fechar</button>
+    <!-- Detalhes da sugestão (modal) -->
+    @if (sugestaoSelecionada) {
+      <div class="modal">
+        <div class="modal-content">
+          <h2>Detalhes da Sugestão</h2>
+          <p><strong>Nome:</strong> {{ sugestaoSelecionada.nome }}</p>
+          <p><strong>Email:</strong> {{ sugestaoSelecionada.email }}</p>
+          <p><strong>Celular:</strong> {{ sugestaoSelecionada.celular }}</p>
+          <p><strong>Assunto:</strong> {{ sugestaoSelecionada.assunto }}</p>
+          <p><strong>Mensagem:</strong> {{ sugestaoSelecionada.mensagem }}</p>
+          <p><strong>Lida:</strong> {{ sugestaoSelecionada.lida ? 'Sim' : 'Não' }}</p>
+          <p>
+            <strong>Criada em:</strong>
+            {{ sugestaoSelecionada.criadaEm | date: 'dd/MM/yyyy HH:MM' }}
+          </p>
+          @if (sugestaoSelecionada.lidaEm) {
+            <p>
+              <strong>Lida em:</strong>
+              {{ sugestaoSelecionada.lidaEm | date: 'dd/MM/yyyy HH:MM' }}
+            </p>
+          }
+          <button (click)="fecharDetalhes()" class="close-button">Fechar</button>
+        </div>
+      </div>
+    }
+
+    <div class="pagination-container">
+      <button class="pagination-button"
+        [disabled]="page === 1"
+        (click)="onPageChange(page - 1)">
+        Anterior
+      </button>
+      <span class="pagination-info">
+        Página {{ page }} de {{ totalPages }}
+      </span>
+      <button class="pagination-button"
+        [disabled]="page >= totalPages"
+        (click)="onPageChange(page + 1)">
+        Próximo
+      </button>
     </div>
   </div>
-
-  <div class="pagination-container">
-    <button class="pagination-button"
-            [disabled]="page === 1"
-            (click)="onPageChange(page - 1)">
-      Anterior
-    </button>
-    <span class="pagination-info">
-      Página {{ page }} de {{ totalPages }}
-    </span>
-    <button class="pagination-button"
-            [disabled]="page >= totalPages"
-            (click)="onPageChange(page + 1)">
-      Próximo
-    </button>
-  </div>
-</div>

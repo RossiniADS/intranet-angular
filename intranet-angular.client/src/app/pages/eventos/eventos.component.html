@@ -3,10 +3,10 @@
     <h5 class="mb-0">{{totalEventos}} eventos</h5>
     <div class="dropdown">
       <button class="btn btn-light dropdown-toggle"
-              type="button"
-              id="dropdownMenuButton"
-              data-bs-toggle="dropdown"
-              aria-expanded="false">
+        type="button"
+        id="dropdownMenuButton"
+        data-bs-toggle="dropdown"
+        aria-expanded="false">
         Order by
       </button>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
@@ -18,25 +18,27 @@
   </div>
 
   <div class="row">
-    <div class="col-md-4 mb-4" *ngFor="let event of eventos">
-      <div class="card">
-        <img [src]="event.imagemUrl"
-             class="card-img-top"
-             alt="{{ event.nome }}"
-             style="height: 180px; object-fit: cover" />
-        <div class="card-body">
-          <div class="d-flex align-items-center mb-2">
-            <div class="date-box text-center me-3">
-              <div class="date-day">{{ event.dataInicio | date: 'dd' }}</div>
-              <div class="date-month">{{ event.dataInicio | date: 'MMM' }}</div>
-            </div>
-            <div>
-              <h6 class="card-title mb-1">{{ event.nome }}</h6>
-              <p class="card-text text-muted mb-0">{{ event.localizacao }}</p>
+    @for (event of eventos; track event) {
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <img [src]="event.imagemUrl"
+            class="card-img-top"
+            alt="{{ event.nome }}"
+            style="height: 180px; object-fit: cover" />
+            <div class="card-body">
+              <div class="d-flex align-items-center mb-2">
+                <div class="date-box text-center me-3">
+                  <div class="date-day">{{ event.dataInicio | date: 'dd' }}</div>
+                  <div class="date-month">{{ event.dataInicio | date: 'MMM' }}</div>
+                </div>
+                <div>
+                  <h6 class="card-title mb-1">{{ event.nome }}</h6>
+                  <p class="card-text text-muted mb-0">{{ event.localizacao }}</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      }
     </div>
   </div>
-</div>

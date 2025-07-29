@@ -15,78 +15,83 @@
     <div class="form-group">
       <label for="conteudo">Conteúdo:</label>
       <quill-editor id="conteudo"
-                    formControlName="conteudo"
-                    placeholder="Digite o conteúdo completo"
-                    class="form-control"></quill-editor>
+        formControlName="conteudo"
+        placeholder="Digite o conteúdo completo"
+      class="form-control"></quill-editor>
     </div>
 
     <div class="form-group">
       <label for="categoria">Categoria:</label>
       <ng-select id="categoria"
-                 formControlName="categoriaIds"
-                 [items]="categorias"
-                 bindLabel="nome"
-                 bindValue="id"
-                 [multiple]="true"
-                 placeholder="Selecione as categorias"
-                 class="form-control"></ng-select>
+        formControlName="categoriaIds"
+        [items]="categorias"
+        bindLabel="nome"
+        bindValue="id"
+        [multiple]="true"
+        placeholder="Selecione as categorias"
+      class="form-control"></ng-select>
     </div>
 
     <!-- Upload 1 -->
     <div class="form-group">
       <label for="midia">Mídia Principal (largura deve ter entre 360 e 765 e altura entre 245 e 645):</label>
       <input type="file" id="midia" (change)="onFileSelected($event, 'main')" class="form-control" />
-      <div *ngIf="imageErrors['mmain']" class="error-message">
-        {{ imageErrors['main'] }}
-      </div>
+      @if (imageErrors['mmain']) {
+        <div class="error-message">
+          {{ imageErrors['main'] }}
+        </div>
+      }
     </div>
 
     <!-- Upload 2 -->
     <!--<div class="form-group">
-      <label for="midiaSecundaria">Mídia Secundária (750x375):</label>
-      <input type="file" id="midiaSecundaria" (change)="onFileSelected($event, 'secondary')" class="form-control" />
-      <div *ngIf="imageErrors['msecondary']" class="error-message">
-        {{ imageErrors['secondary'] }}
-      </div>
-    </div>-->
-    <!-- Upload 3 -->
-    <!--<div class="form-group">
-      <label for="midiaTerciaria">Mídia Terciária (360x245):</label>
-      <input type="file" id="midiaTerciaria" (change)="onFileSelected($event, 'tertiary')" class="form-control" />
-      <div *ngIf="imageErrors['tertiary']" class="error-message">
-        {{ imageErrors['tertiary'] }}
-      </div>
-    </div>-->
-
-    <div class="form-check form-switch">
-      <input class="form-check-input"
-             type="checkbox"
-             role="checkbox"
-             id="isTrendingTop"
-             formControlName="isTrendingTop" />
-      <label class="form-check-label" for="isTrendingTop">Destaque na página inicial?</label>
+    <label for="midiaSecundaria">Mídia Secundária (750x375):</label>
+    <input type="file" id="midiaSecundaria" (change)="onFileSelected($event, 'secondary')" class="form-control" />
+    <div *ngIf="imageErrors['msecondary']" class="error-message">
+      {{ imageErrors['secondary'] }}
     </div>
+  </div>-->
+  <!-- Upload 3 -->
+  <!--<div class="form-group">
+  <label for="midiaTerciaria">Mídia Terciária (360x245):</label>
+  <input type="file" id="midiaTerciaria" (change)="onFileSelected($event, 'tertiary')" class="form-control" />
+  <div *ngIf="imageErrors['tertiary']" class="error-message">
+    {{ imageErrors['tertiary'] }}
+  </div>
+</div>-->
 
-    <div class="button-group">
-      <button class="btn btn-primary" type="submit" [disabled]="hasImageErrors() || noticiaForm.invalid">
-        {{ isEditing ? 'Atualizar' : 'Cadastrar' }}
-      </button>
-      <button class="btn btn-secondary" type="button" (click)="resetForm()" *ngIf="isEditing">Cancelar</button>
-    </div>
-  </form>
-  <table class="noticia-table">
-    <thead>
+<div class="form-check form-switch">
+  <input class="form-check-input"
+    type="checkbox"
+    role="checkbox"
+    id="isTrendingTop"
+    formControlName="isTrendingTop" />
+    <label class="form-check-label" for="isTrendingTop">Destaque na página inicial?</label>
+  </div>
+
+  <div class="button-group">
+    <button class="btn btn-primary" type="submit" [disabled]="hasImageErrors() || noticiaForm.invalid">
+      {{ isEditing ? 'Atualizar' : 'Cadastrar' }}
+    </button>
+    @if (isEditing) {
+      <button class="btn btn-secondary" type="button" (click)="resetForm()">Cancelar</button>
+    }
+  </div>
+</form>
+<table class="noticia-table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Título</th>
+      <th>Descrição</th>
+      <th>Categorias</th>
+      <th>Destaque</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (noticia of noticias; track noticia) {
       <tr>
-        <th>ID</th>
-        <th>Título</th>
-        <th>Descrição</th>
-        <th>Categorias</th>
-        <th>Destaque</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let noticia of noticias">
         <td>{{ noticia.id }}</td>
         <td>{{ noticia.titulo }}</td>
         <td>{{ noticia.descricao }}</td>
@@ -97,22 +102,23 @@
           <button class="btn btn-delete" (click)="deleteNoticia(noticia.id)">Excluir</button>
         </td>
       </tr>
-    </tbody>
-  </table>
+    }
+  </tbody>
+</table>
 
-  <div class="pagination-container">
-    <button class="pagination-button"
-            [disabled]="page === 1"
-            (click)="onPageChange(page - 1)">
-      Anterior
-    </button>
-    <span class="pagination-info">
-      Página {{ page }} de {{ totalPages }}
-    </span>
-    <button class="pagination-button"
-            [disabled]="page >= totalPages"
-            (click)="onPageChange(page + 1)">
-      Próximo
-    </button>
-  </div>
+<div class="pagination-container">
+  <button class="pagination-button"
+    [disabled]="page === 1"
+    (click)="onPageChange(page - 1)">
+    Anterior
+  </button>
+  <span class="pagination-info">
+    Página {{ page }} de {{ totalPages }}
+  </span>
+  <button class="pagination-button"
+    [disabled]="page >= totalPages"
+    (click)="onPageChange(page + 1)">
+    Próximo
+  </button>
+</div>
 </div>

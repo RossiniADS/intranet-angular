@@ -34,7 +34,9 @@
 
     <div class="button-group">
       <button class="btn btn-primary" type="submit">{{ isEditing ? 'Atualizar' : 'Cadastrar' }}</button>
-      <button class="btn btn-secondary" type="button" (click)="resetForm()" *ngIf="isEditing">Cancelar</button>
+      @if (isEditing) {
+        <button class="btn btn-secondary" type="button" (click)="resetForm()">Cancelar</button>
+      }
     </div>
   </form>
 
@@ -50,17 +52,19 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let usuario of usuarios">
-        <td>{{ usuario.id }}</td>
-        <td>{{ usuario.nome }}</td>
-        <td>{{ usuario.email }}</td>
-        <td>{{ usuario.login }}</td>
-        <td>{{ usuario.aniversario | date: 'dd/MM/yyyy' }}</td>
-        <td>
-          <button class="btn btn-edit" (click)="editUsuario(usuario)">Editar</button>
-          <button class="btn btn-delete" (click)="deleteUsuario(usuario.id)">Excluir</button>
-        </td>
-      </tr>
+      @for (usuario of usuarios; track usuario) {
+        <tr>
+          <td>{{ usuario.id }}</td>
+          <td>{{ usuario.nome }}</td>
+          <td>{{ usuario.email }}</td>
+          <td>{{ usuario.login }}</td>
+          <td>{{ usuario.aniversario | date: 'dd/MM/yyyy' }}</td>
+          <td>
+            <button class="btn btn-edit" (click)="editUsuario(usuario)">Editar</button>
+            <button class="btn btn-delete" (click)="deleteUsuario(usuario.id)">Excluir</button>
+          </td>
+        </tr>
+      }
     </tbody>
   </table>
 </div>

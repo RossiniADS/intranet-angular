@@ -32,7 +32,9 @@
 
     <div class="button-group">
       <button class="btn btn-primary" type="submit">{{ isEditing ? 'Atualizar' : 'Cadastrar' }}</button>
-      <button class="btn btn-secondary" type="button" (click)="resetForm()" *ngIf="isEditing">Cancelar</button>
+      @if (isEditing) {
+        <button class="btn btn-secondary" type="button" (click)="resetForm()">Cancelar</button>
+      }
     </div>
   </form>
 
@@ -45,14 +47,16 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let cardapio of cardapios">
-        <td>{{ cardapio.diaDaSemana | diaSemana }}</td>
-        <td>{{ cardapio.titulo }}</td>
-        <td>
-          <button class="btn btn-edit" (click)="editCardapio(cardapio)">Editar</button>
-          <button class="btn btn-delete" (click)="deleteCardapio(cardapio.id)">Excluir</button>
-        </td>
-      </tr>
+      @for (cardapio of cardapios; track cardapio) {
+        <tr>
+          <td>{{ cardapio.diaDaSemana | diaSemana }}</td>
+          <td>{{ cardapio.titulo }}</td>
+          <td>
+            <button class="btn btn-edit" (click)="editCardapio(cardapio)">Editar</button>
+            <button class="btn btn-delete" (click)="deleteCardapio(cardapio.id)">Excluir</button>
+          </td>
+        </tr>
+      }
     </tbody>
   </table>
 </div>
