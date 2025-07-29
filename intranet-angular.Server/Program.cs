@@ -9,14 +9,12 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-//builder.Services.AddDbContext<IntraNetDbContext>(options =>
-//    options.UseSqlServer(builder.Configuration.GetConnectionString("IntraNetConnectionString")));
-
+// Configuração do DbContext (MySQL)
 builder.Services.AddDbContext<IntraNetDbContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("IntraNetConnectionString"),
     new MySqlServerVersion(new Version(8, 0, 30))));
 
+// JWT
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -38,17 +36,22 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// Adicione serviços ao contêiner
+// CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", policy =>
     {
-        policy.WithOrigins("https://localhost:52789", "https://localhost:7227", "https://127.0.0.1:52789") // Substitua pela origem do Angular
+        policy.WithOrigins(
+                "https://localhost:52789",
+                "https://localhost:7227",
+                "https://127.0.0.1:52789",
+                "http://localhost:80")
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
 });
 
+// DI dos serviços
 builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 builder.Services.AddScoped<IEventoService, EventoService>();
 builder.Services.AddScoped<IFuncionarioService, FuncionarioService>();
@@ -67,15 +70,45 @@ builder.Services.AddScoped<IUsuarioService>(provider =>
 });
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// Middleware
 app.UseCors("AllowSpecificOrigin");
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+else
+{
+    // Habilita HSTS em produção
+    app.UseHsts();
+}
+
+// HTTPS
+app.UseHttpsRedirection();
+
+// Servir arquivos Angular do wwwroot
 app.UseDefaultFiles();
-app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "browser")),
+    RequestPath = ""
+});
+
+
+// Arquivos de upload (Uploads/)
+var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
+
+if (!Directory.Exists(uploadsPath))
+{
+    Directory.CreateDirectory(uploadsPath);
+}
 
 app.UseStaticFiles(new StaticFileOptions
 {
@@ -83,19 +116,16 @@ app.UseStaticFiles(new StaticFileOptions
     RequestPath = "/uploads"
 });
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapFallbackToFile("/index.html");
+// Fallback para SPA Angular
+app.MapFallbackToFile("index.html", new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "browser"))
+});
 
 app.Run();

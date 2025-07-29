@@ -364,3 +364,4 @@ FodyWeavers.xsd
 
 Migrations/
 /intranet-angular.Server/Migrations/IntraNetDbContextModelSnapshot.cs
+/intranet-angular.Server/wwwroot
