@@ -2,6 +2,7 @@ using intranet_angular.Server.Context;
 using intranet_angular.Server.Interfaces;
 using intranet_angular.Server.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
@@ -77,7 +78,12 @@ builder.Services.AddSwaggerGen();
 
 builder.WebHost.ConfigureKestrel(options =>
 {
-    options.Limits.MaxRequestBodySize = 524288000; // 500 MB, por exemplo
+    options.Limits.MaxRequestBodySize = null; // sem limite
+});
+
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.MultipartBodyLengthLimit = long.MaxValue; // sem limite para multipart/form-data
 });
 
 var app = builder.Build();
