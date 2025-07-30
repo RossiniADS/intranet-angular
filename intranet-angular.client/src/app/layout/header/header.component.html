@@ -77,9 +77,11 @@
             <!-- Heder social -->
             <ul class="header-social">
               @for (social of socialLinks; track social) {
-                <li>
-                  <a [href]="social.link"><i [class]="social.icon"></i></a>
-                </li>
+              <li>
+                <a [href]="social.link" target="_blank" rel="noopener noreferrer">
+                  <i [class]="social.icon"></i>
+                </a>
+              </li>
               }
             </ul>
             <!-- Search Nav -->

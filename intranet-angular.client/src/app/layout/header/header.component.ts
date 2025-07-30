@@ -81,9 +81,9 @@ export class HeaderComponent {
   ];
 
   socialLinks = [
-    { link: 'https://www.fb.com/sai4ull', icon: 'fab fa-facebook-f' },
-    { link: '#', icon: 'fab fa-twitter' },
-    { link: '#', icon: 'fab fa-instagram' },
-    { link: '#', icon: 'fab fa-youtube' }
+    { link: 'https://www.facebook.com/santacasadelorena', icon: 'fab fa-facebook-f' },
+    { link: 'https://www.linkedin.com/company/santa-casa-de-lorena', icon: 'fab fa-linkedin-in' },
+    { link: 'https://www.instagram.com/santacasadelorena/', icon: 'fab fa-instagram' },
+    //{ link: '#', icon: 'fab fa-youtube' }
   ];
 }
